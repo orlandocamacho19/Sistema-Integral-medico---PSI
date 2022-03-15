@@ -2,20 +2,30 @@ package Domain;
 
 import java.util.Objects;
 
-/**
- * @author Equipo 1
- */
 public class MedicalNote {
-    private final String ID;
-    private final Doctor doctor;
-    private final Appointment appointment;
+    private int ID;
+    private User user;
+    private Appointment appointment;
     private String notes;
 
-    public MedicalNote(String ID, Doctor doctor, Appointment appointment, String notes) {
+    public MedicalNote(int ID, User user, Appointment appointment, String notes) {
         this.ID = ID;
-        this.doctor = doctor;
+        this.user = user;
         this.appointment = appointment;
         this.notes = notes;
+    }
+
+    public MedicalNote(User user, Appointment appointment, String notes) {
+        this.user = user;
+        this.appointment = appointment;
+        this.notes = notes;
+    }
+
+    public MedicalNote(int ID) {
+        this.ID = ID;
+    }
+
+    public MedicalNote() {
     }
 
     public String getNotes() {
@@ -24,6 +34,30 @@ public class MedicalNote {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
     @Override
@@ -50,7 +84,7 @@ public class MedicalNote {
 
     @Override
     public String toString() {
-        return "MedicalNote{" + "ID=" + ID + ", doctor=" + doctor + ", appointment=" + appointment + ", notes=" + notes + '}';
+        return "MedicalNote{" + "ID=" + ID + ", doctor=" + user + ", appointment=" + appointment + ", notes=" + notes + '}';
     }
         
 }

@@ -3,23 +3,41 @@ package Domain;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * @author Equipo 1
- */
 public class Appointment {
-    private final String ID;
+
+    private int id_appointment;
     private Date startTime;
-    private final Patient patient;
-    private final AppointmentType aType;
-    private final Type type;
+    private Patient patient;
+    private AppointmentType aType;
+    private Type type;
     private Medicine medicine;
     private Payment payment;
     private boolean confirmation;
-    private String notes;
 
+    public Appointment() {
+    }
 
-    public Appointment(String ID, Date startTime, Patient patient, AppointmentType aType, Type type, Medicine medicine, Payment payment, boolean confirmation, String notes) {
-        this.ID = ID;
+    public Appointment(int id_appointment) {
+        this.id_appointment = id_appointment;
+    }
+
+    public Appointment(int id_appointment, Date startTime) {
+        this.id_appointment = id_appointment;
+        this.startTime = startTime;
+    }
+
+    public Appointment(Date startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
+        this.startTime = startTime;
+        this.patient = patient;
+        this.medicine = medicine;
+        this.payment = payment;
+        this.aType = aType;
+        this.type = type;
+        this.confirmation = confirmation;
+    }
+
+    public Appointment(int id_appointment, Date startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
+        this.id_appointment = id_appointment;
         this.startTime = startTime;
         this.patient = patient;
         this.aType = aType;
@@ -27,9 +45,41 @@ public class Appointment {
         this.medicine = medicine;
         this.payment = payment;
         this.confirmation = confirmation;
-        this.notes = notes;
     }
 
+    public int getId_appointment() {
+        return id_appointment;
+    }
+
+    public void setId_appointment(int id_appointment) {
+        this.id_appointment = id_appointment;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+    
+    public AppointmentType getaType() {
+        return aType;
+    }
+
+    public void setaType(AppointmentType aType) {
+        this.aType = aType;
+    }
+
+    
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+    
     public Date getStartTime() {
         return startTime;
     }
@@ -45,7 +95,7 @@ public class Appointment {
     public void setMedicine(Medicine medicine) {
         this.medicine = medicine;
     }
-
+    
     public Payment getPayment() {
         return payment;
     }
@@ -62,18 +112,10 @@ public class Appointment {
         this.confirmation = confirmation;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.ID);
+        hash = 89 * hash + Objects.hashCode(this.id_appointment);
         return hash;
     }
 
@@ -89,12 +131,12 @@ public class Appointment {
             return false;
         }
         final Appointment other = (Appointment) obj;
-        return Objects.equals(this.ID, other.ID);
+        return Objects.equals(this.id_appointment, other.id_appointment);
     }
 
     @Override
     public String toString() {
-        return "Appointment{" + "ID=" + ID + ", startTime=" + startTime + ", patient=" + patient + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine + ", payment=" + payment + ", confirmation=" + confirmation + ", notes=" + notes + '}';
+        return "Appointment{" + "ID=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient.getID() + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine.getID() + ", payment=" + payment.getId_payment() + ", confirmation=" + confirmation;
     }
    
 }

@@ -5,30 +5,40 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Equipo 1
- */
 public class Patient {
-    private String ID;
+    private int id_patient;
     private String name;
     private String phone;
     private Date birthDate;
     private List<MedicalNote> medicalNotes = new ArrayList<>();
     private List<Medicine> medicines = new ArrayList<>();
 
-    public Patient(String ID, String name, String phone, Date birthDate) {
-        this.ID = ID;
+    public Patient() {
+    }
+
+    public Patient(int id_patient) {
+        this.id_patient = id_patient;
+    }
+
+    public Patient(int id_patient, String name, String phone, Date birthDate) {
+        this.id_patient = id_patient;
         this.name = name;
         this.phone = phone;
         this.birthDate = birthDate;
     }
 
-    public String getID() {
-        return ID;
+    public Patient(String name, String phone, Date birthDate) {
+        this.name = name;
+        this.phone = phone;
+        this.birthDate = birthDate;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public int getID() {
+        return id_patient;
+    }
+
+    public void setID(int id_patient) {
+        this.id_patient = id_patient;
     }
     
     public String getName() {
@@ -74,7 +84,7 @@ public class Patient {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 43 * hash + Objects.hashCode(this.ID);
+        hash = 43 * hash + Objects.hashCode(this.id_patient);
         return hash;
     }
 
@@ -90,11 +100,11 @@ public class Patient {
             return false;
         }
         final Patient other = (Patient) obj;
-        return Objects.equals(this.ID, other.ID);
+        return Objects.equals(this.id_patient, other.id_patient);
     }
 
     @Override
     public String toString() {
-        return "Patient{" + "ID=" + ID + ", name=" + name + ", phone=" + phone + ", birthDate=" + birthDate + ", medicalNotes=" + medicalNotes + ", medicines=" + medicines + '}';
+        return "Patient: " + "Id: " + id_patient + ", Name: " + name + ", Phone: " + phone + ", Birth Date: " + birthDate;
     }
 }
