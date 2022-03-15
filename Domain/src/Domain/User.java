@@ -4,25 +4,65 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Equipo 1
- */
-public class Doctor {
-    private final String ID;
-    private final String name;
+public class User {
+
+    private int id;
+    private String name;
     private String email;
     private String password;
     private String phone;
+    private Ocupation ocupation;
     private String specialty;
     private List<Appointment> appointments = new ArrayList<>();
 
-    public Doctor(String ID, String name, String email, String password, String phone, String specialty) {
-        this.ID = ID;
+    public User() {
+    }
+
+    public User(int id) {
+        this.id = id;
+    }
+
+    public User(int id, String name, String email, String password, String phone, Ocupation ocupation, String specialty) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.ocupation = ocupation;
         this.specialty = specialty;
+    }
+
+    public User(String name, String email, String password, String phone, Ocupation ocupation, String specialty) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.ocupation = ocupation;
+        this.specialty = specialty;
+    }
+
+    public Ocupation getOcupation() {
+        return ocupation;
+    }
+
+    public void setOcupation(Ocupation ocupation) {
+        this.ocupation = ocupation;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -68,7 +108,7 @@ public class Doctor {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.ID);
+        hash = 89 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -83,12 +123,12 @@ public class Doctor {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Doctor other = (Doctor) obj;
-        return Objects.equals(this.ID, other.ID);
+        final User other = (User) obj;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Doctor{" + "ID=" + ID + ", name=" + name + ", email=" + email + ", password=" + password + ", phone=" + phone + ", specialty=" + specialty + ", appointments=" + appointments + '}';
-    }  
+        return "User: " + "Id: " + id + ", Name: " + name + ", Email: " + email + ", Password: " + password + ", Phone: " + phone + ", Ocupation: " + ocupation + ", Specialty: " + specialty;
+    }
 }

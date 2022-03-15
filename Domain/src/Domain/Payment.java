@@ -5,28 +5,37 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Equipo 1
- */
 public class Payment {
-    private String ID;
+    private int id_payment;
     private double Amount;
     private List<Double> payments = new ArrayList<>();
     private List<Date> paymentsDate = new ArrayList<>();
     private boolean paidOut;
 
-    public Payment(String ID, double Amount, boolean paidOut) {
-        this.ID = ID;
+    public Payment() {
+    }
+
+    public Payment(int id_payment) {
+        this.id_payment = id_payment;
+    }
+
+    public Payment(double Amount, boolean paidOut) {
         this.Amount = Amount;
         this.paidOut = paidOut;
     }
 
-    public String getID() {
-        return ID;
+    public Payment(int id_payment, double Amount, boolean paidOut) {
+        this.id_payment = id_payment;
+        this.Amount = Amount;
+        this.paidOut = paidOut;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public int getId_payment() {
+        return id_payment;
+    }
+
+    public void setId_payment(int id_payment) {
+        this.id_payment = id_payment;
     }
 
     public double getAmount() {
@@ -64,7 +73,7 @@ public class Payment {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.ID);
+        hash = 97 * hash + Objects.hashCode(this.id_payment);
         return hash;
     }
 
@@ -80,12 +89,12 @@ public class Payment {
             return false;
         }
         final Payment other = (Payment) obj;
-        return Objects.equals(this.ID, other.ID);
+        return Objects.equals(this.id_payment, other.id_payment);
     }
 
     @Override
     public String toString() {
-        return "Payment{" + "ID=" + ID + ", Amount=" + Amount + ", payments=" + payments + ", paymentsDate=" + paymentsDate + ", paidOut=" + paidOut + '}';
+        return "Payment: " + "Id: " + id_payment + ", Amount: " + Amount + ", Paid Out: " + paidOut;
     }
     
     

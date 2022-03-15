@@ -3,19 +3,23 @@ package Domain;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * @author Equipo 1
- */
 public class Medicine {
-    private String ID;
+    private int id_medicine;
     private String name;
     private double amount;
     private double ingest;
     private String indications;
     private Date dueDate;
 
-    public Medicine(String ID, String name, double amount, double ingest, String indications, Date dueDate) {
-        this.ID = ID;
+    public Medicine() {
+    }
+
+    public Medicine(int id_medicine) {
+        this.id_medicine = id_medicine;
+    }
+
+    public Medicine(int id_medicine, String name, double amount, double ingest, String indications, Date dueDate) {
+        this.id_medicine = id_medicine;
         this.name = name;
         this.amount = amount;
         this.ingest = ingest;
@@ -23,12 +27,20 @@ public class Medicine {
         this.dueDate = dueDate;
     }
 
-    public String getID() {
-        return ID;
+    public Medicine(String name, double amount, double ingest, String indications, Date dueDate) {
+        this.name = name;
+        this.amount = amount;
+        this.ingest = ingest;
+        this.indications = indications;
+        this.dueDate = dueDate;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public int getID() {
+        return id_medicine;
+    }
+
+    public void setID(int id_medicine) {
+        this.id_medicine = id_medicine;
     }
 
     public String getName() {
@@ -74,7 +86,7 @@ public class Medicine {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.ID);
+        hash = 29 * hash + Objects.hashCode(this.id_medicine);
         return hash;
     }
 
@@ -90,12 +102,12 @@ public class Medicine {
             return false;
         }
         final Medicine other = (Medicine) obj;
-        return Objects.equals(this.ID, other.ID);
+        return Objects.equals(this.id_medicine, other.id_medicine);
     }
 
     @Override
     public String toString() {
-        return "Medicine{" + "ID=" + ID + ", name=" + name + ", amount=" + amount + ", ingest=" + ingest + ", indications=" + indications + ", dueDate=" + dueDate + '}';
+        return "Medicine: " + "Id: " + id_medicine + ", Name: " + name + ", Amount: " + amount + ", Ingest: " + ingest + ", Indications: " + indications + ", Due Date: " + dueDate;
     }
 
     
