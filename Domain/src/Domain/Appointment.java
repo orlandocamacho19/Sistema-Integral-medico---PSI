@@ -1,12 +1,12 @@
 package Domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Appointment {
 
     private int id_appointment;
-    private Date startTime;
+    private Timestamp startTime;
     private Patient patient;
     private AppointmentType aType;
     private Type type;
@@ -21,12 +21,12 @@ public class Appointment {
         this.id_appointment = id_appointment;
     }
 
-    public Appointment(int id_appointment, Date startTime) {
+    public Appointment(int id_appointment, Timestamp startTime) {
         this.id_appointment = id_appointment;
         this.startTime = startTime;
     }
 
-    public Appointment(Date startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
+    public Appointment(Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
         this.startTime = startTime;
         this.patient = patient;
         this.medicine = medicine;
@@ -36,7 +36,7 @@ public class Appointment {
         this.confirmation = confirmation;
     }
 
-    public Appointment(int id_appointment, Date startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
+    public Appointment(int id_appointment, Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
         this.id_appointment = id_appointment;
         this.startTime = startTime;
         this.patient = patient;
@@ -80,11 +80,11 @@ public class Appointment {
         this.type = type;
     }
     
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
@@ -136,7 +136,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" + "ID=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient.getID() + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine.getID() + ", payment=" + payment.getId_payment() + ", confirmation=" + confirmation;
+        return "Appointment{" + "ID=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient.getID() + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine.getId_medicine()+ ", payment=" + payment.getId_payment() + ", confirmation=" + confirmation;
     }
    
 }

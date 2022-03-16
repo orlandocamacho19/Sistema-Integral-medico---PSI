@@ -1,6 +1,7 @@
 package DAO;
 
 import Domain.Medicine;
+import Domain.Patient;
 import conexion.Conexion;
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class MedicineDAO extends Conexion {
         }
     }
 
-    public List consultAll() {
+    public List<Medicine> consultAll() {
         ResultSet res;
         List medicines = new ArrayList();
         try {
@@ -64,7 +65,7 @@ public class MedicineDAO extends Conexion {
             res = ps.executeQuery();
             while (res.next()) {
                 Medicine medicine = new Medicine();
-                medicine.setID(res.getInt("id_medicine"));
+                medicine.setId_medicine(res.getInt("id_medicine"));
                 medicine.setName(res.getString("name"));
                 medicine.setAmount(res.getDouble("amount"));
                 medicine.setIngest(res.getDouble("ingest"));
@@ -77,5 +78,14 @@ public class MedicineDAO extends Conexion {
             e.getStackTrace();
         }
         return medicines;
+    }
+    
+     public boolean findID(Medicine medicine) {
+        for (int i = 0; i < consultAll().size(); i++) {
+            if (consultAll().get(i).getId_medicine()== medicine.getId_medicine()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

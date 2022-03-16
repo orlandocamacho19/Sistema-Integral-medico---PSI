@@ -83,17 +83,4 @@ public class PatientDAO extends Conexion {
         return false;
     }
 
-//    public Patient clon(Patient patient){
-//        for (int i = 0; i < consultAll().size(); i++) {
-//            if (patient.getName().equalsIgnoreCase(consultAll().get(i).getName())) {
-//                if (patient.getPhone().equalsIgnoreCase(consultAll().get(i).getPhone())) {
-//                    if (patient.getBirthDate().equals(consultAll().get(i).getBirthDate())) {
-//                        Patient pClone = new Patient();
-//                        pClone.setID(patient.);
-//                    }
-//                }
-//            }
-//        }
-//        return patient;
-//    }
 }

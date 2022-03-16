@@ -56,7 +56,7 @@ public class UserDAO extends Conexion {
         }
     }
 
-    public List consultAll() {
+    public List<User> consultAll() {
         ResultSet res;
         List doctors = new ArrayList();
         try {
@@ -82,7 +82,12 @@ public class UserDAO extends Conexion {
         return doctors;
     }
     
-    public int exist(){
-        return 0;
+    public boolean findID(User user) {
+        for (int i = 0; i < consultAll().size(); i++) {
+            if (consultAll().get(i).getId()== user.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

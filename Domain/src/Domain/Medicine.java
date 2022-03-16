@@ -35,14 +35,6 @@ public class Medicine {
         this.dueDate = dueDate;
     }
 
-    public int getID() {
-        return id_medicine;
-    }
-
-    public void setID(int id_medicine) {
-        this.id_medicine = id_medicine;
-    }
-
     public String getName() {
         return name;
     }
@@ -53,6 +45,14 @@ public class Medicine {
 
     public double getAmount() {
         return amount;
+    }
+
+    public int getId_medicine() {
+        return id_medicine;
+    }
+
+    public void setId_medicine(int id_medicine) {
+        this.id_medicine = id_medicine;
     }
 
     public void setAmount(double amount) {

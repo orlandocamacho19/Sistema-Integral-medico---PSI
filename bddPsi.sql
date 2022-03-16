@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `appointments`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `appointments` (
   `id_appointment` int NOT NULL AUTO_INCREMENT,
-  `start_time` date NOT NULL,
+  `start_time` datetime NOT NULL,
   `id_patient` int NOT NULL,
   `id_medicine` int NOT NULL,
   `id_payment` int NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `appointments` (
   CONSTRAINT `fk_appoinment_medicine` FOREIGN KEY (`id_medicine`) REFERENCES `medicines` (`id_medicine`),
   CONSTRAINT `fk_appointment_patient` FOREIGN KEY (`id_patient`) REFERENCES `patients` (`id_patient`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_appointment_payment` FOREIGN KEY (`id_payment`) REFERENCES `payments` (`id_payment`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (19,'2022-03-25',10,14,8,'Surgical','Recurrent',1);
+INSERT INTO `appointments` VALUES (19,'2022-03-25 00:00:00',10,14,8,'Surgical','Recurrent',1),(20,'3922-12-30 00:00:00',10,14,8,'Surgical','Recurrent',1),(21,'3922-12-30 17:30:00',10,14,8,'Surgical','Recurrent',1),(22,'2022-11-30 17:30:00',10,14,8,'Surgical','Recurrent',1);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-15 16:40:34
+-- Dump completed on 2022-03-16 14:47:24
