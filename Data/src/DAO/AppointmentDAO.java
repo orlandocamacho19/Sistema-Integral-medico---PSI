@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class AppointmentDAO extends Conexion {
@@ -21,9 +22,9 @@ public class AppointmentDAO extends Conexion {
             String sql = "INSERT INTO appointments (start_time, id_patient, id_medicine, id_payment, appointment_type, type, confirmation) VALUES (?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
 
-            ps.setDate(1, (Date) appointment.getStartTime());
+            ps.setTimestamp(1,  appointment.getStartTime());
             ps.setInt(2, appointment.getPatient().getID());
-            ps.setInt(3, appointment.getMedicine().getID());
+            ps.setInt(3, appointment.getMedicine().getId_medicine());
             ps.setInt(4, appointment.getPayment().getId_payment());
             ps.setString(5, appointment.getaType().toString());
             ps.setString(6, appointment.getType().toString());
@@ -40,9 +41,9 @@ public class AppointmentDAO extends Conexion {
             this.conect();
             String sql = "update appointments set start_time=?, id_patient=?, id_medicine=?, id_payment=?, appointment_type=?, type=?, confirmation=? where id_appointment=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setDate(1, (Date) appointment.getStartTime());
+            ps.setTimestamp(1,appointment.getStartTime());
             ps.setInt(2, appointment.getPatient().getID());
-            ps.setInt(3, appointment.getMedicine().getID());
+            ps.setInt(3, appointment.getMedicine().getId_medicine());
             ps.setInt(4, appointment.getPayment().getId_payment());
             ps.setString(5, appointment.getaType().toString());
             ps.setString(6, appointment.getType().toString());
@@ -66,7 +67,7 @@ public class AppointmentDAO extends Conexion {
         }
     }
 
-    public List consultAll() {
+    public List<Appointment> consultAll() {
         ResultSet res;
         List appointments = new ArrayList();
         try {
@@ -77,7 +78,7 @@ public class AppointmentDAO extends Conexion {
             while (res.next()) {
                 Appointment appointment = new Appointment();
                 appointment.setId_appointment(res.getInt("id_appointment"));
-                appointment.setStartTime(res.getDate("start_time"));
+                appointment.setStartTime(res.getTimestamp("start_time"));
                 Patient p = new Patient((int) res.getObject("id_patient"));
                 appointment.setPatient(p);
                 

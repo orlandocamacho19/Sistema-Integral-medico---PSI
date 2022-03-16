@@ -15,7 +15,8 @@ import Domain.Type;
 import Domain.User;
 import Domain.MedicalNote;
 import Domain.Ocupation;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class test {
 
@@ -39,14 +40,14 @@ public class test {
         Payment pay1 = new Payment(8, 2000, true);
 //        payd.insert(pay1);
         
-        Appointment a1 = new Appointment(19, new Date(2022-1900, 3-1, 25), p1, m1, pay1, AppointmentType.Surgical, Type.Recurrent, true);
-//        System.out.println(ad.consultAll());
+        Appointment a1 = new Appointment(new Timestamp(2022-1900, 11-1, 30, 17, 30,     0,0), p1, m1, pay1, AppointmentType.Surgical, Type.Recurrent, true);
+        ad.insert(a1);
 
         User d = new User(4, "Hector", "torrozapata@gmail.com", "torro123", "0000000000", Ocupation.Doctor,"Cirujano");
 //        dd.insert(d);
 
-        MedicalNote mn = new MedicalNote(d, a1, "Tiene que volver en 15 dias");
-        mnd.insert(mn);
+//        MedicalNote mn = new MedicalNote(d, a1, "Tiene que volver en 15 dias");
+//        mnd.insert(mn);
     }
 
 }
