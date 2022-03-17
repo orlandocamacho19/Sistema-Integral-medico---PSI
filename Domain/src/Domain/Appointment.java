@@ -14,18 +14,44 @@ public class Appointment {
     private Payment payment;
     private boolean confirmation;
 
+    /**
+     * Constructor
+     */
     public Appointment() {
     }
 
+    /**
+     * Constructor that receives the appointment ID
+     *
+     * @param id_appointment appointment ID
+     */
     public Appointment(int id_appointment) {
         this.id_appointment = id_appointment;
     }
 
+    /**
+     * Constructor that receives the appointment ID and start time
+     *
+     * @param id_appointment appointment ID
+     * @param startTime start time
+     */
     public Appointment(int id_appointment, Timestamp startTime) {
         this.id_appointment = id_appointment;
         this.startTime = startTime;
     }
 
+    /**
+     * Constructor that receives the appointment start time, patient, medicine,
+     * payment, apointment type, type and confirmation
+     *
+     * @param startTime start time
+     * @param patient patient
+     * @param medicine medicine
+     * @param payment payment
+     * @param aType appointment type
+     * @param type type
+     * @param confirmation confirmation
+     */
     public Appointment(Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
         this.startTime = startTime;
         this.patient = patient;
@@ -36,6 +62,19 @@ public class Appointment {
         this.confirmation = confirmation;
     }
 
+    /**
+     * Constructor that receives the appointment ID, start time, patient,
+     * medicine, payment, apointment type, type and confirmation
+     *
+     * @param id_appointment appointmen ID
+     * @param startTime start time
+     * @param patient patient
+     * @param medicine medicine
+     * @param payment payment
+     * @param aType appointment type
+     * @param type type
+     * @param confirmation confirmation
+     */
     public Appointment(int id_appointment, Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
         this.id_appointment = id_appointment;
         this.startTime = startTime;
@@ -47,71 +86,155 @@ public class Appointment {
         this.confirmation = confirmation;
     }
 
+    /**
+     * Return the appointment ID
+     *
+     * @return appointment ID
+     */
     public int getId_appointment() {
         return id_appointment;
     }
 
+    /**
+     * Set the appointment ID
+     *
+     * @param id_appointment appointment ID
+     */
     public void setId_appointment(int id_appointment) {
         this.id_appointment = id_appointment;
     }
 
+    /**
+     * Return the patient
+     *
+     * @return patient
+     */
     public Patient getPatient() {
         return patient;
     }
 
+    /**
+     * Set the patient
+     *
+     * @param patient patient
+     */
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
-    
+
+    /**
+     * Return the appointment type
+     *
+     * @return appointment type
+     */
     public AppointmentType getaType() {
         return aType;
     }
 
+    /**
+     * Set the appointment type
+     *
+     * @param aType appointment type
+     */
     public void setaType(AppointmentType aType) {
         this.aType = aType;
     }
 
-    
+    /**
+     * Return the type
+     *
+     * @return type
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * Set the type
+     *
+     * @param type type
+     */
     public void setType(Type type) {
         this.type = type;
     }
-    
+
+    /**
+     * Return the appointment start time
+     *
+     * @return start time
+     */
     public Timestamp getStartTime() {
         return startTime;
     }
 
+    /**
+     * Set the appointment start time
+     *
+     * @param startTime start time
+     */
     public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Return the medicine
+     *
+     * @return medicine
+     */
     public Medicine getMedicine() {
         return medicine;
     }
 
+    /**
+     * Set the medicine
+     *
+     * @param medicine medicine
+     */
     public void setMedicine(Medicine medicine) {
         this.medicine = medicine;
     }
-    
+
+    /**
+     * Return the payment
+     *
+     * @return payment
+     */
     public Payment getPayment() {
         return payment;
     }
 
+    /**
+     * Set the payment
+     *
+     * @param payment payment
+     */
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
 
+    /**
+     * Return if the appointment is confirmed
+     *
+     * @return confirmation
+     */
     public boolean isConfirmation() {
         return confirmation;
     }
 
+    /**
+     * Set the appointment confirmation
+     *
+     * @param confirmation confirmation
+     */
     public void setConfirmation(boolean confirmation) {
         this.confirmation = confirmation;
     }
 
+    /**
+     * Hash code method
+     *
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -119,6 +242,12 @@ public class Appointment {
         return hash;
     }
 
+    /**
+     * Return if the object receive in params and this are equals
+     *
+     * @param obj object
+     * @return True if they are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -134,9 +263,13 @@ public class Appointment {
         return Objects.equals(this.id_appointment, other.id_appointment);
     }
 
+    /**
+     * String of the attributes of the object
+     *
+     * @return String
+     */
     @Override
     public String toString() {
-        return "Appointment{" + "ID=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient.getID() + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine.getId_medicine()+ ", payment=" + payment.getId_payment() + ", confirmation=" + confirmation;
+        return "Appointment{" + "ID=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient.getID() + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine.getId_medicine() + ", payment=" + payment.getId_payment() + ", confirmation=" + confirmation;
     }
-   
 }

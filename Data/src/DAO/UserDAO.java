@@ -2,16 +2,40 @@ package DAO;
 
 import Domain.Ocupation;
 import Domain.User;
-import conexion.Conexion;
+import connection.ConnectionDB;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO extends Conexion {
+public class UserDAO extends ConnectionDB {
+    
+    private static UserDAO userDAO;
 
+    /**
+     * Constructor
+     */
+    private UserDAO() {
+    }
+    
+    /**
+     * Return the instance of the class following the singleton pattern
+     *
+     * @return instance
+     */
+    public static UserDAO getInstance(){
+        if (userDAO == null) {
+            userDAO = new UserDAO();
+        }
+        return userDAO;
+    }
+
+    /**
+     * Inserts in the database the user received in parameters
+     * @param user User
+     */
     public void insert(User user) {
         try {
-            this.conect();
+            this.connect();
             String sql = "insert into users (name, email, password, phone, speciality, ocupation) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, user.getName());
@@ -26,9 +50,15 @@ public class UserDAO extends Conexion {
         }
     }
 
+    /**
+     * Update in the database the user received in parameters by the
+     * user ID
+     * @param id User ID
+     * @param user User
+     */
     public void update(int id, User user) {
         try {
-            this.conect();
+            this.connect();
             String sql = "update users set name=?, email=?, password=?, phone=?, speciality=?, ocupation=? where id_user=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, user.getName());
@@ -44,9 +74,14 @@ public class UserDAO extends Conexion {
         }
     }
 
+    /**
+     * Deletes from the database the user with which the ID received in
+     * parameters matches
+     * @param id 
+     */
     public void delete(int id) {
         try {
-            this.conect();
+            this.connect();
             String sql = "delete from users where id_user=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setInt(1, id);
@@ -56,11 +91,16 @@ public class UserDAO extends Conexion {
         }
     }
 
+    /**
+     * Consults and returns all the medical notes in the database
+     *
+     * @return medical notes list
+     */
     public List<User> consultAll() {
         ResultSet res;
         List doctors = new ArrayList();
         try {
-            this.conect();
+            this.connect();
             String sql = "select * from users";
             PreparedStatement ps = this.getCon().prepareCall(sql);
             res = ps.executeQuery();
@@ -82,7 +122,12 @@ public class UserDAO extends Conexion {
         return doctors;
     }
     
-    public boolean findID(User user) {
+    /**
+     * Consults and returns the user matching their IDs
+     * @param user User
+     * @return User 
+     */
+    public boolean consultByID(User user) {
         for (int i = 0; i < consultAll().size(); i++) {
             if (consultAll().get(i).getId()== user.getId()) {
                 return true;

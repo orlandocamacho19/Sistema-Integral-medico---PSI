@@ -1,6 +1,8 @@
 package Domain;
 
 public enum AppointmentType {
-   Nutritional, Surgical, Esthetic;
-
+    /**
+     * Appointment types
+     */
+    Nutritional, Surgical, Esthetic;
 }
