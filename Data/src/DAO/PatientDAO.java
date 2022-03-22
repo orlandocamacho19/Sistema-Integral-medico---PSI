@@ -98,7 +98,7 @@ public class PatientDAO extends ConnectionDB {
         List medicines = new ArrayList();
         try {
             this.connect();
-            String sql = "select * from patients";
+            String sql = "SELECT * FROM patients";
             PreparedStatement ps = this.getCon().prepareCall(sql);
             res = ps.executeQuery();
             while (res.next()) {

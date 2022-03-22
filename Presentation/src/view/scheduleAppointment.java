@@ -12,6 +12,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -26,6 +27,7 @@ public class scheduleAppointment extends javax.swing.JFrame {
      */
     public scheduleAppointment() {
         initComponents();
+        loadPatients();
         String separator = File.separator;
         
         if (separator.equals("/")) {
@@ -41,6 +43,12 @@ public class scheduleAppointment extends javax.swing.JFrame {
         }
         setLocationRelativeTo(null); 
 
+    }
+    
+    private void loadPatients() {
+        for (Patient patient : PatientControl.getInstance().getPatients()) {
+            cbPatient.addItem(patient);
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 
 import Domain.Patient;
+import control.AppointmentControl;
 import control.PatientControl;
 
 /*
