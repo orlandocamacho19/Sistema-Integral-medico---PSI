@@ -42,7 +42,7 @@ public class AppointmentDAO extends ConnectionDB {
     public void insert(Appointment appointment) {
         try {
             this.connect();
-            String sql = "INSERT INTO appointments (start_time, id_patient, id_medicine, id_payment, appointment_type, type, confirmation) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO appointments (start_time, id_patient, id_medicine, id_payment, appointment_type, type, confirmation, reason) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
 
             ps.setTimestamp(1, appointment.getStartTime());
@@ -52,7 +52,7 @@ public class AppointmentDAO extends ConnectionDB {
             ps.setString(5, appointment.getaType().toString());
             ps.setString(6, appointment.getType().toString());
             ps.setBoolean(7, appointment.isConfirmation());
-
+            ps.setString(8, appointment.getReason());
             ps.executeUpdate();
         } catch (Exception e) {
             e.getStackTrace();
@@ -69,7 +69,7 @@ public class AppointmentDAO extends ConnectionDB {
     public void update(int id, Appointment appointment) {
         try {
             this.connect();
-            String sql = "update appointments set start_time=?, id_patient=?, id_medicine=?, id_payment=?, appointment_type=?, type=?, confirmation=? where id_appointment=?";
+            String sql = "update appointments set start_time=?, id_patient=?, id_medicine=?, id_payment=?, appointment_type=?, type=?, confirmation=? reason=? where id_appointment=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setTimestamp(1, appointment.getStartTime());
             ps.setInt(2, appointment.getPatient().getID());
@@ -78,7 +78,8 @@ public class AppointmentDAO extends ConnectionDB {
             ps.setString(5, appointment.getaType().toString());
             ps.setString(6, appointment.getType().toString());
             ps.setBoolean(7, appointment.isConfirmation());
-            ps.setInt(8, id);
+            ps.setString(8, appointment.getReason());
+            ps.setInt(9, id);
             ps.executeUpdate();
         } catch (Exception e) {
             e.getStackTrace();
@@ -132,6 +133,7 @@ public class AppointmentDAO extends ConnectionDB {
                 appointment.setaType(AppointmentType.valueOf((String) res.getObject("appointment_type")));
                 appointment.setType(Type.valueOf((String) res.getObject("type")));
                 appointment.setConfirmation(res.getBoolean("confirmation"));
+                appointment.setReason(res.getString("reason"));
                 appointments.add(appointment);
 
             }

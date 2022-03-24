@@ -13,7 +13,8 @@ public class Appointment {
     private Medicine medicine;
     private Payment payment;
     private boolean confirmation;
-
+    private String reason;
+    
     /**
      * Constructor
      */
@@ -42,7 +43,7 @@ public class Appointment {
 
     /**
      * Constructor that receives the appointment start time, patient, medicine,
-     * payment, apointment type, type and confirmation
+     * payment, apointment type, type, confirmation and reason
      *
      * @param startTime start time
      * @param patient patient
@@ -51,8 +52,9 @@ public class Appointment {
      * @param aType appointment type
      * @param type type
      * @param confirmation confirmation
+     * @param reason reason
      */
-    public Appointment(Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
+    public Appointment(Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation, String reason) {
         this.startTime = startTime;
         this.patient = patient;
         this.medicine = medicine;
@@ -60,11 +62,12 @@ public class Appointment {
         this.aType = aType;
         this.type = type;
         this.confirmation = confirmation;
+        this.reason = reason;
     }
 
     /**
      * Constructor that receives the appointment ID, start time, patient,
-     * medicine, payment, apointment type, type and confirmation
+     * medicine, payment, apointment type, type, confirmation and reason
      *
      * @param id_appointment appointmen ID
      * @param startTime start time
@@ -74,8 +77,9 @@ public class Appointment {
      * @param aType appointment type
      * @param type type
      * @param confirmation confirmation
+     * @param reason reason
      */
-    public Appointment(int id_appointment, Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation) {
+    public Appointment(int id_appointment, Timestamp startTime, Patient patient, Medicine medicine, Payment payment, AppointmentType aType, Type type, boolean confirmation, String reason) {
         this.id_appointment = id_appointment;
         this.startTime = startTime;
         this.patient = patient;
@@ -84,6 +88,7 @@ public class Appointment {
         this.medicine = medicine;
         this.payment = payment;
         this.confirmation = confirmation;
+        this.reason = reason;
     }
 
     /**
@@ -230,6 +235,24 @@ public class Appointment {
         this.confirmation = confirmation;
     }
 
+     /**
+     * Return the reason
+     *
+     * @return confirmation
+     */
+    public String getReason() {
+        return reason;
+    }
+
+    /**
+     * Set the reason 
+     *
+     * @param reason reason
+     */
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     /**
      * Hash code method
      *
@@ -270,6 +293,6 @@ public class Appointment {
      */
     @Override
     public String toString() {
-        return "Appointment{" + "ID=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient.getID() + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine.getId_medicine() + ", payment=" + payment.getId_payment() + ", confirmation=" + confirmation;
+        return "Appointment{" + "id_appointment=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine + ", payment=" + payment + ", confirmation=" + confirmation + ", reason=" + reason + '}';
     }
 }

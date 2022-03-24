@@ -19,14 +19,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     private int mouseX;
     private int mouseY;
-    
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         String separator = File.separator;
-        
+
         if (separator.equals("/")) {
             setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 22, 22));
             this.DisposeButtonW.setVisible(false);
@@ -40,15 +40,13 @@ public class MainFrame extends javax.swing.JFrame {
         }
         setLocationRelativeTo(null);
     }
-    
-    public void setContent(JPanel content){
+
+    public void setContent(JPanel content) {
 
         this.content.removeAll();
         this.content.invalidate();
         this.content.add(content);
         this.content.revalidate();
-        
-        System.out.println(content.getClass());
     }
 
     /**
@@ -370,41 +368,49 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         if (evt.getClickCount() >= 0) {
-            App.GetSingleton().setState(AppState.MANAGEAPPOINTMENTS);
-            manageApointments.setBackground(new Color(204,204,204));
-            scheduleApointments.setBackground(new Color(232,240,254));
-            editApointment.setBackground(new Color(232,240,254));
-            cancelApointment.setBackground(new Color(232,240,254));
-        } 
+            if (App.GetSingleton().getState() != AppState.MANAGEAPPOINTMENTS) {
+                App.GetSingleton().setState(AppState.MANAGEAPPOINTMENTS);
+                manageApointments.setBackground(new Color(204, 204, 204));
+                scheduleApointments.setBackground(new Color(232, 240, 254));
+                editApointment.setBackground(new Color(232, 240, 254));
+                cancelApointment.setBackground(new Color(232, 240, 254));
+            }
+        }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         if (evt.getClickCount() >= 0) {
-            App.GetSingleton().setState(AppState.SCHEDULEAPPOINTMENTS);
-            manageApointments.setBackground(new Color(232,240,254));
-            scheduleApointments.setBackground(new Color(204,204,204));
-            editApointment.setBackground(new Color(232,240,254));
-            cancelApointment.setBackground(new Color(232,240,254));
-        } 
+            if (App.GetSingleton().getState() != AppState.SCHEDULEAPPOINTMENTS) {
+                App.GetSingleton().setState(AppState.SCHEDULEAPPOINTMENTS);
+                manageApointments.setBackground(new Color(232, 240, 254));
+                scheduleApointments.setBackground(new Color(204, 204, 204));
+                editApointment.setBackground(new Color(232, 240, 254));
+                cancelApointment.setBackground(new Color(232, 240, 254));
+            }
+        }
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         if (evt.getClickCount() >= 0) {
-            App.GetSingleton().setState(AppState.RESCHEDULEAPPOINTMENTS);
-            manageApointments.setBackground(new Color(232,240,254));
-            scheduleApointments.setBackground(new Color(232,240,254));
-            editApointment.setBackground(new Color(204,204,204));
-            cancelApointment.setBackground(new Color(232,240,254));
-        } 
+            if (App.GetSingleton().getState() != AppState.RESCHEDULEAPPOINTMENTS) {
+                App.GetSingleton().setState(AppState.RESCHEDULEAPPOINTMENTS);
+                manageApointments.setBackground(new Color(232, 240, 254));
+                scheduleApointments.setBackground(new Color(232, 240, 254));
+                editApointment.setBackground(new Color(204, 204, 204));
+                cancelApointment.setBackground(new Color(232, 240, 254));
+            }
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         if (evt.getClickCount() >= 0) {
-            App.GetSingleton().setState(AppState.CANCELAPPOINTMENTS);
-            manageApointments.setBackground(new Color(232,240,254));
-            scheduleApointments.setBackground(new Color(232,240,254));
-            editApointment.setBackground(new Color(232,240,254));
-            cancelApointment.setBackground(new Color(204,204,204));
+            if (App.GetSingleton().getState() != AppState.CANCELAPPOINTMENTS) {
+                App.GetSingleton().setState(AppState.CANCELAPPOINTMENTS);
+                manageApointments.setBackground(new Color(232, 240, 254));
+                scheduleApointments.setBackground(new Color(232, 240, 254));
+                editApointment.setBackground(new Color(232, 240, 254));
+                cancelApointment.setBackground(new Color(204, 204, 204));
+            }
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
