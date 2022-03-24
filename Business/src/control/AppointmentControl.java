@@ -8,7 +8,7 @@ public class AppointmentControl {
     private static AppointmentControl appointmentControl;
     private static AppointmentDAO ad;
     
-    /**
+    /** 
      * Constructor
      */
     private AppointmentControl() {

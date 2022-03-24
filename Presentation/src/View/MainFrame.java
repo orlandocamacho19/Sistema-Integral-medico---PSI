@@ -2,25 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package view;
+package View;
 
+import SIM.App;
+import SIM.AppState;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
-import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 /**
  *
  * @author orlandocamacho
  */
-public class deleteAppointment extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame {
 
     private int mouseX;
     private int mouseY;
+    
     /**
-     * Creates new form home
+     * Creates new form MainFrame
      */
-    public deleteAppointment() {
+    public MainFrame() {
         initComponents();
         String separator = File.separator;
         
@@ -36,6 +39,16 @@ public class deleteAppointment extends javax.swing.JFrame {
             this.FullScreenButton.setVisible(false);
         }
         setLocationRelativeTo(null);
+    }
+    
+    public void setContent(JPanel content){
+
+        this.content.removeAll();
+        this.content.invalidate();
+        this.content.add(content);
+        this.content.revalidate();
+        
+        System.out.println(content.getClass());
     }
 
     /**
@@ -56,28 +69,15 @@ public class deleteAppointment extends javax.swing.JFrame {
         FullScreenButtonW = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lateralMenu = new javax.swing.JPanel();
-        roundedPanel1 = new components.RoundedPanel();
-        menuScheduleAppointment = new javax.swing.JButton();
-        roundedPanel2 = new components.RoundedPanel();
-        menuEditAppointment = new javax.swing.JButton();
-        roundedPanel3 = new components.RoundedPanel();
-        menuDeleteAppointment = new javax.swing.JButton();
-        content = new javax.swing.JPanel();
-        title = new javax.swing.JPanel();
+        manageApointments = new Components.RoundedPanel();
+        jLabel4 = new javax.swing.JLabel();
+        scheduleApointments = new Components.RoundedPanel();
         jLabel2 = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
-        Patient = new javax.swing.JLabel();
-        cbPatient = new javax.swing.JComboBox<>();
-        Date = new javax.swing.JLabel();
-        cbDate = new javax.swing.JComboBox<>();
-        Hour = new javax.swing.JLabel();
-        cbHour = new javax.swing.JComboBox<>();
-        service = new javax.swing.JLabel();
-        cbService = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        AppointmentDescription = new javax.swing.JTextArea();
-        scheduleBtn = new components.RoundedPanel();
-        scheduleAppointment = new javax.swing.JButton();
+        editApointment = new Components.RoundedPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cancelApointment = new Components.RoundedPanel();
+        jLabel3 = new javax.swing.JLabel();
+        content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -98,7 +98,7 @@ public class deleteAppointment extends javax.swing.JFrame {
         topBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         DisposeButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        DisposeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DisposeButton.png"))); // NOI18N
+        DisposeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/DisposeButton.png"))); // NOI18N
         DisposeButton.setMaximumSize(new java.awt.Dimension(14, 14));
         DisposeButton.setMinimumSize(new java.awt.Dimension(14, 14));
         DisposeButton.setPreferredSize(new java.awt.Dimension(14, 14));
@@ -118,7 +118,7 @@ public class deleteAppointment extends javax.swing.JFrame {
         topBar.add(DisposeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 35));
 
         MinimizeButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MinimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MinimizeButton.png"))); // NOI18N
+        MinimizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/MinimizeButton.png"))); // NOI18N
         MinimizeButton.setMaximumSize(new java.awt.Dimension(14, 14));
         MinimizeButton.setMinimumSize(new java.awt.Dimension(14, 14));
         MinimizeButton.setPreferredSize(new java.awt.Dimension(14, 14));
@@ -138,7 +138,7 @@ public class deleteAppointment extends javax.swing.JFrame {
         topBar.add(MinimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, 35));
 
         FullScreenButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FullScreenButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FullScreenButton.png"))); // NOI18N
+        FullScreenButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FullScreenButton.png"))); // NOI18N
         FullScreenButton.setMaximumSize(new java.awt.Dimension(14, 14));
         FullScreenButton.setMinimumSize(new java.awt.Dimension(14, 14));
         FullScreenButton.setPreferredSize(new java.awt.Dimension(14, 14));
@@ -155,7 +155,7 @@ public class deleteAppointment extends javax.swing.JFrame {
         topBar.add(FullScreenButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, 35));
 
         MinimizeButtonW.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        MinimizeButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MinimizeButtonW.png"))); // NOI18N
+        MinimizeButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/MinimizeButtonW.png"))); // NOI18N
         MinimizeButtonW.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 MinimizeButtonWMouseMoved(evt);
@@ -172,7 +172,7 @@ public class deleteAppointment extends javax.swing.JFrame {
         topBar.add(MinimizeButtonW, new org.netbeans.lib.awtextra.AbsoluteConstraints(1103, 2, 55, 33));
 
         DisposeButtonW.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        DisposeButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DisposeButtonW.png"))); // NOI18N
+        DisposeButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/DisposeButtonW.png"))); // NOI18N
         DisposeButtonW.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 DisposeButtonWMouseMoved(evt);
@@ -189,7 +189,7 @@ public class deleteAppointment extends javax.swing.JFrame {
         topBar.add(DisposeButtonW, new org.netbeans.lib.awtextra.AbsoluteConstraints(1223, 2, 55, 33));
 
         FullScreenButtonW.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FullScreenButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FullScreenButtonW.png"))); // NOI18N
+        FullScreenButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FullScreenButtonW.png"))); // NOI18N
         FullScreenButtonW.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 FullScreenButtonWMouseMoved(evt);
@@ -214,160 +214,71 @@ public class deleteAppointment extends javax.swing.JFrame {
         lateralMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(204, 204, 204)));
         lateralMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundedPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        roundedPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        manageApointments.setBackground(new java.awt.Color(232, 240, 254));
+        manageApointments.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menuScheduleAppointment.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        menuScheduleAppointment.setForeground(new java.awt.Color(35, 36, 37));
-        menuScheduleAppointment.setText("Agendar cita");
-        menuScheduleAppointment.setContentAreaFilled(false);
-        menuScheduleAppointment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        menuScheduleAppointment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuScheduleAppointmentActionPerformed(evt);
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Administrar citas");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
             }
         });
-        roundedPanel1.add(menuScheduleAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 30));
+        manageApointments.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, 30));
 
-        lateralMenu.add(roundedPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 30));
+        lateralMenu.add(manageApointments, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 30));
 
-        roundedPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        roundedPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        scheduleApointments.setBackground(new java.awt.Color(232, 240, 254));
+        scheduleApointments.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menuEditAppointment.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        menuEditAppointment.setForeground(new java.awt.Color(35, 36, 37));
-        menuEditAppointment.setText("Editar");
-        menuEditAppointment.setContentAreaFilled(false);
-        menuEditAppointment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        menuEditAppointment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEditAppointmentActionPerformed(evt);
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Agendar cita");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
             }
         });
-        roundedPanel2.add(menuEditAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 30));
+        scheduleApointments.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, 30));
 
-        lateralMenu.add(roundedPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 30));
+        lateralMenu.add(scheduleApointments, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 180, 30));
 
-        roundedPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        roundedPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        editApointment.setBackground(new java.awt.Color(232, 240, 254));
+        editApointment.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menuDeleteAppointment.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        menuDeleteAppointment.setForeground(new java.awt.Color(35, 36, 37));
-        menuDeleteAppointment.setText("Eliminar cita");
-        menuDeleteAppointment.setContentAreaFilled(false);
-        menuDeleteAppointment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        roundedPanel3.add(menuDeleteAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 30));
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Reagendar cita");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+        editApointment.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, 30));
 
-        lateralMenu.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 180, 30));
+        lateralMenu.add(editApointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 180, 30));
+
+        cancelApointment.setBackground(new java.awt.Color(232, 240, 254));
+        cancelApointment.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Cancelar cita");
+        jLabel3.setToolTipText("");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        cancelApointment.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 160, 30));
+
+        lateralMenu.add(cancelApointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, 30));
 
         getContentPane().add(lateralMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 35, 200, 685));
 
         content.setBackground(new java.awt.Color(255, 255, 255));
-        content.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        title.setBackground(new java.awt.Color(255, 255, 255));
-        title.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        title.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 22)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel2.setText("Cancelar citas");
-        title.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, 55));
-
-        content.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
-
-        description.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        description.setForeground(new java.awt.Color(35, 36, 37));
-        description.setText("Descripción:");
-        content.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
-
-        Patient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        Patient.setForeground(new java.awt.Color(35, 36, 37));
-        Patient.setText("Paciente:");
-        content.add(Patient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
-
-        cbPatient.setBackground(new java.awt.Color(204, 204, 204));
-        cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbPatient.setForeground(new java.awt.Color(35, 36, 37));
-        cbPatient.setMaximumRowCount(12);
-        cbPatient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbPatient.setBorder(null);
-        cbPatient.setFocusable(false);
-        content.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 250, 30));
-
-        Date.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        Date.setForeground(new java.awt.Color(35, 36, 37));
-        Date.setText("Fecha:");
-        content.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
-
-        cbDate.setBackground(new java.awt.Color(204, 204, 204));
-        cbDate.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbDate.setForeground(new java.awt.Color(35, 36, 37));
-        cbDate.setMaximumRowCount(12);
-        cbDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbDate.setBorder(null);
-        cbDate.setFocusable(false);
-        cbDate.setIgnoreRepaint(true);
-        cbDate.setLightWeightPopupEnabled(false);
-        content.add(cbDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 250, 30));
-
-        Hour.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        Hour.setForeground(new java.awt.Color(35, 36, 37));
-        Hour.setText("Hora:");
-        content.add(Hour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
-
-        cbHour.setBackground(new java.awt.Color(204, 204, 204));
-        cbHour.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbHour.setForeground(new java.awt.Color(35, 36, 37));
-        cbHour.setMaximumRowCount(12);
-        cbHour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbHour.setBorder(null);
-        cbHour.setFocusable(false);
-        cbHour.setIgnoreRepaint(true);
-        cbHour.setLightWeightPopupEnabled(false);
-        content.add(cbHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 250, 30));
-
-        service.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        service.setForeground(new java.awt.Color(35, 36, 37));
-        service.setText("Servicio:");
-        content.add(service, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
-
-        cbService.setBackground(new java.awt.Color(204, 204, 204));
-        cbService.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbService.setForeground(new java.awt.Color(35, 36, 37));
-        cbService.setMaximumRowCount(12);
-        cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbService.setBorder(null);
-        cbService.setEnabled(false);
-        cbService.setFocusable(false);
-        cbService.setIgnoreRepaint(true);
-        cbService.setLightWeightPopupEnabled(false);
-        content.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 250, 30));
-
-        jScrollPane1.setBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
-
-        AppointmentDescription.setBackground(new java.awt.Color(255, 255, 255));
-        AppointmentDescription.setColumns(19);
-        AppointmentDescription.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        AppointmentDescription.setForeground(new java.awt.Color(35, 36, 37));
-        AppointmentDescription.setRows(5);
-        AppointmentDescription.setEnabled(false);
-        jScrollPane1.setViewportView(AppointmentDescription);
-
-        content.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 250, 140));
-
-        scheduleBtn.setBackground(new java.awt.Color(0, 102, 255));
-        scheduleBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        scheduleAppointment.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        scheduleAppointment.setForeground(new java.awt.Color(255, 255, 255));
-        scheduleAppointment.setText("Cancelar cita");
-        scheduleAppointment.setContentAreaFilled(false);
-        scheduleBtn.add(scheduleAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 40));
-
-        content.add(scheduleBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 620, 250, 40));
-
+        content.setLayout(new java.awt.BorderLayout());
         getContentPane().add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 35, 1080, 685));
 
         pack();
@@ -445,11 +356,6 @@ public class deleteAppointment extends javax.swing.JFrame {
         FullScreenButtonW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FullScreenButtonW.png")));
     }//GEN-LAST:event_FullScreenButtonWMouseExited
 
-    private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
-        mouseX = evt.getX();
-        mouseY = evt.getY();
-    }//GEN-LAST:event_topBarMousePressed
-
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int X = evt.getXOnScreen();
         int Y = evt.getYOnScreen();
@@ -457,55 +363,69 @@ public class deleteAppointment extends javax.swing.JFrame {
         setLocation(X - mouseX, Y - mouseY + 1);
     }//GEN-LAST:event_topBarMouseDragged
 
-    private void menuScheduleAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuScheduleAppointmentActionPerformed
-        scheduleAppointment schedule = new scheduleAppointment();
-        schedule.setVisible(true);
-        this.setVisible(false);
-        System.gc();
-    }//GEN-LAST:event_menuScheduleAppointmentActionPerformed
+    private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_topBarMousePressed
 
-    private void menuEditAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditAppointmentActionPerformed
-        editAppointment edit = new editAppointment();
-        edit.setVisible(true);
-        this.setVisible(false);
-        System.gc();
-    }//GEN-LAST:event_menuEditAppointmentActionPerformed
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        if (evt.getClickCount() >= 0) {
+            App.GetSingleton().setState(AppState.MANAGEAPPOINTMENTS);
+            manageApointments.setBackground(new Color(204,204,204));
+            scheduleApointments.setBackground(new Color(232,240,254));
+            editApointment.setBackground(new Color(232,240,254));
+            cancelApointment.setBackground(new Color(232,240,254));
+        } 
+    }//GEN-LAST:event_jLabel4MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        if (evt.getClickCount() >= 0) {
+            App.GetSingleton().setState(AppState.SCHEDULEAPPOINTMENTS);
+            manageApointments.setBackground(new Color(232,240,254));
+            scheduleApointments.setBackground(new Color(204,204,204));
+            editApointment.setBackground(new Color(232,240,254));
+            cancelApointment.setBackground(new Color(232,240,254));
+        } 
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        if (evt.getClickCount() >= 0) {
+            App.GetSingleton().setState(AppState.RESCHEDULEAPPOINTMENTS);
+            manageApointments.setBackground(new Color(232,240,254));
+            scheduleApointments.setBackground(new Color(232,240,254));
+            editApointment.setBackground(new Color(204,204,204));
+            cancelApointment.setBackground(new Color(232,240,254));
+        } 
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        if (evt.getClickCount() >= 0) {
+            App.GetSingleton().setState(AppState.CANCELAPPOINTMENTS);
+            manageApointments.setBackground(new Color(232,240,254));
+            scheduleApointments.setBackground(new Color(232,240,254));
+            editApointment.setBackground(new Color(232,240,254));
+            cancelApointment.setBackground(new Color(204,204,204));
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea AppointmentDescription;
-    private javax.swing.JLabel Date;
     private javax.swing.JLabel DisposeButton;
     private javax.swing.JLabel DisposeButtonW;
     private javax.swing.JLabel FullScreenButton;
     private javax.swing.JLabel FullScreenButtonW;
-    private javax.swing.JLabel Hour;
     private javax.swing.JLabel MinimizeButton;
     private javax.swing.JLabel MinimizeButtonW;
-    private javax.swing.JLabel Patient;
-    private javax.swing.JComboBox<String> cbDate;
-    private javax.swing.JComboBox<String> cbHour;
-    private javax.swing.JComboBox<String> cbPatient;
-    private javax.swing.JComboBox<String> cbService;
+    private Components.RoundedPanel cancelApointment;
     private javax.swing.JPanel content;
-    private javax.swing.JLabel description;
+    private Components.RoundedPanel editApointment;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel lateralMenu;
-    private javax.swing.JButton menuDeleteAppointment;
-    private javax.swing.JButton menuEditAppointment;
-    private javax.swing.JButton menuScheduleAppointment;
-    private components.RoundedPanel roundedPanel1;
-    private components.RoundedPanel roundedPanel2;
-    private components.RoundedPanel roundedPanel3;
-    private javax.swing.JButton scheduleAppointment;
-    private components.RoundedPanel scheduleBtn;
-    private javax.swing.JLabel service;
-    private javax.swing.JPanel title;
+    private Components.RoundedPanel manageApointments;
+    private Components.RoundedPanel scheduleApointments;
     private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

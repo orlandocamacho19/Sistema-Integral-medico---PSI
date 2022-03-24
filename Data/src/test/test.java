@@ -21,8 +21,8 @@ import java.util.Date;
 public class test {
 
     public static void main(String[] args) {
-        // Persistence with the singleton pattern
-        System.out.println(AppointmentDAO.getInstance().consultAll());
+//        // Persistence with the singleton pattern
+//        System.out.println(PatientDAO.getInstance().consultAll());
     }
 
 }
