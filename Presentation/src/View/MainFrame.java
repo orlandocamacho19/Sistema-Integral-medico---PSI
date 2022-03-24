@@ -42,7 +42,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void setContent(JPanel content) {
-
         this.content.removeAll();
         this.content.invalidate();
         this.content.add(content);

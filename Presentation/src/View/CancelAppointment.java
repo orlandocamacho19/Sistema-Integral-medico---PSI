@@ -4,8 +4,12 @@
  */
 package View;
 
+import Domain.Appointment;
+import Domain.AppointmentType;
 import Domain.Patient;
+import control.AppointmentControl;
 import control.PatientControl;
+import java.awt.Color;
 
 /**
  *
@@ -22,9 +26,54 @@ public class CancelAppointment extends javax.swing.JPanel {
     }
     
     private void loadPatients(){
-//        for (Patient patient : PatientControl.getInstance().getPatients()) {
-//            cbPatient.addItem(patient);
-//        }
+        this.cbPatient.removeAllItems();
+        for (Patient patient : PatientControl.getInstance().getPatients()) {
+            cbPatient.addItem(patient);
+        }
+        cbPatient.setSelectedIndex(0);
+    }
+    
+    private void loadAppointments(){
+        this.cbScheduleDate.removeAllItems();
+        Patient patient = (Patient) cbPatient.getSelectedItem();
+        for (Appointment appointment : AppointmentControl.getInstance().getAppointment()) {
+            if (patient.getID() == appointment.getPatient().getID()) {
+                this.cbScheduleDate.addItem(appointment);
+            }
+        }
+        cbScheduleDate.setSelectedIndex(0);
+    }
+    
+    private void fillService(){
+        Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
+        if (app.getaType() == AppointmentType.Nutritional) {
+            cbService.setSelectedIndex(0);
+        } else if (app.getaType() == AppointmentType.Surgical) {
+            cbService.setSelectedIndex(1);
+        } else {
+            cbService.setSelectedIndex(2);
+        }
+    }
+    
+    private void fillHours(){
+        Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
+        tfScheduleBeginning.setText(app.getStartTime().getHours() + ":" + app.getStartTime().getMinutes() );
+
+        int hh = app.getStartTime().getHours() ;
+        int mm = app.getStartTime().getMinutes() ;
+
+        if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
+            if (mm + 15 > 59) {
+                mm = mm + 15 - 60;
+                hh++;
+            } else {
+                mm += 15;
+            }
+        } else if (cbService.getSelectedItem().toString().equals("Quirurgica")) {
+            hh++;
+        }
+        tfScheduleEnding.setText(hh + ":" + mm);
+        this.tAReason.setText(app.getReason());
     }
 
     /**
@@ -38,17 +87,26 @@ public class CancelAppointment extends javax.swing.JPanel {
 
         title = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        Patient = new javax.swing.JLabel();
+        jLPatient = new javax.swing.JLabel();
+        containerScheduleDate = new Components.RoundedPanel();
+        cbScheduleDate = new javax.swing.JComboBox<>();
+        jLDate = new javax.swing.JLabel();
+        containerPatient = new Components.RoundedPanel();
         cbPatient = new javax.swing.JComboBox<>();
-        Date = new javax.swing.JLabel();
-        cbDate = new javax.swing.JComboBox<>();
-        Hour = new javax.swing.JLabel();
-        cbHour = new javax.swing.JComboBox<>();
-        service = new javax.swing.JLabel();
+        jLEnding = new javax.swing.JLabel();
+        jLBeginning = new javax.swing.JLabel();
+        containerScheduleBeginning = new Components.RoundedPanel();
+        tfScheduleBeginning = new javax.swing.JTextField();
+        containerScheduleEnding = new Components.RoundedPanel();
+        tfScheduleEnding = new javax.swing.JTextField();
+        jLNotes = new javax.swing.JLabel();
+        containerService = new Components.RoundedPanel();
         cbService = new javax.swing.JComboBox<>();
-        description = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        AppointmentDescription = new javax.swing.JTextArea();
+        jLService = new javax.swing.JLabel();
+        containerReason = new Components.RoundedPanel();
+        tAReason = new javax.swing.JTextArea();
+        containerBtnCancel = new Components.RoundedPanel();
+        btnCancel = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -66,99 +124,220 @@ public class CancelAppointment extends javax.swing.JPanel {
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
 
-        Patient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        Patient.setForeground(new java.awt.Color(35, 36, 37));
-        Patient.setText("Paciente:");
-        add(Patient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        jLPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLPatient.setForeground(new java.awt.Color(35, 36, 37));
+        jLPatient.setText("Paciente:");
+        add(jLPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
 
-        cbPatient.setBackground(new java.awt.Color(204, 204, 204));
+        containerScheduleDate.setBackground(new java.awt.Color(232, 240, 255));
+        containerScheduleDate.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbScheduleDate.setBackground(new java.awt.Color(232, 240, 255));
+        cbScheduleDate.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbScheduleDate.setForeground(new java.awt.Color(35, 36, 37));
+        cbScheduleDate.setMaximumRowCount(12);
+        cbScheduleDate.setBorder(null);
+        cbScheduleDate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbScheduleDate.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbScheduleDate.setFocusable(false);
+        cbScheduleDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbScheduleDateActionPerformed(evt);
+            }
+        });
+        containerScheduleDate.add(cbScheduleDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
+
+        add(containerScheduleDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
+
+        jLDate.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLDate.setForeground(new java.awt.Color(35, 36, 37));
+        jLDate.setText("Fecha agendada:");
+        jLDate.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
+
+        containerPatient.setBackground(new java.awt.Color(232, 240, 255));
+        containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbPatient.setBackground(new java.awt.Color(232, 240, 255));
         cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbPatient.setForeground(new java.awt.Color(35, 36, 37));
         cbPatient.setMaximumRowCount(12);
         cbPatient.setBorder(null);
+        cbPatient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbPatient.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbPatient.setFocusable(false);
-        add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 250, 30));
+        cbPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPatientActionPerformed(evt);
+            }
+        });
+        containerPatient.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
-        Date.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        Date.setForeground(new java.awt.Color(35, 36, 37));
-        Date.setText("Fecha:");
-        add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
 
-        cbDate.setBackground(new java.awt.Color(204, 204, 204));
-        cbDate.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbDate.setForeground(new java.awt.Color(35, 36, 37));
-        cbDate.setMaximumRowCount(12);
-        cbDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbDate.setBorder(null);
-        cbDate.setFocusable(false);
-        cbDate.setIgnoreRepaint(true);
-        cbDate.setLightWeightPopupEnabled(false);
-        add(cbDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 250, 30));
+        jLEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLEnding.setForeground(new java.awt.Color(35, 36, 37));
+        jLEnding.setText("Final agendado:");
+        jLEnding.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jLEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 200, -1, 20));
 
-        Hour.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        Hour.setForeground(new java.awt.Color(35, 36, 37));
-        Hour.setText("Hora:");
-        add(Hour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        jLBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning.setText("Inicio agendado:");
+        jLBeginning.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 20));
 
-        cbHour.setBackground(new java.awt.Color(204, 204, 204));
-        cbHour.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbHour.setForeground(new java.awt.Color(35, 36, 37));
-        cbHour.setMaximumRowCount(12);
-        cbHour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbHour.setBorder(null);
-        cbHour.setFocusable(false);
-        cbHour.setIgnoreRepaint(true);
-        cbHour.setLightWeightPopupEnabled(false);
-        add(cbHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 250, 30));
+        containerScheduleBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        containerScheduleBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        service.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        service.setForeground(new java.awt.Color(35, 36, 37));
-        service.setText("Servicio:");
-        add(service, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+        tfScheduleBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        tfScheduleBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        tfScheduleBeginning.setForeground(new java.awt.Color(0, 0, 0));
+        tfScheduleBeginning.setBorder(null);
+        tfScheduleBeginning.setEnabled(false);
+        tfScheduleBeginning.setIgnoreRepaint(true);
+        containerScheduleBeginning.add(tfScheduleBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
 
-        cbService.setBackground(new java.awt.Color(204, 204, 204));
+        add(containerScheduleBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 120, 30));
+
+        containerScheduleEnding.setBackground(new java.awt.Color(232, 240, 255));
+        containerScheduleEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tfScheduleEnding.setBackground(new java.awt.Color(232, 240, 255));
+        tfScheduleEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        tfScheduleEnding.setForeground(new java.awt.Color(0, 0, 0));
+        tfScheduleEnding.setBorder(null);
+        tfScheduleEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tfScheduleEnding.setEnabled(false);
+        tfScheduleEnding.setIgnoreRepaint(true);
+        containerScheduleEnding.add(tfScheduleEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
+
+        add(containerScheduleEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 220, 120, 30));
+
+        jLNotes.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLNotes.setForeground(new java.awt.Color(35, 36, 37));
+        jLNotes.setText("Notas:");
+        add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, 10));
+
+        containerService.setBackground(new java.awt.Color(232, 240, 255));
+        containerService.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbService.setBackground(new java.awt.Color(232, 240, 255));
         cbService.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbService.setForeground(new java.awt.Color(35, 36, 37));
         cbService.setMaximumRowCount(12);
-        cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nutricional", "Quirurgica", "Estetica" }));
+        cbService.setSelectedIndex(-1);
         cbService.setBorder(null);
+        cbService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbService.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbService.setEnabled(false);
         cbService.setFocusable(false);
-        cbService.setIgnoreRepaint(true);
-        cbService.setLightWeightPopupEnabled(false);
-        add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 250, 30));
+        containerService.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
-        description.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        description.setForeground(new java.awt.Color(35, 36, 37));
-        description.setText("Descripción:");
-        add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
+        add(containerService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
 
-        jScrollPane1.setBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jLService.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLService.setForeground(new java.awt.Color(35, 36, 37));
+        jLService.setText("Servicio:");
+        add(jLService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
 
-        AppointmentDescription.setBackground(new java.awt.Color(255, 255, 255));
-        AppointmentDescription.setColumns(19);
-        AppointmentDescription.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        AppointmentDescription.setForeground(new java.awt.Color(35, 36, 37));
-        AppointmentDescription.setRows(5);
-        jScrollPane1.setViewportView(AppointmentDescription);
+        containerReason.setBackground(new java.awt.Color(232, 240, 255));
+        containerReason.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 250, 140));
+        tAReason.setBackground(new java.awt.Color(232, 240, 255));
+        tAReason.setColumns(20);
+        tAReason.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        tAReason.setForeground(new java.awt.Color(35, 36, 37));
+        tAReason.setLineWrap(true);
+        tAReason.setRows(7);
+        tAReason.setTabSize(4);
+        tAReason.setEnabled(false);
+        tAReason.setIgnoreRepaint(true);
+        containerReason.add(tAReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, 140));
+
+        add(containerReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 260, 160));
+
+        containerBtnCancel.setBackground(new java.awt.Color(37, 119, 241));
+        containerBtnCancel.setLayout(new java.awt.BorderLayout());
+
+        btnCancel.setBackground(new java.awt.Color(37, 119, 241));
+        btnCancel.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancel.setText("Cancelar cita");
+        btnCancel.setBorderPainted(false);
+        btnCancel.setContentAreaFilled(false);
+        btnCancel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnCancelnMouseMoved(evt);
+            }
+        });
+        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCancelMouseExited(evt);
+            }
+        });
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        containerBtnCancel.add(btnCancel, java.awt.BorderLayout.CENTER);
+
+        add(containerBtnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 260, 40));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelnMouseMoved
+        containerBtnCancel.setBackground(new Color(35,111,229));
+    }//GEN-LAST:event_btnCancelnMouseMoved
+
+    private void btnCancelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseExited
+        containerBtnCancel.setBackground(new Color(37,119,241));
+    }//GEN-LAST:event_btnCancelMouseExited
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        Appointment app = (Appointment) this.cbScheduleDate.getSelectedItem();
+        System.out.println(AppointmentControl.getInstance().deleteAppointment(app));
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void cbPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPatientActionPerformed
+        this.cbScheduleDate.removeAllItems();
+        loadAppointments();
+        this.loadAppointments();
+        this.fillService();
+        this.fillHours();
+    }//GEN-LAST:event_cbPatientActionPerformed
+
+    private void cbScheduleDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleDateActionPerformed
+        if (cbScheduleDate.getSelectedItem() != null) {
+            this.fillService();
+            this.fillHours();
+        }
+    }//GEN-LAST:event_cbScheduleDateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea AppointmentDescription;
-    private javax.swing.JLabel Date;
-    private javax.swing.JLabel Hour;
-    private javax.swing.JLabel Patient;
-    private javax.swing.JComboBox<String> cbDate;
-    private javax.swing.JComboBox<String> cbHour;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JComboBox<Patient> cbPatient;
+    private javax.swing.JComboBox<Appointment> cbScheduleDate;
     private javax.swing.JComboBox<String> cbService;
-    private javax.swing.JLabel description;
+    private Components.RoundedPanel containerBtnCancel;
+    private Components.RoundedPanel containerPatient;
+    private Components.RoundedPanel containerReason;
+    private Components.RoundedPanel containerScheduleBeginning;
+    private Components.RoundedPanel containerScheduleDate;
+    private Components.RoundedPanel containerScheduleEnding;
+    private Components.RoundedPanel containerService;
+    private javax.swing.JLabel jLBeginning;
+    private javax.swing.JLabel jLDate;
+    private javax.swing.JLabel jLEnding;
+    private javax.swing.JLabel jLNotes;
+    private javax.swing.JLabel jLPatient;
+    private javax.swing.JLabel jLService;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel service;
+    private javax.swing.JTextArea tAReason;
+    private javax.swing.JTextField tfScheduleBeginning;
+    private javax.swing.JTextField tfScheduleEnding;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
 }

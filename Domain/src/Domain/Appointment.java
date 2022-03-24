@@ -285,7 +285,7 @@ public class Appointment {
         final Appointment other = (Appointment) obj;
         return Objects.equals(this.id_appointment, other.id_appointment);
     }
-
+    
     /**
      * String of the attributes of the object
      *
@@ -293,6 +293,9 @@ public class Appointment {
      */
     @Override
     public String toString() {
-        return "Appointment{" + "id_appointment=" + id_appointment + ", startTime=" + startTime + ", patient=" + patient + ", aType=" + aType + ", type=" + type + ", medicine=" + medicine + ", payment=" + payment + ", confirmation=" + confirmation + ", reason=" + reason + '}';
+        return  startTime.toString();
     }
+
+    
+    
 }

@@ -4,8 +4,16 @@
  */
 package View;
 
+import Domain.Appointment;
+import Domain.AppointmentType;
+import Domain.Medicine;
 import Domain.Patient;
+import Domain.Payment;
+import Domain.Type;
+import control.AppointmentControl;
 import control.PatientControl;
+import java.awt.Color;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,59 +32,82 @@ public class ScheduleAppointment extends javax.swing.JPanel {
     public ScheduleAppointment() {
         initComponents();
         this.loadPatients();
-        
+
         Date date = new Date();
         int year = date.getYear() - 1;
         int month = date.getMonth();
         int day = date.getDate() - 1;
-        
+
         this.fillComboBoxDay(month+1, year+1901);
         this.fillComboBoxMonthYear();
-        
+
         cbDay.setSelectedIndex(day);
         cbMonth.setSelectedIndex(month);
         cbYear.setSelectedIndex(year);
         tfBeginning.setText(date.getHours() + ":00");
-        tfEnding.setText(date.getHours() + 1 + ":00");
     }
-    
-    private void loadPatients(){
+
+    private void loadPatients() {
         for (Patient patient : PatientControl.getInstance().getPatients()) {
             cbPatient.addItem(patient);
         }
-        cbPatient.setSelectedIndex(-1);
+        cbPatient.setSelectedIndex(0);
     }
-    
-    private void fillComboBoxDay(int month, int year){
+
+    private void fillComboBoxDay(int month, int year) {
         Calendar mycal = new GregorianCalendar(year, month, 0);
         int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        
+
         ArrayList<String> days = new ArrayList<String>();
-        
+
         for (int i = 0; i < daysInMonth; i++) {
-            days.add(String.valueOf(i+1));
+            days.add(String.valueOf(i + 1));
         }
-        
+
         cbDay.setModel(new DefaultComboBoxModel<String>(days.toArray(new String[0])));
     }
-    
-    private void fillComboBoxMonthYear(){
+
+    private void fillComboBoxMonthYear() {
         ArrayList<String> months = new ArrayList<String>();
         ArrayList<String> years = new ArrayList<String>();
-        
-        for (int i = 0; i < 12; i++){
-            months.add(String.valueOf(i+1));
+
+        for (int i = 0; i < 12; i++) {
+            months.add(String.valueOf(i + 1));
         }
-        
+
         Date date = new Date();
         int year = date.getYear();
-        
-        for (int i = 0; i < year ; i++){
-            years.add(String.valueOf(i+1901));
+
+        for (int i = 0; i < year; i++) {
+            years.add(String.valueOf(i + 1901));
         }
-        
+
         cbMonth.setModel(new DefaultComboBoxModel<String>(months.toArray(new String[0])));
         cbYear.setModel(new DefaultComboBoxModel<String>(years.toArray(new String[0])));
+    }
+
+    private void updateHour() {
+        String hour = tfBeginning.getText();
+        if (Integer.parseInt(hour.split(":")[0]) < 18) {
+            if (Integer.parseInt(hour.split(":")[1]) < 60) {
+                int hh = Integer.parseInt(hour.split(":")[0]);
+                int mm = Integer.parseInt(hour.split(":")[1]);
+
+                if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
+                    if (mm + 15 > 59) {
+                        mm = mm + 15 - 60;
+                        hh++;
+                    } else {
+                        mm += 15;
+                    }
+                } else if (cbService.getSelectedItem().toString().equals("Quirurgica")) {
+                    hh++;
+                }
+                tfEnding.setText(hh + ":" + mm);
+            }
+        } else {
+            tfBeginning.setText("");
+        }
     }
 
     /**
@@ -89,29 +120,31 @@ public class ScheduleAppointment extends javax.swing.JPanel {
     private void initComponents() {
 
         title = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        Patient = new javax.swing.JLabel();
-        Date = new javax.swing.JLabel();
-        roundedPanel1 = new Components.RoundedPanel();
+        jLTitle = new javax.swing.JLabel();
+        jLPatient = new javax.swing.JLabel();
+        jLNotes = new javax.swing.JLabel();
+        containerEnding = new Components.RoundedPanel();
         tfEnding = new javax.swing.JTextField();
-        roundedPanel2 = new Components.RoundedPanel();
+        containerService = new Components.RoundedPanel();
         cbService = new javax.swing.JComboBox<>();
-        roundedPanel3 = new Components.RoundedPanel();
+        containerBeginning = new Components.RoundedPanel();
         tfBeginning = new javax.swing.JTextField();
-        roundedPanel4 = new Components.RoundedPanel();
+        containerMonth = new Components.RoundedPanel();
         cbMonth = new javax.swing.JComboBox<>();
-        Date1 = new javax.swing.JLabel();
-        roundedPanel5 = new Components.RoundedPanel();
+        jLDate = new javax.swing.JLabel();
+        containerDay = new Components.RoundedPanel();
         cbDay = new javax.swing.JComboBox<>();
-        roundedPanel6 = new Components.RoundedPanel();
+        containerYear = new Components.RoundedPanel();
         cbYear = new javax.swing.JComboBox<>();
-        Date2 = new javax.swing.JLabel();
-        roundedPanel7 = new Components.RoundedPanel();
+        jLEnding = new javax.swing.JLabel();
+        containerPatient = new Components.RoundedPanel();
         cbPatient = new javax.swing.JComboBox<>();
-        Date3 = new javax.swing.JLabel();
-        roundedPanel8 = new Components.RoundedPanel();
-        AppointmentDescription = new javax.swing.JTextArea();
-        Date4 = new javax.swing.JLabel();
+        jLService = new javax.swing.JLabel();
+        containerReason = new Components.RoundedPanel();
+        tAReason = new javax.swing.JTextArea();
+        jLBeginning = new javax.swing.JLabel();
+        containerBtnSchedule = new Components.RoundedPanel();
+        btnSchedule = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -122,25 +155,25 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         title.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         title.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 22)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel2.setText("Agendar cita");
-        title.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 60));
+        jLTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 22)); // NOI18N
+        jLTitle.setForeground(new java.awt.Color(35, 36, 37));
+        jLTitle.setText("Agendar cita");
+        title.add(jLTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 60));
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
 
-        Patient.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        Patient.setForeground(new java.awt.Color(35, 36, 37));
-        Patient.setText("Paciente:");
-        add(Patient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
+        jLPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLPatient.setForeground(new java.awt.Color(35, 36, 37));
+        jLPatient.setText("Paciente:");
+        add(jLPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
 
-        Date.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        Date.setForeground(new java.awt.Color(35, 36, 37));
-        Date.setText("Notas:");
-        add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, 10));
+        jLNotes.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLNotes.setForeground(new java.awt.Color(35, 36, 37));
+        jLNotes.setText("Notas:");
+        add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, 10));
 
-        roundedPanel1.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerEnding.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tfEnding.setBackground(new java.awt.Color(232, 240, 255));
         tfEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -149,41 +182,55 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         tfEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tfEnding.setEnabled(false);
         tfEnding.setIgnoreRepaint(true);
-        roundedPanel1.add(tfEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, 30));
+        containerEnding.add(tfEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, 30));
 
-        add(roundedPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 110, 30));
+        add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 220, 120, 30));
 
-        roundedPanel2.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerService.setBackground(new java.awt.Color(232, 240, 255));
+        containerService.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbService.setBackground(new java.awt.Color(232, 240, 255));
         cbService.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbService.setForeground(new java.awt.Color(35, 36, 37));
         cbService.setMaximumRowCount(12);
         cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nutricional", "Quirurgica", "Estetica" }));
-        cbService.setSelectedIndex(-1);
         cbService.setBorder(null);
         cbService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbService.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbService.setFocusable(false);
-        roundedPanel2.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 260, 30));
+        cbService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbServiceActionPerformed(evt);
+            }
+        });
+        containerService.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
-        add(roundedPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 230, 30));
+        add(containerService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
 
-        roundedPanel3.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tfBeginning.setBackground(new java.awt.Color(232, 240, 255));
         tfBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         tfBeginning.setForeground(new java.awt.Color(0, 0, 0));
         tfBeginning.setBorder(null);
         tfBeginning.setIgnoreRepaint(true);
-        roundedPanel3.add(tfBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, 30));
+        tfBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfBeginningFocusLost(evt);
+            }
+        });
+        tfBeginning.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfBeginningKeyTyped(evt);
+            }
+        });
+        containerBeginning.add(tfBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, 30));
 
-        add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 110, 30));
+        add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 125, 30));
 
-        roundedPanel4.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerMonth.setBackground(new java.awt.Color(232, 240, 255));
+        containerMonth.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbMonth.setBackground(new java.awt.Color(232, 240, 255));
         cbMonth.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -194,17 +241,22 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbMonth.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbMonth.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbMonth.setFocusable(false);
-        roundedPanel4.add(cbMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 110, 30));
+        cbMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMonthActionPerformed(evt);
+            }
+        });
+        containerMonth.add(cbMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
-        add(roundedPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 70, 30));
+        add(containerMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 80, 30));
 
-        Date1.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        Date1.setForeground(new java.awt.Color(35, 36, 37));
-        Date1.setText("Fecha:");
-        add(Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+        jLDate.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLDate.setForeground(new java.awt.Color(35, 36, 37));
+        jLDate.setText("Fecha:");
+        add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
 
-        roundedPanel5.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerDay.setBackground(new java.awt.Color(232, 240, 255));
+        containerDay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbDay.setBackground(new java.awt.Color(232, 240, 255));
         cbDay.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -215,12 +267,17 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbDay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbDay.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbDay.setFocusable(false);
-        roundedPanel5.add(cbDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 110, 30));
+        cbDay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDayActionPerformed(evt);
+            }
+        });
+        containerDay.add(cbDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
-        add(roundedPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 70, 30));
+        add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 80, 30));
 
-        roundedPanel6.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerYear.setBackground(new java.awt.Color(232, 240, 255));
+        containerYear.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbYear.setBackground(new java.awt.Color(232, 240, 255));
         cbYear.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -231,17 +288,22 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbYear.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbYear.setFocusable(false);
-        roundedPanel6.add(cbYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 110, 30));
+        cbYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbYearActionPerformed(evt);
+            }
+        });
+        containerYear.add(cbYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
-        add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 70, 30));
+        add(containerYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 80, 30));
 
-        Date2.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        Date2.setForeground(new java.awt.Color(35, 36, 37));
-        Date2.setText("Final:");
-        add(Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, 10));
+        jLEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLEnding.setForeground(new java.awt.Color(35, 36, 37));
+        jLEnding.setText("Final:");
+        add(jLEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 200, -1, 10));
 
-        roundedPanel7.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerPatient.setBackground(new java.awt.Color(232, 240, 255));
+        containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbPatient.setBackground(new java.awt.Color(232, 240, 255));
         cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -251,68 +313,201 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbPatient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbPatient.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbPatient.setFocusable(false);
-        roundedPanel7.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 260, 30));
-
-        add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 230, 30));
-
-        Date3.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        Date3.setForeground(new java.awt.Color(35, 36, 37));
-        Date3.setText("Servicio:");
-        add(Date3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
-
-        roundedPanel8.setBackground(new java.awt.Color(232, 240, 255));
-        roundedPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        AppointmentDescription.setBackground(new java.awt.Color(232, 240, 255));
-        AppointmentDescription.setColumns(18);
-        AppointmentDescription.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        AppointmentDescription.setForeground(new java.awt.Color(35, 36, 37));
-        AppointmentDescription.setLineWrap(true);
-        AppointmentDescription.setRows(7);
-        AppointmentDescription.setTabSize(4);
-        AppointmentDescription.setIgnoreRepaint(true);
-        AppointmentDescription.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                AppointmentDescriptionKeyTyped(evt);
+        cbPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPatientActionPerformed(evt);
             }
         });
-        roundedPanel8.add(AppointmentDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 130));
+        containerPatient.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
-        add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 230, 150));
+        add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
 
-        Date4.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        Date4.setForeground(new java.awt.Color(35, 36, 37));
-        Date4.setText("Inicio:");
-        add(Date4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
+        jLService.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLService.setForeground(new java.awt.Color(35, 36, 37));
+        jLService.setText("Servicio:");
+        add(jLService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
+
+        containerReason.setBackground(new java.awt.Color(232, 240, 255));
+        containerReason.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tAReason.setBackground(new java.awt.Color(232, 240, 255));
+        tAReason.setColumns(20);
+        tAReason.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        tAReason.setForeground(new java.awt.Color(35, 36, 37));
+        tAReason.setLineWrap(true);
+        tAReason.setRows(7);
+        tAReason.setTabSize(4);
+        tAReason.setIgnoreRepaint(true);
+        tAReason.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tAReasonKeyTyped(evt);
+            }
+        });
+        containerReason.add(tAReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, 140));
+
+        add(containerReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 260, 160));
+
+        jLBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning.setText("Inicio:");
+        add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
+
+        containerBtnSchedule.setBackground(new java.awt.Color(37, 119, 241));
+        containerBtnSchedule.setLayout(new java.awt.BorderLayout());
+
+        btnSchedule.setBackground(new java.awt.Color(37, 119, 241));
+        btnSchedule.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        btnSchedule.setForeground(new java.awt.Color(255, 255, 255));
+        btnSchedule.setText("Agendar cita");
+        btnSchedule.setBorderPainted(false);
+        btnSchedule.setContentAreaFilled(false);
+        btnSchedule.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnSchedulenMouseMoved(evt);
+            }
+        });
+        btnSchedule.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnScheduleMouseExited(evt);
+            }
+        });
+        btnSchedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnScheduleActionPerformed(evt);
+            }
+        });
+        containerBtnSchedule.add(btnSchedule, java.awt.BorderLayout.CENTER);
+
+        add(containerBtnSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 260, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AppointmentDescriptionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AppointmentDescriptionKeyTyped
+    private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
+        if (tAReason.getText().length() == 200)
+            evt.consume();
+    }//GEN-LAST:event_tAReasonKeyTyped
+
+    private void btnSchedulenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSchedulenMouseMoved
+        containerBtnSchedule.setBackground(new Color(35, 111, 229));
+    }//GEN-LAST:event_btnSchedulenMouseMoved
+
+    private void btnScheduleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnScheduleMouseExited
+        containerBtnSchedule.setBackground(new Color(37, 119, 241));
+    }//GEN-LAST:event_btnScheduleMouseExited
+
+    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
+        Timestamp startTime = Timestamp.valueOf((cbYear.getSelectedIndex() + 1901) + "-" + (cbMonth.getSelectedIndex() + 1) + "-" + (cbDay.getSelectedIndex() + 1) +" " + tfBeginning.getText() + ":00");
+        Patient patient = (Patient) cbPatient.getSelectedItem();
+        AppointmentType type;
+        if (cbService.getSelectedIndex() == 0) {
+            type = AppointmentType.Nutritional;
+        } else if (cbService.getSelectedIndex() == 1) {
+            type = AppointmentType.Surgical;
+        } else {
+            type = AppointmentType.Esthetic;
+        }
         
-    }//GEN-LAST:event_AppointmentDescriptionKeyTyped
+        System.out.println(AppointmentControl.getInstance().addAppointment(new Appointment(startTime, patient, new Medicine(14), new Payment(8), type, Type.New, false, tAReason.getText())));
+    }//GEN-LAST:event_btnScheduleActionPerformed
+
+    private void cbMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonthActionPerformed
+
+        int month = Integer.parseInt((String) cbMonth.getSelectedItem());
+        int year = Integer.parseInt((String) cbYear.getSelectedItem());
+
+        int day = cbDay.getSelectedIndex();
+
+        fillComboBoxDay(month, year);
+
+        if (day < cbDay.getItemCount() - 1) {
+            cbDay.setSelectedIndex(day);
+        } else {
+            cbDay.setSelectedIndex(cbDay.getItemCount() - 1);
+        }
+    }//GEN-LAST:event_cbMonthActionPerformed
+
+    private void cbYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbYearActionPerformed
+
+        int month = Integer.parseInt((String) cbMonth.getSelectedItem());
+        int year = Integer.parseInt((String) cbYear.getSelectedItem());
+
+        int day = cbDay.getSelectedIndex();
+
+        fillComboBoxDay(month, year);
+
+        if (day < cbDay.getItemCount() - 1) {
+            cbDay.setSelectedIndex(day);
+        } else {
+            cbDay.setSelectedIndex(cbDay.getItemCount() - 1);
+        }
+    }//GEN-LAST:event_cbYearActionPerformed
+
+    private void tfBeginningKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBeginningKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > ':')) {
+            evt.consume();
+        }
+
+        if (tfBeginning.getText().length() > 1) {
+            if (!tfBeginning.getText().contains(":")) {
+                tfBeginning.setText(tfBeginning.getText().subSequence(0, 1).toString() + ":" + tfBeginning.getText().subSequence(1, 2));
+            }
+        }
+
+        if (tfBeginning.getText().length() > 3) {
+            if (tfBeginning.getText().contains(":")) {
+                tfBeginning.setText(tfBeginning.getText().subSequence(0, 1).toString() + tfBeginning.getText().subSequence(2, 3).toString() + ":" + tfBeginning.getText().subSequence(3, 4));
+            }
+        }
+
+        if (c == '\b') {
+            tfBeginning.setText("");
+        }
+
+        if (tfBeginning.getText().length() == 5)
+            evt.consume();
+    }//GEN-LAST:event_tfBeginningKeyTyped
+
+    private void tfBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfBeginningFocusLost
+        this.updateHour();
+    }//GEN-LAST:event_tfBeginningFocusLost
+
+    private void cbServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbServiceActionPerformed
+        this.updateHour();
+    }//GEN-LAST:event_cbServiceActionPerformed
+
+    private void cbDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDayActionPerformed
+
+    }//GEN-LAST:event_cbDayActionPerformed
+
+    private void cbPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPatientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPatientActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea AppointmentDescription;
-    private javax.swing.JLabel Date;
-    private javax.swing.JLabel Date1;
-    private javax.swing.JLabel Date2;
-    private javax.swing.JLabel Date3;
-    private javax.swing.JLabel Date4;
-    private javax.swing.JLabel Patient;
+    private javax.swing.JButton btnSchedule;
     private javax.swing.JComboBox<String> cbDay;
     private javax.swing.JComboBox<String> cbMonth;
     private javax.swing.JComboBox<Patient> cbPatient;
     private javax.swing.JComboBox<String> cbService;
     private javax.swing.JComboBox<String> cbYear;
-    private javax.swing.JLabel jLabel2;
-    private Components.RoundedPanel roundedPanel1;
-    private Components.RoundedPanel roundedPanel2;
-    private Components.RoundedPanel roundedPanel3;
-    private Components.RoundedPanel roundedPanel4;
-    private Components.RoundedPanel roundedPanel5;
-    private Components.RoundedPanel roundedPanel6;
-    private Components.RoundedPanel roundedPanel7;
-    private Components.RoundedPanel roundedPanel8;
+    private Components.RoundedPanel containerBeginning;
+    private Components.RoundedPanel containerBtnSchedule;
+    private Components.RoundedPanel containerDay;
+    private Components.RoundedPanel containerEnding;
+    private Components.RoundedPanel containerMonth;
+    private Components.RoundedPanel containerPatient;
+    private Components.RoundedPanel containerReason;
+    private Components.RoundedPanel containerService;
+    private Components.RoundedPanel containerYear;
+    private javax.swing.JLabel jLBeginning;
+    private javax.swing.JLabel jLDate;
+    private javax.swing.JLabel jLEnding;
+    private javax.swing.JLabel jLNotes;
+    private javax.swing.JLabel jLPatient;
+    private javax.swing.JLabel jLService;
+    private javax.swing.JLabel jLTitle;
+    private javax.swing.JTextArea tAReason;
     private javax.swing.JTextField tfBeginning;
     private javax.swing.JTextField tfEnding;
     private javax.swing.JPanel title;

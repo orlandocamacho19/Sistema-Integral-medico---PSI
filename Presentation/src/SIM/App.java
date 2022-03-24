@@ -38,7 +38,7 @@ public class App {
 
     public void setState(AppState state) {
         this.state = state;
-        
+        System.gc();
         switch (state) {
             case MANAGEAPPOINTMENTS:
                 mainFrame.setContent(new ManageAppointments());

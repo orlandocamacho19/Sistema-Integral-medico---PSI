@@ -2,6 +2,8 @@ package control;
 
 import DAO.AppointmentDAO;
 import Domain.Appointment;
+import Domain.AppointmentType;
+import java.util.List;
 
 public class AppointmentControl {
     
@@ -39,6 +41,10 @@ public class AppointmentControl {
             if (appointment.getId_appointment()== ad.consultAll().get(i).getId_appointment()) {
                 return false;
             } else {
+//                if (this.betweenHours(appointment, ad.consultAll().get(i))) {
+//                    System.out.println("Error - Conflicts between hours");
+//                    return false;
+//                }
                 ad.insert(appointment);
                 return true;
             }
@@ -83,11 +89,32 @@ public class AppointmentControl {
     /**
      * Returns all the users in the database
      */
-    public void getAppointment(){
+    public List<Appointment> getAppointment(){
         if (ad.consultAll().isEmpty()) {
-            System.out.println("The database has not patients at this time");
+            System.out.println("The database has not appointments at this time");
         }else{
-            System.out.println(ad.consultAll());
+            return ad.consultAll();
         }
+        return null;
     }
+    
+//    public boolean betweenHours(Appointment add, Appointment bdd){
+//        if (bdd.getaType() == AppointmentType.Nutritional) {
+//            if (bdd.getStartTime().getTime() <= add.getStartTime().getTime() && bdd.getStartTime().getTime() + 900000 >= add.getStartTime().getTime()) {
+//                System.out.println("qp");
+//                return true;
+//            }
+//        } else if (bdd.getaType() == AppointmentType.Surgical) {
+//            if (bdd.getStartTime().getTime() <= add.getStartTime().getTime() && bdd.getStartTime().getTime() + 3600000 >= add.getStartTime().getTime()) {
+//                System.out.println("qp2");
+//                return true;
+//            }
+//        } else if (bdd.getaType() == AppointmentType.Esthetic) {
+//            if (bdd.getStartTime().getTime() <= add.getStartTime().getTime() && bdd.getStartTime().getTime() + 900000 >= add.getStartTime().getTime()) {
+//                System.out.println("qp3");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
