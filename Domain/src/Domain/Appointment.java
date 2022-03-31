@@ -293,7 +293,19 @@ public class Appointment {
      */
     @Override
     public String toString() {
-        return  id_appointment + " - " + startTime.toString();
+        String date = this.startTime.getDate() + "-" + (this.startTime.getMonth() + 1) + "-" + (this.startTime.getYear() + 1900);
+        switch (aType) {
+            case Nutritional:
+                date = "Nutricional - " + date;
+                break;
+            case Surgical:
+                date = "Quirurgica - " + date;
+                break;
+            case Esthetic:
+                date = "Estetica - " + date;
+                break;
+        }
+        return date;
     }
 
     

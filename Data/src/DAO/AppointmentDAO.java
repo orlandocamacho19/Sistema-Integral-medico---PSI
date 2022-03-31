@@ -69,7 +69,7 @@ public class AppointmentDAO extends ConnectionDB {
     public void update(int id, Appointment appointment) {
         try {
             this.connect();
-            String sql = "update appointments set start_time=?, id_patient=?, id_medicine=?, id_payment=?, appointment_type=?, type=?, confirmation=? reason=? where id_appointment=?";
+            String sql = "update appointments set start_time=?, id_patient=?, id_medicine=?, id_payment=?, appointment_type=?, type=?, confirmation=?, reason=? where id_appointment=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setTimestamp(1, appointment.getStartTime());
             ps.setInt(2, appointment.getPatient().getID());

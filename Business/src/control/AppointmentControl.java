@@ -14,35 +14,35 @@ public class AppointmentControl {
     
     private static AppointmentControl appointmentControl;
     private static AppointmentDAO ad;
-    
-    /** 
+
+    /**
      * Constructor
      */
     private AppointmentControl() {
         ad = AppointmentDAO.getInstance();
     }
-    
+
     /**
      * Return the instance of the class following the singleton pattern
      *
      * @return instance
      */
-    public static AppointmentControl getInstance(){
+    public static AppointmentControl getInstance() {
         if (appointmentControl == null) {
             appointmentControl = new AppointmentControl();
         }
         return appointmentControl;
     }
-    
+
     /**
-     * Return if was possible inserts in the database the appointment received in
-     * parameters
+     * Return if was possible inserts in the database the appointment received
+     * in parameters
      *
      * @param appointment Appointment
      * @return if was possible add
      */
     public boolean addAppointment(Appointment appointment) {
-        List <Appointment> appointments = ad.consultAll();
+        List<Appointment> appointments = ad.consultAll();
         
         if (!validateAppointment(appointment, appointments)) {
             return false;
@@ -67,7 +67,7 @@ public class AppointmentControl {
      * @return if was possible update
      */
     public boolean editAppointment(Appointment appointment) {
-        List <Appointment> appointments = ad.consultAll();
+        List<Appointment> appointments = ad.consultAll();
         
         if (!validateAppointment(appointment, appointments)) {
             return false;
@@ -81,7 +81,7 @@ public class AppointmentControl {
         }
         return false;
     }
-    
+
     /**
      * Return if was possible delete in the database the appointment received in
      * parameters
@@ -90,7 +90,7 @@ public class AppointmentControl {
      * @return if was possible delete
      */
     public boolean deleteAppointment(Appointment appointment) {
-        List <Appointment> appointments = ad.consultAll();
+        List<Appointment> appointments = ad.consultAll();
         for (int i = 0; i < appointments.size(); i++) {
             if (appointment.getId_appointment() == appointments.get(i).getId_appointment()) {
                 ad.delete(appointment.getId_appointment());
@@ -99,28 +99,28 @@ public class AppointmentControl {
         }
         return false;
     }
-    
+
     /**
      * Returns all the appointments in the database
      */
-    public List<Appointment> getAppointment(){
-        List <Appointment> appointments = ad.consultAll();
+    public List<Appointment> getAppointment() {
+        List<Appointment> appointments = ad.consultAll();
         if (appointments.isEmpty()) {
             System.out.println("The database has not appointments at this time");
-        }else{
+        } else {
             return appointments;
         }
         return null;
     }
-    
+
     /**
      * Returns all the appointments in the database
      */
-    public Appointment getAppointmentByID(int ID){
-        List <Appointment> appointments = ad.consultAll();
+    public Appointment getAppointmentByID(int ID) {
+        List<Appointment> appointments = ad.consultAll();
         if (appointments.isEmpty()) {
             System.out.println("The database has not appointments at this time");
-        }else{
+        } else {
             for (Appointment appointment : appointments) {
                 if (ID == appointment.getId_appointment()) {
                     return appointment;
@@ -129,20 +129,21 @@ public class AppointmentControl {
         }
         return null;
     }
-    
+
     /**
      * Returns all the appointments of a patient
+     *
      * @param patient
-     * @return 
+     * @return
      */
-    public List<Appointment> getAppointmentByPatient(Patient patient){
-        List <Appointment> appointments = ad.consultAll();
-        List <Appointment> byPatient = new ArrayList<>();
+    public List<Appointment> getAppointmentByPatient(Patient patient) {
+        List<Appointment> appointments = ad.consultAll();
+        List<Appointment> byPatient = new ArrayList<>();
         
         if (appointments.isEmpty()) {
             System.out.println("The database has not appointments at this time");
             return null;
-        } else{
+        } else {
             for (Appointment appointment : appointments) {
                 if (patient.getID() == appointment.getPatient().getID()) {
                     byPatient.add(appointment);
@@ -156,15 +157,16 @@ public class AppointmentControl {
             return byPatient;
         }
     }
-    
+
     /**
      * Returns all the appointments from now on
+     *
      * @param appointments
-     * @return 
+     * @return
      */
-    public List<Appointment> getAppointmentFromNowOn(List <Appointment> appointments){
+    public List<Appointment> getAppointmentFromNowOn(List<Appointment> appointments) {
         Timestamp currentTime = Timestamp.from(Instant.now());
-        List <Appointment> fromNowOn = new ArrayList<>();
+        List<Appointment> fromNowOn = new ArrayList<>();
         
         if (appointments.isEmpty()) {
             System.out.println("The database has not appointments at this time");
@@ -183,56 +185,64 @@ public class AppointmentControl {
             return fromNowOn;
         }
     }
-    
+
     /**
-     * Validate that the date of the appointment received is different to all in the database
+     * Validate that the date of the appointment received is different to all in
+     * the database
+     *
      * @param appointment
-     * @return 
+     * @return
      */
-    public boolean validateAppointment(Appointment appointment, List <Appointment> appointments){
+    public boolean validateAppointment(Appointment appointment, List<Appointment> appointments) {
+        Timestamp currentTime = Timestamp.from(Instant.now());
         long start = appointment.getStartTime().getTime();
         long end;
         
-        if (appointment.getaType() == AppointmentType.Esthetic || appointment.getaType() == AppointmentType.Nutritional) {
-            end = start + 900000;
-        } else{
-            end = start + 3600000;
+        if (currentTime.before(appointment.getStartTime())) {
+            if (appointment.getaType() == AppointmentType.Esthetic || appointment.getaType() == AppointmentType.Nutritional) {
+                end = start + 900000;
+            } else {
+                end = start + 3600000;
+            }
+            
+            for (Appointment appointmentDB : appointments) {
+                long startDB = appointmentDB.getStartTime().getTime();
+                long endDB;
+                
+                if (appointment.getId_appointment() != appointmentDB.getId_appointment()) {
+                    if (start == startDB) {
+                        return false;
+                    }
+                    
+                    if (appointmentDB.getaType() == AppointmentType.Esthetic || appointmentDB.getaType() == AppointmentType.Nutritional) {
+                        endDB = startDB + 900000;
+                        
+                        if (start < startDB) {
+                            if (end > endDB) {                                
+                                return false;
+                            }
+                        } else if (start > startDB) {
+                            if (start < endDB) {
+                                return false;
+                            }
+                        }
+                    } else {
+                        endDB = startDB + 3600000;
+                        
+                        if (start < startDB) {
+                            if (end > endDB) {
+                                return false;
+                            }
+                        } else if (start > startDB) {
+                            if (start < endDB) {
+                                return false;
+                            }
+                        }
+                    }                    
+                }
+            }            
         }
         
-        for (Appointment appointmentDB : appointments) {
-            long startDB = appointmentDB.getStartTime().getTime();
-            long endDB;
-            
-            if (start == startDB) {
-                return false;
-            }
-            
-            if (appointmentDB.getaType() == AppointmentType.Esthetic || appointmentDB.getaType() == AppointmentType.Nutritional) {
-                endDB = startDB + 900000;
-                
-                if (start < startDB) {
-                    if (end > endDB) { 
-                        return false;
-                    }
-                } else if (start > startDB) {
-                    if (start < endDB) {
-                        return false;
-                    }
-                }
-            } else {
-                endDB = startDB + 3600000;
-                
-                if (start < startDB) {
-                    if (end > endDB) {
-                        return false;
-                    }
-                } else if (start > startDB) {
-                    if (start < endDB) {
-                        return false;
-                    }
-                }
-            }
-        }
         return true;
     }
 }

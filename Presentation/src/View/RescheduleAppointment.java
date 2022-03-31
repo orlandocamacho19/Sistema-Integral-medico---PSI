@@ -41,8 +41,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbNewDay.setSelectedIndex(day);
         cbNewMonth.setSelectedIndex(month);
         cbNewYear.setSelectedIndex(year);
-        tfNewBeginning.setText(date.getHours() + ":00");
-        tfNewEnding.setText(date.getHours() + 1 + ":00");
     }
     
     private void loadPatients(){
@@ -77,22 +75,28 @@ public class RescheduleAppointment extends javax.swing.JPanel {
     
     private void fillHours(){
         Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
-        tfScheduleBeginning.setText(app.getStartTime().getHours() + ":" + app.getStartTime().getMinutes() );
-
-        int hh = app.getStartTime().getHours() ;
-        int mm = app.getStartTime().getMinutes() ;
-
-        if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
-            if (mm + 15 > 59) {
-                mm = mm + 15 - 60;
-                hh++;
-            } else {
-                mm += 15;
-            }
-        } else if (cbService.getSelectedItem().toString().equals("Quirurgica")) {
-            hh++;
+        cbHourBeginningOld.setSelectedItem(String.valueOf(app.getStartTime().getHours()));
+        
+        if (app.getStartTime().getMinutes() != 0) {
+            cbMinuteBeginningOld.setSelectedItem(String.valueOf(app.getStartTime().getMinutes()));
+        } else {
+            cbMinuteBeginningOld.setSelectedIndex(0);
         }
-        tfScheduleEnding.setText(hh + ":" + mm);
+        
+        if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
+            if (cbMinuteBeginningOld.getSelectedIndex() == 0 || cbMinuteBeginningOld.getSelectedIndex() == 1 || cbMinuteBeginningOld.getSelectedIndex() == 2) {
+                cbHourEndingOld.setSelectedIndex(cbHourBeginningOld.getSelectedIndex());
+                cbMinuteEndingOld.setSelectedIndex(cbMinuteBeginningOld.getSelectedIndex() + 1);
+            } else {
+                cbHourEndingOld.setSelectedIndex(cbHourBeginningOld.getSelectedIndex() + 1);
+                cbMinuteEndingOld.setSelectedIndex(0);
+            }    
+        } else {
+            cbHourEndingOld.setSelectedIndex(cbHourBeginningOld.getSelectedIndex() + 1);
+            cbMinuteEndingOld.setSelectedIndex(cbMinuteBeginningOld.getSelectedIndex());
+        }
+        
+        
         this.tAReason.setText(app.getReason());
     }
     
@@ -129,26 +133,17 @@ public class RescheduleAppointment extends javax.swing.JPanel {
     }
     
     private void updateHour() {
-        String hour = tfNewBeginning.getText();
-        if (Integer.parseInt(hour.split(":")[0]) < 18) {
-            if (Integer.parseInt(hour.split(":")[1]) < 60) {
-                int hh = Integer.parseInt(hour.split(":")[0]);
-                int mm = Integer.parseInt(hour.split(":")[1]);
-
-                if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
-                    if (mm + 15 > 59) {
-                        mm = mm + 15 - 60;
-                        hh++;
-                    } else {
-                        mm += 15;
-                    }
-                } else if (cbService.getSelectedItem().toString().equals("Quirurgica")) {
-                    hh++;
-                }
-                tfNewEnding.setText(hh + ":" + mm);
-            }
+        if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
+            if (cbMinuteBeginning.getSelectedIndex() == 0 || cbMinuteBeginning.getSelectedIndex() == 1 || cbMinuteBeginning.getSelectedIndex() == 2) {
+                cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex());
+                cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex() + 1);
+            } else {
+                cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
+                cbMinuteEnding.setSelectedIndex(0);
+            }    
         } else {
-            tfNewBeginning.setText("");
+            cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
+            cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
         }
     }
 
@@ -171,10 +166,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbPatient = new javax.swing.JComboBox<>();
         jLEnding = new javax.swing.JLabel();
         jLBeginning = new javax.swing.JLabel();
-        containerScheduleBeginning = new Components.RoundedPanel();
-        tfScheduleBeginning = new javax.swing.JTextField();
-        containerScheduleEnding = new Components.RoundedPanel();
-        tfScheduleEnding = new javax.swing.JTextField();
         containerNewMonth = new Components.RoundedPanel();
         cbNewMonth = new javax.swing.JComboBox<>();
         jLNewDate = new javax.swing.JLabel();
@@ -183,12 +174,8 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         containerNewYear = new Components.RoundedPanel();
         cbNewYear = new javax.swing.JComboBox<>();
         jLNotes = new javax.swing.JLabel();
-        containerEnding = new Components.RoundedPanel();
-        tfNewEnding = new javax.swing.JTextField();
         containerService = new Components.RoundedPanel();
         cbService = new javax.swing.JComboBox<>();
-        containerBeginning = new Components.RoundedPanel();
-        tfNewBeginning = new javax.swing.JTextField();
         jLEnding1 = new javax.swing.JLabel();
         jLService = new javax.swing.JLabel();
         containerReason = new Components.RoundedPanel();
@@ -196,6 +183,26 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         jLBeginning1 = new javax.swing.JLabel();
         containerBtnReschedule = new Components.RoundedPanel();
         btnReschedule = new javax.swing.JButton();
+        containerEnding1 = new Components.RoundedPanel();
+        cbMinuteEndingOld = new javax.swing.JComboBox<>();
+        containerBeginning1 = new Components.RoundedPanel();
+        cbMinuteBeginningOld = new javax.swing.JComboBox<>();
+        containerBeginning2 = new Components.RoundedPanel();
+        cbHourBeginningOld = new javax.swing.JComboBox<>();
+        containerEnding2 = new Components.RoundedPanel();
+        cbHourEndingOld = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        containerEnding = new Components.RoundedPanel();
+        cbMinuteEnding = new javax.swing.JComboBox<>();
+        containerBeginning = new Components.RoundedPanel();
+        cbMinuteBeginning = new javax.swing.JComboBox<>();
+        containerBeginning3 = new Components.RoundedPanel();
+        cbHourBeginning = new javax.swing.JComboBox<>();
+        containerEnding3 = new Components.RoundedPanel();
+        cbHourEnding = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -276,33 +283,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         jLBeginning.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 20));
 
-        containerScheduleBeginning.setBackground(new java.awt.Color(232, 240, 255));
-        containerScheduleBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tfScheduleBeginning.setBackground(new java.awt.Color(232, 240, 255));
-        tfScheduleBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        tfScheduleBeginning.setForeground(new java.awt.Color(0, 0, 0));
-        tfScheduleBeginning.setBorder(null);
-        tfScheduleBeginning.setEnabled(false);
-        tfScheduleBeginning.setIgnoreRepaint(true);
-        containerScheduleBeginning.add(tfScheduleBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        add(containerScheduleBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 120, 30));
-
-        containerScheduleEnding.setBackground(new java.awt.Color(232, 240, 255));
-        containerScheduleEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tfScheduleEnding.setBackground(new java.awt.Color(232, 240, 255));
-        tfScheduleEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        tfScheduleEnding.setForeground(new java.awt.Color(0, 0, 0));
-        tfScheduleEnding.setBorder(null);
-        tfScheduleEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tfScheduleEnding.setEnabled(false);
-        tfScheduleEnding.setIgnoreRepaint(true);
-        containerScheduleEnding.add(tfScheduleEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        add(containerScheduleEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 220, 120, 30));
-
         containerNewMonth.setBackground(new java.awt.Color(232, 240, 255));
         containerNewMonth.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -337,6 +317,11 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbNewDay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbNewDay.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbNewDay.setFocusable(false);
+        cbNewDay.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbNewDayFocusLost(evt);
+            }
+        });
         containerNewDay.add(cbNewDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
         add(containerNewDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 80, 30));
@@ -362,20 +347,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         jLNotes.setText("Notas:");
         add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, 10));
 
-        containerEnding.setBackground(new java.awt.Color(232, 240, 255));
-        containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tfNewEnding.setBackground(new java.awt.Color(232, 240, 255));
-        tfNewEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        tfNewEnding.setForeground(new java.awt.Color(0, 0, 0));
-        tfNewEnding.setBorder(null);
-        tfNewEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tfNewEnding.setEnabled(false);
-        tfNewEnding.setIgnoreRepaint(true);
-        containerEnding.add(tfNewEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 120, 30));
-
         containerService.setBackground(new java.awt.Color(232, 240, 255));
         containerService.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -393,29 +364,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         containerService.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
         add(containerService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 260, 30));
-
-        containerBeginning.setBackground(new java.awt.Color(232, 240, 255));
-        containerBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tfNewBeginning.setBackground(new java.awt.Color(232, 240, 255));
-        tfNewBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        tfNewBeginning.setForeground(new java.awt.Color(0, 0, 0));
-        tfNewBeginning.setBorder(null);
-        tfNewBeginning.setEnabled(false);
-        tfNewBeginning.setIgnoreRepaint(true);
-        tfNewBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tfNewBeginningFocusLost(evt);
-            }
-        });
-        tfNewBeginning.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfNewBeginningKeyTyped(evt);
-            }
-        });
-        containerBeginning.add(tfNewBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 125, 30));
 
         jLEnding1.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLEnding1.setForeground(new java.awt.Color(35, 36, 37));
@@ -481,6 +429,184 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         containerBtnReschedule.add(btnReschedule, java.awt.BorderLayout.CENTER);
 
         add(containerBtnReschedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 260, 40));
+
+        containerEnding1.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbMinuteEndingOld.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteEndingOld.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMinuteEndingOld.setForeground(new java.awt.Color(35, 36, 37));
+        cbMinuteEndingOld.setMaximumRowCount(12);
+        cbMinuteEndingOld.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteEndingOld.setBorder(null);
+        cbMinuteEndingOld.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMinuteEndingOld.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMinuteEndingOld.setEnabled(false);
+        cbMinuteEndingOld.setFocusable(false);
+        containerEnding1.add(cbMinuteEndingOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 220, 55, 30));
+
+        containerBeginning1.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbMinuteBeginningOld.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteBeginningOld.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMinuteBeginningOld.setForeground(new java.awt.Color(35, 36, 37));
+        cbMinuteBeginningOld.setMaximumRowCount(12);
+        cbMinuteBeginningOld.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteBeginningOld.setBorder(null);
+        cbMinuteBeginningOld.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMinuteBeginningOld.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMinuteBeginningOld.setEnabled(false);
+        cbMinuteBeginningOld.setFocusable(false);
+        cbMinuteBeginningOld.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbMinuteBeginningOldFocusLost(evt);
+            }
+        });
+        containerBeginning1.add(cbMinuteBeginningOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 220, 55, 30));
+
+        containerBeginning2.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbHourBeginningOld.setBackground(new java.awt.Color(232, 240, 255));
+        cbHourBeginningOld.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbHourBeginningOld.setForeground(new java.awt.Color(35, 36, 37));
+        cbHourBeginningOld.setMaximumRowCount(12);
+        cbHourBeginningOld.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18" }));
+        cbHourBeginningOld.setBorder(null);
+        cbHourBeginningOld.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbHourBeginningOld.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbHourBeginningOld.setEnabled(false);
+        cbHourBeginningOld.setFocusable(false);
+        cbHourBeginningOld.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbHourBeginningOldFocusLost(evt);
+            }
+        });
+        containerBeginning2.add(cbHourBeginningOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerBeginning2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 55, 30));
+
+        containerEnding2.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbHourEndingOld.setBackground(new java.awt.Color(232, 240, 255));
+        cbHourEndingOld.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbHourEndingOld.setForeground(new java.awt.Color(35, 36, 37));
+        cbHourEndingOld.setMaximumRowCount(12);
+        cbHourEndingOld.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
+        cbHourEndingOld.setBorder(null);
+        cbHourEndingOld.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbHourEndingOld.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbHourEndingOld.setEnabled(false);
+        cbHourEndingOld.setFocusable(false);
+        containerEnding2.add(cbHourEndingOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerEnding2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 55, 30));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(":");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 220, 10, 30));
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText(":");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 220, 10, 30));
+
+        containerEnding.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbMinuteEnding.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMinuteEnding.setForeground(new java.awt.Color(35, 36, 37));
+        cbMinuteEnding.setMaximumRowCount(12);
+        cbMinuteEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteEnding.setBorder(null);
+        cbMinuteEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMinuteEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMinuteEnding.setEnabled(false);
+        cbMinuteEnding.setFocusable(false);
+        containerEnding.add(cbMinuteEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 55, 30));
+
+        containerBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbMinuteBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMinuteBeginning.setForeground(new java.awt.Color(35, 36, 37));
+        cbMinuteBeginning.setMaximumRowCount(12);
+        cbMinuteBeginning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteBeginning.setBorder(null);
+        cbMinuteBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMinuteBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMinuteBeginning.setFocusable(false);
+        cbMinuteBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbMinuteBeginningFocusLost(evt);
+            }
+        });
+        containerBeginning.add(cbMinuteBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 55, 30));
+
+        containerBeginning3.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbHourBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        cbHourBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbHourBeginning.setForeground(new java.awt.Color(35, 36, 37));
+        cbHourBeginning.setMaximumRowCount(12);
+        cbHourBeginning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18" }));
+        cbHourBeginning.setBorder(null);
+        cbHourBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbHourBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbHourBeginning.setFocusable(false);
+        cbHourBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbHourBeginningFocusLost(evt);
+            }
+        });
+        containerBeginning3.add(cbHourBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerBeginning3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 55, 30));
+
+        containerEnding3.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbHourEnding.setBackground(new java.awt.Color(232, 240, 255));
+        cbHourEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbHourEnding.setForeground(new java.awt.Color(35, 36, 37));
+        cbHourEnding.setMaximumRowCount(12);
+        cbHourEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
+        cbHourEnding.setBorder(null);
+        cbHourEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbHourEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbHourEnding.setEnabled(false);
+        cbHourEnding.setFocusable(false);
+        containerEnding3.add(cbHourEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        add(containerEnding3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 55, 30));
+
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText(":");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 10, 30));
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText(":");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 10, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
@@ -498,7 +624,7 @@ public class RescheduleAppointment extends javax.swing.JPanel {
 
     private void btnRescheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRescheduleActionPerformed
         Appointment app = (Appointment)this.cbScheduleDate.getSelectedItem();
-        Timestamp startTime = Timestamp.valueOf((cbNewYear.getSelectedIndex() + 1901) + "-" + (cbNewMonth.getSelectedIndex() + 1) + "-" + (cbNewDay.getSelectedIndex() + 1) +" " + tfNewBeginning.getText() + ":00");
+        Timestamp startTime = Timestamp.valueOf((cbNewYear.getSelectedIndex() + 1901) + "-" + (cbNewMonth.getSelectedIndex() + 1) + "-" + (cbNewDay.getSelectedIndex() + 1) +" " + cbHourBeginning.getSelectedItem().toString() + ":" + cbMinuteBeginning.getSelectedItem().toString() + ":00");
         
         app.setStartTime(startTime);
         app.setReason(this.tAReason.getText());
@@ -518,46 +644,46 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         if (cbScheduleDate.getSelectedItem() != null) {
             this.fillService();
             this.fillHours();
-            this.tfNewBeginning.enable(true);
+            this.cbHourBeginning.enable(true);
+            this.cbMinuteBeginning.enable(true);
         } else {
-            this.tfNewBeginning.enable(false);
+            this.cbHourBeginning.enable(false);
+            this.cbMinuteBeginning.enable(false);
         }
         
     }//GEN-LAST:event_cbScheduleDateActionPerformed
 
-    private void tfNewBeginningKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNewBeginningKeyTyped
-        char c = evt.getKeyChar();
-        if ((c < '0' || c > ':')) {
-            evt.consume();
-        }
+    private void cbNewDayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbNewDayFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbNewDayFocusLost
 
-        if (tfNewBeginning.getText().length() > 1) {
-            if (!tfNewBeginning.getText().contains(":")) {
-                tfNewBeginning.setText(tfNewBeginning.getText().subSequence(0, 1).toString() + ":" + tfNewBeginning.getText().subSequence(1, 2));
-            }
-        }
-
-        if (tfNewBeginning.getText().length() > 3) {
-            if (tfNewBeginning.getText().contains(":")) {
-                tfNewBeginning.setText(tfNewBeginning.getText().subSequence(0, 1).toString() + tfNewBeginning.getText().subSequence(2, 3).toString() + ":" + tfNewBeginning.getText().subSequence(3, 4));
-            }
-        }
-
-        if (c == '\b') {
-            tfNewBeginning.setText("");
-        }
-
-        if (tfNewBeginning.getText().length() == 5)
-            evt.consume();
-    }//GEN-LAST:event_tfNewBeginningKeyTyped
-
-    private void tfNewBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfNewBeginningFocusLost
+    private void cbMinuteBeginningOldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbMinuteBeginningOldFocusLost
         this.updateHour();
-    }//GEN-LAST:event_tfNewBeginningFocusLost
+    }//GEN-LAST:event_cbMinuteBeginningOldFocusLost
+
+    private void cbHourBeginningOldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbHourBeginningOldFocusLost
+        this.updateHour();
+    }//GEN-LAST:event_cbHourBeginningOldFocusLost
+
+    private void cbMinuteBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbMinuteBeginningFocusLost
+        this.updateHour();
+    }//GEN-LAST:event_cbMinuteBeginningFocusLost
+
+    private void cbHourBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbHourBeginningFocusLost
+        this.updateHour();
+    }//GEN-LAST:event_cbHourBeginningFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReschedule;
+    private javax.swing.JComboBox<String> cbHourBeginning;
+    private javax.swing.JComboBox<String> cbHourBeginningOld;
+    private javax.swing.JComboBox<String> cbHourEnding;
+    private javax.swing.JComboBox<String> cbHourEndingOld;
+    private javax.swing.JComboBox<String> cbMinuteBeginning;
+    private javax.swing.JComboBox<String> cbMinuteBeginningOld;
+    private javax.swing.JComboBox<String> cbMinuteEnding;
+    private javax.swing.JComboBox<String> cbMinuteEndingOld;
     private javax.swing.JComboBox<String> cbNewDay;
     private javax.swing.JComboBox<String> cbNewMonth;
     private javax.swing.JComboBox<String> cbNewYear;
@@ -565,16 +691,20 @@ public class RescheduleAppointment extends javax.swing.JPanel {
     private javax.swing.JComboBox<Appointment> cbScheduleDate;
     private javax.swing.JComboBox<String> cbService;
     private Components.RoundedPanel containerBeginning;
+    private Components.RoundedPanel containerBeginning1;
+    private Components.RoundedPanel containerBeginning2;
+    private Components.RoundedPanel containerBeginning3;
     private Components.RoundedPanel containerBtnReschedule;
     private Components.RoundedPanel containerEnding;
+    private Components.RoundedPanel containerEnding1;
+    private Components.RoundedPanel containerEnding2;
+    private Components.RoundedPanel containerEnding3;
     private Components.RoundedPanel containerNewDay;
     private Components.RoundedPanel containerNewMonth;
     private Components.RoundedPanel containerNewYear;
     private Components.RoundedPanel containerPatient;
     private Components.RoundedPanel containerReason;
-    private Components.RoundedPanel containerScheduleBeginning;
     private Components.RoundedPanel containerScheduleDate;
-    private Components.RoundedPanel containerScheduleEnding;
     private Components.RoundedPanel containerService;
     private javax.swing.JLabel jLBeginning;
     private javax.swing.JLabel jLBeginning1;
@@ -585,12 +715,12 @@ public class RescheduleAppointment extends javax.swing.JPanel {
     private javax.swing.JLabel jLNotes;
     private javax.swing.JLabel jLPatient;
     private javax.swing.JLabel jLService;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextArea tAReason;
-    private javax.swing.JTextField tfNewBeginning;
-    private javax.swing.JTextField tfNewEnding;
-    private javax.swing.JTextField tfScheduleBeginning;
-    private javax.swing.JTextField tfScheduleEnding;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
 }
