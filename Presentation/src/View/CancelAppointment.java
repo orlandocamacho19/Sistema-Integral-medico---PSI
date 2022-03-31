@@ -7,6 +7,8 @@ package View;
 import Domain.Appointment;
 import Domain.AppointmentType;
 import Domain.Patient;
+import SIM.App;
+import SIM.MessageType;
 import control.AppointmentControl;
 import control.PatientControl;
 import java.awt.Color;
@@ -95,6 +97,11 @@ private void fillHours(){
             cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
             cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
         }
+    }
+    
+    private void cleanFields() {
+        cbPatient.setSelectedIndex(0);
+        loadAppointments();
     }
 
     /**
@@ -316,11 +323,6 @@ private void fillHours(){
         cbMinuteBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbMinuteBeginning.setEnabled(false);
         cbMinuteBeginning.setFocusable(false);
-        cbMinuteBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbMinuteBeginningFocusLost(evt);
-            }
-        });
         containerBeginning.add(cbMinuteBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
 
         add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 220, 55, 30));
@@ -338,11 +340,6 @@ private void fillHours(){
         cbHourBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbHourBeginning.setEnabled(false);
         cbHourBeginning.setFocusable(false);
-        cbHourBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbHourBeginningFocusLost(evt);
-            }
-        });
         containerBeginning1.add(cbHourBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
 
         add(containerBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 55, 30));
@@ -387,7 +384,12 @@ private void fillHours(){
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         Appointment app = (Appointment) this.cbScheduleDate.getSelectedItem();
-        System.out.println(AppointmentControl.getInstance().deleteAppointment(app));
+        if(AppointmentControl.getInstance().deleteAppointment(app)){
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Cancelar cita", "Cita cancelada correctamente");
+            cleanFields();
+        } else {
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Cancelar cita", "Imposible cancelar cita");
+        }
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void cbPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPatientActionPerformed
@@ -404,14 +406,6 @@ private void fillHours(){
             this.fillHours();
         }
     }//GEN-LAST:event_cbScheduleDateActionPerformed
-
-    private void cbMinuteBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbMinuteBeginningFocusLost
-        this.updateHour();
-    }//GEN-LAST:event_cbMinuteBeginningFocusLost
-
-    private void cbHourBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbHourBeginningFocusLost
-        this.updateHour();
-    }//GEN-LAST:event_cbHourBeginningFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

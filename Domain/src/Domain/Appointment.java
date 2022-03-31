@@ -283,9 +283,33 @@ public class Appointment {
             return false;
         }
         final Appointment other = (Appointment) obj;
-        return Objects.equals(this.id_appointment, other.id_appointment);
+        if (this.id_appointment != other.id_appointment) {
+            return false;
+        }
+        if (this.confirmation != other.confirmation) {
+            return false;
+        }
+        if (!Objects.equals(this.reason, other.reason)) {
+            return false;
+        }
+        if (!Objects.equals(this.startTime, other.startTime)) {
+            return false;
+        }
+        if (!Objects.equals(this.patient, other.patient)) {
+            return false;
+        }
+        if (this.aType != other.aType) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        if (!Objects.equals(this.medicine, other.medicine)) {
+            return false;
+        }
+        return Objects.equals(this.payment, other.payment);
     }
-    
+
     /**
      * String of the attributes of the object
      *

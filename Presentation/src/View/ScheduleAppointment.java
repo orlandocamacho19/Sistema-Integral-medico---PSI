@@ -10,6 +10,8 @@ import Domain.Medicine;
 import Domain.Patient;
 import Domain.Payment;
 import Domain.Type;
+import SIM.App;
+import SIM.MessageType;
 import control.AppointmentControl;
 import control.PatientControl;
 import java.awt.Color;
@@ -38,7 +40,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         int month = date.getMonth();
         int day = date.getDate() - 1;
 
-        this.fillComboBoxDay(month+1, year+1901);
+        this.fillComboBoxDay(month + 1, year + 1901);
         this.fillComboBoxMonthYear();
 
         cbDay.setSelectedIndex(day);
@@ -86,18 +88,42 @@ public class ScheduleAppointment extends javax.swing.JPanel {
     }
 
     private void updateHour() {
-        if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
-            if (cbMinuteBeginning.getSelectedIndex() == 0 || cbMinuteBeginning.getSelectedIndex() == 1 || cbMinuteBeginning.getSelectedIndex() == 2) {
-                cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex());
-                cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex() + 1);
+        if (cbService.getSelectedItem() != null) {
+            if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
+                if (cbMinuteBeginning.getSelectedIndex() == 0 || cbMinuteBeginning.getSelectedIndex() == 1 || cbMinuteBeginning.getSelectedIndex() == 2) {
+                    cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex());
+                    cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex() + 1);
+                } else {
+                    cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
+                    cbMinuteEnding.setSelectedIndex(0);
+                }
             } else {
                 cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
-                cbMinuteEnding.setSelectedIndex(0);
-            }    
-        } else {
-            cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
-            cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
+                cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
+            }
         }
+    }
+
+    private void cleanFields() {
+        cbPatient.setSelectedIndex(-1);
+        cbService.setSelectedIndex(-1);
+        cbHourBeginning.setSelectedIndex(-1);
+        cbMinuteBeginning.setSelectedIndex(-1);
+        cbHourEnding.setSelectedIndex(-1);
+        cbMinuteEnding.setSelectedIndex(-1);
+        tAReason.setText("");
+    }
+
+    private boolean validateFields() {
+        if (cbPatient.getSelectedIndex() == -1) {
+            return false;
+        }
+
+        if (cbService.getSelectedIndex() == -1) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -176,6 +202,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbMinuteEnding.setForeground(new java.awt.Color(35, 36, 37));
         cbMinuteEnding.setMaximumRowCount(12);
         cbMinuteEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteEnding.setSelectedIndex(-1);
         cbMinuteEnding.setBorder(null);
         cbMinuteEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbMinuteEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
@@ -215,13 +242,14 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbMinuteBeginning.setForeground(new java.awt.Color(35, 36, 37));
         cbMinuteBeginning.setMaximumRowCount(12);
         cbMinuteBeginning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteBeginning.setSelectedIndex(-1);
         cbMinuteBeginning.setBorder(null);
         cbMinuteBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbMinuteBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbMinuteBeginning.setFocusable(false);
-        cbMinuteBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbMinuteBeginningFocusLost(evt);
+        cbMinuteBeginning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMinuteBeginningActionPerformed(evt);
             }
         });
         containerBeginning.add(cbMinuteBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
@@ -367,13 +395,14 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbHourBeginning.setForeground(new java.awt.Color(35, 36, 37));
         cbHourBeginning.setMaximumRowCount(12);
         cbHourBeginning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18" }));
+        cbHourBeginning.setSelectedIndex(-1);
         cbHourBeginning.setBorder(null);
         cbHourBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbHourBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbHourBeginning.setFocusable(false);
-        cbHourBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbHourBeginningFocusLost(evt);
+        cbHourBeginning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHourBeginningActionPerformed(evt);
             }
         });
         containerBeginning1.add(cbHourBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
@@ -388,6 +417,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbHourEnding.setForeground(new java.awt.Color(35, 36, 37));
         cbHourEnding.setMaximumRowCount(12);
         cbHourEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
+        cbHourEnding.setSelectedIndex(-1);
         cbHourEnding.setBorder(null);
         cbHourEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbHourEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
@@ -424,31 +454,48 @@ public class ScheduleAppointment extends javax.swing.JPanel {
     }//GEN-LAST:event_btnScheduleMouseExited
 
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
-        Timestamp startTime = Timestamp.valueOf((cbYear.getSelectedIndex() + 1901) + "-" + (cbMonth.getSelectedIndex() + 1) + "-" + (cbDay.getSelectedIndex() + 1) + " " + cbHourBeginning.getSelectedItem().toString() + ":" + cbMinuteBeginning.getSelectedItem().toString() + ":00");
-        Patient patient = (Patient) cbPatient.getSelectedItem();
-        AppointmentType type;
-        if (cbService.getSelectedIndex() == 0) {
-            type = AppointmentType.Nutritional;
-        } else if (cbService.getSelectedIndex() == 1) {
-            type = AppointmentType.Surgical;
+        if (validateFields()) {
+            Timestamp startTime = Timestamp.valueOf((cbYear.getSelectedIndex() + 1901) + "-" + (cbMonth.getSelectedIndex() + 1) + "-" + (cbDay.getSelectedIndex() + 1) + " " + cbHourBeginning.getSelectedItem().toString() + ":" + cbMinuteBeginning.getSelectedItem().toString() + ":00");
+            Patient patient = (Patient) cbPatient.getSelectedItem();
+            AppointmentType type;
+            Type patientType;
+
+            if (AppointmentControl.getInstance().getAppointmentByPatient(patient) != null) {
+                patientType = Type.Recurrent;
+            } else {
+                patientType = Type.New;
+            }
+
+            if (cbService.getSelectedIndex() == 0) {
+                type = AppointmentType.Nutritional;
+            } else if (cbService.getSelectedIndex() == 1) {
+                type = AppointmentType.Surgical;
+            } else {
+                type = AppointmentType.Esthetic;
+            }
+
+            if (AppointmentControl.getInstance().addAppointment(new Appointment(startTime, patient, new Medicine(14), new Payment(8), type, patientType, false, tAReason.getText()))) {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Agendar cita", "Cita agendada correctamente");
+                cleanFields();
+            } else {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Verifique los datos");
+            }
         } else {
-            type = AppointmentType.Esthetic;
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Campos vacios");
         }
-        
-        System.out.println(AppointmentControl.getInstance().addAppointment(new Appointment(startTime, patient, new Medicine(14), new Payment(8), type, Type.New, false, tAReason.getText())));
     }//GEN-LAST:event_btnScheduleActionPerformed
 
     private void cbServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbServiceActionPerformed
         this.updateHour();
     }//GEN-LAST:event_cbServiceActionPerformed
 
-    private void cbHourBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbHourBeginningFocusLost
+    private void cbHourBeginningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHourBeginningActionPerformed
         this.updateHour();
-    }//GEN-LAST:event_cbHourBeginningFocusLost
+    }//GEN-LAST:event_cbHourBeginningActionPerformed
 
-    private void cbMinuteBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbMinuteBeginningFocusLost
+    private void cbMinuteBeginningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMinuteBeginningActionPerformed
         this.updateHour();
-    }//GEN-LAST:event_cbMinuteBeginningFocusLost
+    }//GEN-LAST:event_cbMinuteBeginningActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

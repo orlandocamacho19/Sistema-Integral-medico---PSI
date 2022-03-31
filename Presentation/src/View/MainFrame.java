@@ -38,7 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
             this.MinimizeButton.setVisible(false);
             this.FullScreenButton.setVisible(false);
         }
-        setLocationRelativeTo(null);
+        this.setLocationRelativeTo(this);
     }
 
     public void setContent(JPanel content) {

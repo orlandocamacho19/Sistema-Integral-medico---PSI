@@ -7,6 +7,8 @@ package View;
 import Domain.Appointment;
 import Domain.AppointmentType;
 import Domain.Patient;
+import SIM.App;
+import SIM.MessageType;
 import control.AppointmentControl;
 import control.PatientControl;
 import java.awt.Color;
@@ -145,6 +147,11 @@ public class RescheduleAppointment extends javax.swing.JPanel {
             cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
             cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
         }
+    }
+    
+    private void cleanFields() {
+        cbPatient.setSelectedIndex(0);
+        loadAppointments();
     }
 
     /**
@@ -317,11 +324,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbNewDay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbNewDay.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbNewDay.setFocusable(false);
-        cbNewDay.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbNewDayFocusLost(evt);
-            }
-        });
         containerNewDay.add(cbNewDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
         add(containerNewDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 80, 30));
@@ -355,7 +357,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbService.setForeground(new java.awt.Color(35, 36, 37));
         cbService.setMaximumRowCount(12);
         cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nutricional", "Quirurgica", "Estetica" }));
-        cbService.setSelectedIndex(-1);
         cbService.setBorder(null);
         cbService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbService.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
@@ -460,11 +461,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbMinuteBeginningOld.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbMinuteBeginningOld.setEnabled(false);
         cbMinuteBeginningOld.setFocusable(false);
-        cbMinuteBeginningOld.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbMinuteBeginningOldFocusLost(evt);
-            }
-        });
         containerBeginning1.add(cbMinuteBeginningOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
 
         add(containerBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 220, 55, 30));
@@ -482,11 +478,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbHourBeginningOld.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbHourBeginningOld.setEnabled(false);
         cbHourBeginningOld.setFocusable(false);
-        cbHourBeginningOld.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbHourBeginningOldFocusLost(evt);
-            }
-        });
         containerBeginning2.add(cbHourBeginningOld, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
 
         add(containerBeginning2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 55, 30));
@@ -549,9 +540,9 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbMinuteBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbMinuteBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbMinuteBeginning.setFocusable(false);
-        cbMinuteBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbMinuteBeginningFocusLost(evt);
+        cbMinuteBeginning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMinuteBeginningActionPerformed(evt);
             }
         });
         containerBeginning.add(cbMinuteBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
@@ -570,9 +561,9 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         cbHourBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbHourBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbHourBeginning.setFocusable(false);
-        cbHourBeginning.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cbHourBeginningFocusLost(evt);
+        cbHourBeginning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHourBeginningActionPerformed(evt);
             }
         });
         containerBeginning3.add(cbHourBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
@@ -629,13 +620,21 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         app.setStartTime(startTime);
         app.setReason(this.tAReason.getText());
         
-        System.out.println(AppointmentControl.getInstance().editAppointment(app));
+        if(AppointmentControl.getInstance().editAppointment(app)){
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Reagendar cita", "Cita reagendada correctamente");
+            cleanFields();
+        } else {
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Reagendar cita", "Imposible reagendar cita - Verifique los datos");
+        }
         
     }//GEN-LAST:event_btnRescheduleActionPerformed
 
     private void cbPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPatientActionPerformed
         this.cbScheduleDate.removeAllItems();
-        this.loadAppointments();
+        if (cbPatient.getSelectedItem() != null) {
+            this.loadAppointments();
+        }
+        
         this.fillService();
         this.fillHours();
     }//GEN-LAST:event_cbPatientActionPerformed
@@ -653,25 +652,13 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cbScheduleDateActionPerformed
 
-    private void cbNewDayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbNewDayFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbNewDayFocusLost
+    private void cbHourBeginningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHourBeginningActionPerformed
+        updateHour();
+    }//GEN-LAST:event_cbHourBeginningActionPerformed
 
-    private void cbMinuteBeginningOldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbMinuteBeginningOldFocusLost
-        this.updateHour();
-    }//GEN-LAST:event_cbMinuteBeginningOldFocusLost
-
-    private void cbHourBeginningOldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbHourBeginningOldFocusLost
-        this.updateHour();
-    }//GEN-LAST:event_cbHourBeginningOldFocusLost
-
-    private void cbMinuteBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbMinuteBeginningFocusLost
-        this.updateHour();
-    }//GEN-LAST:event_cbMinuteBeginningFocusLost
-
-    private void cbHourBeginningFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbHourBeginningFocusLost
-        this.updateHour();
-    }//GEN-LAST:event_cbHourBeginningFocusLost
+    private void cbMinuteBeginningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMinuteBeginningActionPerformed
+        updateHour();
+    }//GEN-LAST:event_cbMinuteBeginningActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

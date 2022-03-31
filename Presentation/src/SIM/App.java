@@ -6,6 +6,7 @@ package SIM;
 
 import View.*;
 import control.PatientControl;
+import java.awt.Component;
 
 /**
  *
@@ -14,9 +15,7 @@ import control.PatientControl;
 public class App {
 
     private static App AppSingleton;
-    
     private MainFrame mainFrame;
-    
     private AppState state;
     
     public static App GetSingleton(){
@@ -30,6 +29,10 @@ public class App {
         mainFrame = new MainFrame();
         
         mainFrame.setVisible(true);
+    }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
     }
     
     public AppState getState(){
@@ -55,7 +58,15 @@ public class App {
         }
     }
     
-    
+    /**
+     * 
+     * @param C
+     * @param type
+     * @param text 
+     */
+    public void newMessage(Component C, MessageType type, String action, String text){
+        new Message(C, type, action, text);
+    }
     
     /**
      * @param args the command line arguments

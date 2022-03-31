@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 public class AppointmentControl {
-    
+
     private static AppointmentControl appointmentControl;
     private static AppointmentDAO ad;
 
@@ -43,11 +43,11 @@ public class AppointmentControl {
      */
     public boolean addAppointment(Appointment appointment) {
         List<Appointment> appointments = ad.consultAll();
-        
+
         if (!validateAppointment(appointment, appointments)) {
             return false;
         }
-        
+
         for (int i = 0; i < appointments.size(); i++) {
             if (appointment.getId_appointment() == appointments.get(i).getId_appointment()) {
                 return false;
@@ -68,15 +68,19 @@ public class AppointmentControl {
      */
     public boolean editAppointment(Appointment appointment) {
         List<Appointment> appointments = ad.consultAll();
-        
+
         if (!validateAppointment(appointment, appointments)) {
             return false;
         }
-        
+
         for (int i = 0; i < appointments.size(); i++) {
             if (appointment.getId_appointment() == appointments.get(i).getId_appointment()) {
-                ad.update(appointments.get(i).getId_appointment(), appointment);
-                return true;
+                if (!appointment.equals(appointments.get(i))) {
+                    ad.update(appointments.get(i).getId_appointment(), appointment);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         return false;
@@ -139,7 +143,7 @@ public class AppointmentControl {
     public List<Appointment> getAppointmentByPatient(Patient patient) {
         List<Appointment> appointments = ad.consultAll();
         List<Appointment> byPatient = new ArrayList<>();
-        
+
         if (appointments.isEmpty()) {
             System.out.println("The database has not appointments at this time");
             return null;
@@ -150,7 +154,7 @@ public class AppointmentControl {
                 }
             }
         }
-        
+
         if (byPatient.isEmpty()) {
             return null;
         } else {
@@ -167,7 +171,7 @@ public class AppointmentControl {
     public List<Appointment> getAppointmentFromNowOn(List<Appointment> appointments) {
         Timestamp currentTime = Timestamp.from(Instant.now());
         List<Appointment> fromNowOn = new ArrayList<>();
-        
+
         if (appointments.isEmpty()) {
             System.out.println("The database has not appointments at this time");
             return null;
@@ -178,7 +182,7 @@ public class AppointmentControl {
                 }
             }
         }
-        
+
         if (fromNowOn.isEmpty()) {
             return null;
         } else {
@@ -197,52 +201,54 @@ public class AppointmentControl {
         Timestamp currentTime = Timestamp.from(Instant.now());
         long start = appointment.getStartTime().getTime();
         long end;
-        
-        if (currentTime.before(appointment.getStartTime())) {
-            if (appointment.getaType() == AppointmentType.Esthetic || appointment.getaType() == AppointmentType.Nutritional) {
-                end = start + 900000;
-            } else {
-                end = start + 3600000;
-            }
-            
-            for (Appointment appointmentDB : appointments) {
-                long startDB = appointmentDB.getStartTime().getTime();
-                long endDB;
-                
-                if (appointment.getId_appointment() != appointmentDB.getId_appointment()) {
-                    if (start == startDB) {
-                        return false;
-                    }
-                    
-                    if (appointmentDB.getaType() == AppointmentType.Esthetic || appointmentDB.getaType() == AppointmentType.Nutritional) {
-                        endDB = startDB + 900000;
-                        
-                        if (start < startDB) {
-                            if (end > endDB) {                                
-                                return false;
-                            }
-                        } else if (start > startDB) {
-                            if (start < endDB) {
-                                return false;
-                            }
-                        }
-                    } else {
-                        endDB = startDB + 3600000;
-                        
-                        if (start < startDB) {
-                            if (end > endDB) {
-                                return false;
-                            }
-                        } else if (start > startDB) {
-                            if (start < endDB) {
-                                return false;
-                            }
-                        }
-                    }                    
-                }
-            }            
+
+        if (currentTime.getTime() > appointment.getStartTime().getTime()) {
+            return false;
         }
-        
+
+        if (appointment.getaType() == AppointmentType.Esthetic || appointment.getaType() == AppointmentType.Nutritional) {
+            end = start + 900000;
+        } else {
+            end = start + 3600000;
+        }
+
+        for (Appointment appointmentDB : appointments) {
+            long startDB = appointmentDB.getStartTime().getTime();
+            long endDB;
+
+            if (appointment.getId_appointment() != appointmentDB.getId_appointment()) {
+                if (start == startDB) {
+                    return false;
+                }
+
+                if (appointmentDB.getaType() == AppointmentType.Esthetic || appointmentDB.getaType() == AppointmentType.Nutritional) {
+                    endDB = startDB + 900000;
+
+                    if (start < startDB) {
+                        if (end > endDB) {
+                            return false;
+                        }
+                    } else if (start > startDB) {
+                        if (start < endDB) {
+                            return false;
+                        }
+                    }
+                } else {
+                    endDB = startDB + 3600000;
+
+                    if (start < startDB) {
+                        if (end > endDB) {
+                            return false;
+                        }
+                    } else if (start > startDB) {
+                        if (start < endDB) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
         return true;
     }
 }
