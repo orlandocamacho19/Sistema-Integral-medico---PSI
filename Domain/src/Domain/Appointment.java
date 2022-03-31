@@ -293,7 +293,7 @@ public class Appointment {
      */
     @Override
     public String toString() {
-        return  startTime.toString();
+        return  id_appointment + " - " + startTime.toString();
     }
 
     

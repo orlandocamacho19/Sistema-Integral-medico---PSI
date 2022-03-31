@@ -1,7 +1,12 @@
-
+import Domain.Appointment;
+import Domain.AppointmentType;
+import Domain.Medicine;
 import Domain.Patient;
+import Domain.Payment;
+import Domain.Type;
 import control.AppointmentControl;
 import control.PatientControl;
+import java.sql.Timestamp;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,7 +23,17 @@ public class test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(PatientControl.getInstance().getPatients());
+        Timestamp startTime = Timestamp.valueOf(("2022-03-31 23:45:00"));
+        Patient patient = new Patient(11);
+        //Appointment app = new Appointment(38, startTime, new Patient(11), new Medicine(14), new Payment(8), AppointmentType.Nutritional, Type.New, true, "" );
+        Appointment app = AppointmentControl.getInstance().getAppointmentByID(38);
+        app.setStartTime(startTime);
+        app.setaType(AppointmentType.Nutritional);
+        
+        System.out.println(app);
+        
+        AppointmentControl.getInstance().editAppointment(app);
+        
     }
     
 }

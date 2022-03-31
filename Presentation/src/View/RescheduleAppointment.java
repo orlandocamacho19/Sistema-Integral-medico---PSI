@@ -30,7 +30,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         initComponents();
         this.loadPatients();
         
-        
         Date date = new Date();
         int year = date.getYear() - 1;
         int month = date.getMonth();
