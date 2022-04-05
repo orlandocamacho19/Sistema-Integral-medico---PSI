@@ -474,6 +474,8 @@ public class ScheduleAppointment extends javax.swing.JPanel {
                 type = AppointmentType.Esthetic;
             }
 
+            
+            
             if (AppointmentControl.getInstance().addAppointment(new Appointment(startTime, patient, new Medicine(14), new Payment(8), type, patientType, false, tAReason.getText()))) {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Agendar cita", "Cita agendada correctamente");
                 cleanFields();
