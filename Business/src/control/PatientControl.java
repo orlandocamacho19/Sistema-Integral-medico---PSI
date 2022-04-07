@@ -80,6 +80,20 @@ public class PatientControl {
         }
         return false;
     }
+    
+    public Patient getPatientByID(int id) {
+        List<Patient> patients = pd.consultAll();
+        if (patients.isEmpty()) {
+            System.out.println("The database has not patients at this time");
+        } else {
+            for (Patient patient : patients) {
+                if (id == patient.getID()) {
+                    return patient;
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * Returns all the users in the database

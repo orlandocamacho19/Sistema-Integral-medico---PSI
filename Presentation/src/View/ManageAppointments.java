@@ -5,13 +5,20 @@
 package View;
 
 import Domain.Appointment;
-import Domain.Patient;
-import com.raven.datechooser.SelectedDate;
+import Domain.AppointmentType;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.page.WeekPage;
 import control.AppointmentControl;
+import java.awt.BorderLayout;
+import java.time.LocalDate;
+import com.calendarfx.model.Calendar;
 import control.PatientControl;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.JOptionPane;
+import java.util.List;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -24,13 +31,66 @@ public class ManageAppointments extends javax.swing.JPanel {
      */
     public ManageAppointments() {
         initComponents();
-        this.loadPatients();
+        // this.loadPatients();
+        initAndShowGUI();
     }
 
-    private void loadPatients() {
-//        for (Patient patient : PatientControl.getInstance().getPatients()) {
-//            cbPatient.addItem(patient);
-//        }
+    private static List<Appointment> loadAppointments() {
+        return AppointmentControl.getInstance().getAppointment();
+    }
+
+    private static void initAndShowGUI() {
+        final JFXPanel fxPanel = new JFXPanel();
+        fxPanel.setSize(weekPanel.getWidth(), weekPanel.getHeight());
+        weekPanel.setLayout(new BorderLayout());
+        weekPanel.add(fxPanel, BorderLayout.CENTER);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                initFX(fxPanel);
+            }
+        });
+    }
+
+    private static void initFX(JFXPanel fxPanel) {
+        // This method is invoked on the JavaFX thread
+        Scene scene = createScene();
+        fxPanel.setScene(scene);
+    }
+
+    private static Scene createScene() {
+        WeekPage weekView = new WeekPage();
+
+        CalendarSource appointmentsCalendarSource = new CalendarSource("Appointments");
+
+        Calendar cl = new Calendar("Master");
+
+        for (Appointment appointment : loadAppointments()) {
+            Entry<String> entry = new Entry<>();
+            System.out.println(PatientControl.getInstance().getPatientByID(appointment.getPatient().getID()).getName());
+            entry.setTitle(PatientControl.getInstance().getPatientByID(appointment.getPatient().getID()).getName());
+            entry.changeStartDate(appointment.getStartTime().toLocalDateTime().toLocalDate());
+            entry.changeEndDate(appointment.getStartTime().toLocalDateTime().toLocalDate());
+            entry.changeStartTime(appointment.getStartTime().toLocalDateTime().toLocalTime());
+            if (appointment.getaType() == AppointmentType.Esthetic || appointment.getaType() == AppointmentType.Nutritional) {
+                entry.changeEndTime(appointment.getStartTime().toLocalDateTime().toLocalTime().plusMinutes(15));
+            } else {
+                entry.changeEndTime(appointment.getStartTime().toLocalDateTime().toLocalTime().plusMinutes(60));
+            }
+            cl.addEntry(entry);
+        }
+
+        appointmentsCalendarSource.getCalendars().addAll(cl);
+
+        weekView.getCalendarSources().addAll(appointmentsCalendarSource);
+
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().addAll(weekView);
+
+        Scene scene = new Scene(stackPane);
+
+        return scene;
     }
 
     /**
@@ -44,8 +104,7 @@ public class ManageAppointments extends javax.swing.JPanel {
 
         title = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        date = new com.raven.datechooser.DateChooser();
-        jButton1 = new javax.swing.JButton();
+        weekPanel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -62,45 +121,15 @@ public class ManageAppointments extends javax.swing.JPanel {
         title.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 60));
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
-        add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
-        jButton1.setText("Seleccionar fecha");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
+        weekPanel.setBackground(new java.awt.Color(255, 255, 255));
+        add(weekPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1080, 625));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        SelectedDate d = date.getSelectedDate();
-        //Obtiene la fecha seleccionada del calendario
-        Date date1 = new Date(d.getYear() - 1900, d.getMonth(), d.getDay());
-
-        for (Appointment appointment : AppointmentControl.getInstance().getAppointment()) {
-            //Obtiene formato de fecha Date de la cita
-            Date ddd = new Date(appointment.getStartTime().getTime());
-            Calendar calendar = Calendar.getInstance();
-
-            calendar.setTime(ddd);
-            int dateYear = calendar.get(Calendar.YEAR);
-            int dateMonth = (calendar.get(Calendar.MONTH) + 1);
-            int dateDay = calendar.get(Calendar.DAY_OF_MONTH);
-            
-            
-            if (d.getDay() == dateDay && d.getMonth() == dateMonth && d.getYear() == dateYear) {
-                
-                System.out.println("Cita encontrada en el mismo dia que el que se seleccionó (" + d.getDay() + "-" + d.getMonth() + "-" + d.getYear() + ")\nId appointment: " + appointment.getId_appointment() + "\n\n");
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.datechooser.DateChooser date;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel title;
+    private static javax.swing.JPanel weekPanel;
     // End of variables declaration//GEN-END:variables
 }
