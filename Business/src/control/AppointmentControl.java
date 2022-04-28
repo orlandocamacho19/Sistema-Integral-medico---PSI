@@ -266,6 +266,7 @@ public class AppointmentControl {
             date.setTime(date.getTime() + 86400000);
         }
 
+        date.setTime(date.getTime() - 86400000 * 7);
         return appointmentsByWeek;
     }
 

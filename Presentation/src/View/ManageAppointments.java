@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
 
@@ -24,7 +25,9 @@ import javax.swing.JSeparator;
  * @author orlandocamacho
  */
 public class ManageAppointments extends javax.swing.JPanel {
-
+    
+    Timestamp currentTime = Timestamp.from(Instant.now());
+    
     /**
      * Creates new form ScheduleAppointment
      */
@@ -36,13 +39,18 @@ public class ManageAppointments extends javax.swing.JPanel {
         scrollAppointments.setSize(1080, 1029);
         scrollAppointments.setPreferredSize(new java.awt.Dimension(1080, 1029));
         revalidate();
-        renderAppointments();
+        
+        renderAppointments(currentTime);
     }
     
-    private void renderAppointments(){   
-        Timestamp currentTime = Timestamp.from(Instant.now());
+    private void renderAppointments(Timestamp currentTime){   
         Object[] appointments = AppointmentControl.getInstance().getAppointmentByWeek(currentTime);
         int coorX = 20;
+        
+        Timestamp until = Timestamp.valueOf(currentTime.toLocalDateTime().plusDays(6));
+        
+        jLDay.setText("Dom " + this.currentTime.getDate() + " - Sab " + until.getDate() + "/" + (until.getMonth() + 1) + "/" + (until.getYear() + 1900));
+        scrollAppointments.removeAll();
         
         for (Object appointment : appointments) {           
             List<Appointment> appointmentsByDay = (List<Appointment>) appointment;
@@ -65,11 +73,20 @@ public class ManageAppointments extends javax.swing.JPanel {
         }
         
         int sepY = 123;
+        int hour = 12;
         for (int i = 0; i < 8; i++) {
             JSeparator jSeparator = new javax.swing.JSeparator();
+            JLabel jLabel = new javax.swing.JLabel();
+            
             jSeparator.setForeground(new java.awt.Color(204, 204, 204));
+            jLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 8));
+            jLabel.setForeground(new java.awt.Color(35, 36, 37));
+            jLabel.setText(hour +":00");
+            
+            scrollAppointments.add(jLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, sepY, 20, -1));
             scrollAppointments.add(jSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, sepY, 1040, -1));
             sepY += 128;
+            hour += 1;
         }
     }
     
@@ -85,6 +102,11 @@ public class ManageAppointments extends javax.swing.JPanel {
 
         title = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLDay = new javax.swing.JLabel();
+        roundedPanel1 = new Components.RoundedPanel();
+        nextDay = new javax.swing.JButton();
+        roundedPanel2 = new Components.RoundedPanel();
+        previousDay = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLSun = new javax.swing.JLabel();
         jLMon = new javax.swing.JLabel();
@@ -95,14 +117,6 @@ public class ManageAppointments extends javax.swing.JPanel {
         jLSat = new javax.swing.JLabel();
         AppointmentsScrollPane = new javax.swing.JScrollPane();
         scrollAppointments = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -117,6 +131,47 @@ public class ManageAppointments extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(35, 36, 37));
         jLabel2.setText("Agenda semanal");
         title.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 60));
+
+        jLDay.setBackground(new java.awt.Color(255, 255, 255));
+        jLDay.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLDay.setForeground(new java.awt.Color(35, 36, 37));
+        jLDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLDay.setText("Dom 24 - Sab 30/04/2022");
+        jLDay.setToolTipText("");
+        title.add(jLDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 15, 230, 30));
+
+        roundedPanel1.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel1.setLayout(new java.awt.BorderLayout());
+
+        nextDay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/nextDay.png"))); // NOI18N
+        nextDay.setBorderPainted(false);
+        nextDay.setContentAreaFilled(false);
+        nextDay.setIgnoreRepaint(true);
+        nextDay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextDayActionPerformed(evt);
+            }
+        });
+        roundedPanel1.add(nextDay, java.awt.BorderLayout.CENTER);
+
+        title.add(roundedPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 15, 30, 30));
+
+        roundedPanel2.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel2.setLayout(new java.awt.BorderLayout());
+
+        previousDay.setBackground(new java.awt.Color(244, 243, 243));
+        previousDay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/previousDay.png"))); // NOI18N
+        previousDay.setBorderPainted(false);
+        previousDay.setContentAreaFilled(false);
+        previousDay.setIgnoreRepaint(true);
+        previousDay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                previousDayActionPerformed(evt);
+            }
+        });
+        roundedPanel2.add(previousDay, java.awt.BorderLayout.CENTER);
+
+        title.add(roundedPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 15, 30, 30));
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
 
@@ -191,56 +246,26 @@ public class ManageAppointments extends javax.swing.JPanel {
         scrollAppointments.setBackground(new java.awt.Color(255, 255, 255));
         scrollAppointments.setPreferredSize(new java.awt.Dimension(1080, 575));
         scrollAppointments.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel1.setText("12:00");
-        scrollAppointments.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 123, 20, -1));
-
-        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel3.setText("14:00");
-        scrollAppointments.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 379, 20, -1));
-
-        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel4.setText("13:00");
-        scrollAppointments.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 251, 20, -1));
-
-        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel5.setText("15:00");
-        scrollAppointments.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 507, 20, -1));
-
-        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel6.setText("16:00");
-        scrollAppointments.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 635, 20, -1));
-
-        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel7.setText("17:00");
-        scrollAppointments.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 763, 20, -1));
-
-        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel8.setText("18:00");
-        scrollAppointments.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 891, 20, -1));
-
-        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel9.setText("19:00");
-        scrollAppointments.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1019, 20, -1));
-
         AppointmentsScrollPane.setViewportView(scrollAppointments);
 
         add(AppointmentsScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 1080, -1));
         AppointmentsScrollPane.getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
 
+    private void nextDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextDayActionPerformed
+        currentTime.setTime(currentTime.getTime() + 86400000*7);
+        renderAppointments(currentTime);
+    }//GEN-LAST:event_nextDayActionPerformed
+
+    private void previousDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousDayActionPerformed
+        currentTime.setTime(currentTime.getTime() - 86400000*7);
+        renderAppointments(currentTime);
+    }//GEN-LAST:event_previousDayActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane AppointmentsScrollPane;
+    private javax.swing.JLabel jLDay;
     private javax.swing.JLabel jLFri;
     private javax.swing.JLabel jLMon;
     private javax.swing.JLabel jLSat;
@@ -248,16 +273,12 @@ public class ManageAppointments extends javax.swing.JPanel {
     private javax.swing.JLabel jLThu;
     private javax.swing.JLabel jLTue;
     private javax.swing.JLabel jLWed;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton nextDay;
+    private javax.swing.JButton previousDay;
+    private Components.RoundedPanel roundedPanel1;
+    private Components.RoundedPanel roundedPanel2;
     private javax.swing.JPanel scrollAppointments;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
