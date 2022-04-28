@@ -48,6 +48,11 @@ public class AppointmentControl {
             return false;
         }
 
+        if (appointments.size() == 0) {
+            ad.insert(appointment);
+            return true;
+        }
+        
         for (int i = 0; i < appointments.size(); i++) {
             if (appointment.getId_appointment() == appointments.get(i).getId_appointment()) {
                 return false;
@@ -56,6 +61,7 @@ public class AppointmentControl {
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -110,7 +116,6 @@ public class AppointmentControl {
     public List<Appointment> getAppointment() {
         List<Appointment> appointments = ad.consultAll();
         if (appointments.isEmpty()) {
-            System.out.println("The database has not appointments at this time");
         } else {
             return appointments;
         }
@@ -123,7 +128,6 @@ public class AppointmentControl {
     public Appointment getAppointmentByID(int ID) {
         List<Appointment> appointments = ad.consultAll();
         if (appointments.isEmpty()) {
-            System.out.println("The database has not appointments at this time");
         } else {
             for (Appointment appointment : appointments) {
                 if (ID == appointment.getId_appointment()) {
@@ -141,11 +145,10 @@ public class AppointmentControl {
      * @return
      */
     public List<Appointment> getAppointmentByPatient(Patient patient) {
-        List<Appointment> appointments = ad.consultAll();
+        List<Appointment> appointments = getAppointmentFromNowOn();
         List<Appointment> byPatient = new ArrayList<>();
 
-        if (appointments.isEmpty()) {
-            System.out.println("The database has not appointments at this time");
+        if (appointments == null) {
             return null;
         } else {
             for (Appointment appointment : appointments) {
@@ -168,12 +171,12 @@ public class AppointmentControl {
      * @param appointments
      * @return
      */
-    public List<Appointment> getAppointmentFromNowOn(List<Appointment> appointments) {
+    public List<Appointment> getAppointmentFromNowOn() {
+        List<Appointment> appointments = this.getAppointment();
         Timestamp currentTime = Timestamp.from(Instant.now());
         List<Appointment> fromNowOn = new ArrayList<>();
 
-        if (appointments.isEmpty()) {
-            System.out.println("The database has not appointments at this time");
+        if (appointments == null) {
             return null;
         } else {
             for (Appointment appointment : appointments) {
@@ -188,6 +191,82 @@ public class AppointmentControl {
         } else {
             return fromNowOn;
         }
+    }
+
+    /**
+     * Return all the appointments by the given date
+     *
+     * @param date
+     * @return
+     */
+    public List<Appointment> getAppointmentByDay(Timestamp date) {
+        List<Appointment> appointments = this.getAppointment();
+        List<Appointment> appointmentsByDay = new ArrayList<>();
+
+        Timestamp dateWHours = date;
+        dateWHours.setHours(0);
+        dateWHours.setMinutes(0);
+        dateWHours.setSeconds(0);
+        dateWHours.setNanos(0);
+
+        Timestamp dateLimit = new Timestamp(dateWHours.getTime() + 86400000);
+
+        if (appointments != null) {
+            if (appointments.isEmpty()) {
+                return null;
+            } else {
+                for (Appointment appointment : appointments) {
+                    if (dateWHours.before(appointment.getStartTime()) && dateLimit.after(appointment.getStartTime())) {
+                        appointmentsByDay.add(appointment);
+                    }
+                }
+            }
+        } else {
+            return null;
+        }
+        if (appointmentsByDay.isEmpty()) {
+            return null;
+        } else {
+            return appointmentsByDay;
+        }
+
+    }
+
+    /**
+     * Return all the appointments of the week by the given date
+     *
+     * @param date
+     * @return
+     */
+    public Object[] getAppointmentByWeek(Timestamp date) {
+        if (date.getDay() == 1) {
+            date.setTime(date.getTime() - 86400000);
+        } else if (date.getDay() == 2) {
+            date.setTime(date.getTime() - 86400000 * 2);
+        } else if (date.getDay() == 3) {
+            date.setTime(date.getTime() - 86400000 * 3);
+        } else if (date.getDay() == 4) {
+            date.setTime(date.getTime() - 86400000 * 4);
+        } else if (date.getDay() == 5) {
+            date.setTime(date.getTime() - 86400000 * 5);
+        } else if (date.getDay() == 6) {
+            date.setTime(date.getTime() - 86400000 * 6);
+        }
+
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setNanos(0);
+
+        Object[] appointmentsByWeek = new Object[7];
+
+        for (int i = 0; i <= 6; i++) {
+            List<Appointment> appointments = getAppointmentByDay(date);
+            appointmentsByWeek[i] = appointments;
+            date.setTime(date.getTime() + 86400000);
+        }
+
+        return appointmentsByWeek;
     }
 
     /**

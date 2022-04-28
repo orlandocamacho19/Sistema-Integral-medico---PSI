@@ -4,6 +4,9 @@
  */
 package View;
 
+import Components.AppointmentNERP;
+import Components.AppointmentSRP;
+import Components.CustomScrollBarUI;
 import Domain.Appointment;
 import Domain.AppointmentType;
 import Domain.Medicine;
@@ -16,11 +19,14 @@ import control.AppointmentControl;
 import control.PatientControl;
 import java.awt.Color;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSeparator;
 
 /**
  *
@@ -33,6 +39,13 @@ public class ScheduleAppointment extends javax.swing.JPanel {
      */
     public ScheduleAppointment() {
         initComponents();
+        AppointmentsScrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+
+        scrollAppointments.setSize(220, 1029);
+        scrollAppointments.setPreferredSize(new java.awt.Dimension(220, 1029));
+        revalidate();
+        renderAppointments();
+        
         this.loadPatients();
 
         Date date = new Date();
@@ -46,6 +59,40 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         cbDay.setSelectedIndex(day);
         cbMonth.setSelectedIndex(month);
         cbYear.setSelectedIndex(year);
+    }
+    
+     private void renderAppointments(){   
+//        Timestamp currentTime = Timestamp.from(Instant.now());
+//        Object[] appointments = AppointmentControl.getInstance().getAppointmentByWeek(currentTime);
+//        int coorX = 20;
+//        
+//        for (Object appointment : appointments) {           
+//            List<Appointment> appointmentsByDay = (List<Appointment>) appointment;
+//            if (appointmentsByDay != null) {
+//                for (Appointment appointmentByDay : appointmentsByDay) {
+//                    int hour = appointmentByDay.getStartTime().getHours() - 11;
+//                    int min = appointmentByDay.getStartTime().getMinutes()/15;
+//                    int coorY = (hour * 128) + (min * 32) + 2;
+//                    
+//                    if (appointmentByDay.getaType() == AppointmentType.Surgical) {
+//                        AppointmentSRP appointmentS = new AppointmentSRP(appointmentByDay);
+//                        scrollAppointments.add(appointmentS, new org.netbeans.lib.awtextra.AbsoluteConstraints(coorX, coorY, -1, -1));
+//                    } else {
+//                        AppointmentNERP appointmentSP1 = new AppointmentNERP(appointmentByDay);
+//                        scrollAppointments.add(appointmentSP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(coorX, coorY, -1, -1));
+//                    }
+//                }
+//            }
+//            coorX += 150;
+//        }
+        
+        int sepY = 123;
+        for (int i = 0; i < 8; i++) {
+            JSeparator jSeparator = new javax.swing.JSeparator();
+            jSeparator.setForeground(new java.awt.Color(204, 204, 204));
+            scrollAppointments.add(jSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, sepY, 180, -1));
+            sepY += 128;
+        }
     }
 
     private void loadPatients() {
@@ -115,11 +162,11 @@ public class ScheduleAppointment extends javax.swing.JPanel {
     }
 
     private boolean validateFields() {
-        if (cbPatient.getSelectedIndex() == -1) {
+        if (cbPatient.getSelectedIndex() == -1 || cbService.getSelectedIndex() == -1) {
             return false;
         }
-
-        if (cbService.getSelectedIndex() == -1) {
+        
+        if (cbHourBeginning.getSelectedIndex() == -1 || cbMinuteBeginning.getSelectedIndex() == -1 ) {
             return false;
         }
 
@@ -137,36 +184,49 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         title = new javax.swing.JPanel();
         jLTitle = new javax.swing.JLabel();
-        jLPatient = new javax.swing.JLabel();
-        jLNotes = new javax.swing.JLabel();
-        containerEnding = new Components.RoundedPanel();
-        cbMinuteEnding = new javax.swing.JComboBox<>();
-        containerService = new Components.RoundedPanel();
-        cbService = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLEnding = new javax.swing.JLabel();
         containerBeginning = new Components.RoundedPanel();
         cbMinuteBeginning = new javax.swing.JComboBox<>();
-        containerMonth = new Components.RoundedPanel();
-        cbMonth = new javax.swing.JComboBox<>();
+        jLNotes = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLDate = new javax.swing.JLabel();
-        containerDay = new Components.RoundedPanel();
-        cbDay = new javax.swing.JComboBox<>();
-        containerYear = new Components.RoundedPanel();
-        cbYear = new javax.swing.JComboBox<>();
-        jLEnding = new javax.swing.JLabel();
-        containerPatient = new Components.RoundedPanel();
-        cbPatient = new javax.swing.JComboBox<>();
-        jLService = new javax.swing.JLabel();
         containerReason = new Components.RoundedPanel();
         tAReason = new javax.swing.JTextArea();
-        jLBeginning = new javax.swing.JLabel();
-        containerBtnSchedule = new Components.RoundedPanel();
-        btnSchedule = new javax.swing.JButton();
         containerBeginning1 = new Components.RoundedPanel();
         cbHourBeginning = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        containerYear = new Components.RoundedPanel();
+        cbYear = new javax.swing.JComboBox<>();
+        containerDay = new Components.RoundedPanel();
+        cbDay = new javax.swing.JComboBox<>();
+        jLPatient = new javax.swing.JLabel();
+        containerMonth = new Components.RoundedPanel();
+        cbMonth = new javax.swing.JComboBox<>();
         containerEnding1 = new Components.RoundedPanel();
         cbHourEnding = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLBeginning = new javax.swing.JLabel();
+        jLService = new javax.swing.JLabel();
+        containerBtnSchedule = new Components.RoundedPanel();
+        btnSchedule = new javax.swing.JButton();
+        containerService = new Components.RoundedPanel();
+        cbService = new javax.swing.JComboBox<>();
+        containerPatient = new Components.RoundedPanel();
+        cbPatient = new javax.swing.JComboBox<>();
+        containerEnding = new Components.RoundedPanel();
+        cbMinuteEnding = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        jLSun = new javax.swing.JLabel();
+        AppointmentsScrollPane = new javax.swing.JScrollPane();
+        scrollAppointments = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -184,60 +244,19 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
 
-        jLPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jLPatient.setForeground(new java.awt.Color(35, 36, 37));
-        jLPatient.setText("Paciente:");
-        add(jLPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(204, 204, 204)));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLNotes.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jLNotes.setForeground(new java.awt.Color(35, 36, 37));
-        jLNotes.setText("Notas:");
-        add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, 10));
+        jLEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLEnding.setForeground(new java.awt.Color(35, 36, 37));
+        jLEnding.setText("Final:");
+        jPanel2.add(jLEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, -1, 10));
 
-        containerEnding.setBackground(new java.awt.Color(232, 240, 255));
-        containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbMinuteEnding.setBackground(new java.awt.Color(232, 240, 255));
-        cbMinuteEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbMinuteEnding.setForeground(new java.awt.Color(35, 36, 37));
-        cbMinuteEnding.setMaximumRowCount(12);
-        cbMinuteEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
-        cbMinuteEnding.setSelectedIndex(-1);
-        cbMinuteEnding.setBorder(null);
-        cbMinuteEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbMinuteEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbMinuteEnding.setEnabled(false);
-        cbMinuteEnding.setFocusable(false);
-        containerEnding.add(cbMinuteEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
-
-        add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 220, 55, 30));
-
-        containerService.setBackground(new java.awt.Color(232, 240, 255));
-        containerService.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbService.setBackground(new java.awt.Color(232, 240, 255));
-        cbService.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbService.setForeground(new java.awt.Color(35, 36, 37));
-        cbService.setMaximumRowCount(12);
-        cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nutricional", "Quirurgica", "Estetica" }));
-        cbService.setSelectedIndex(-1);
-        cbService.setBorder(null);
-        cbService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbService.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbService.setFocusable(false);
-        cbService.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbServiceActionPerformed(evt);
-            }
-        });
-        containerService.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
-
-        add(containerService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
-
-        containerBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning.setBackground(new java.awt.Color(244, 243, 243));
         containerBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbMinuteBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteBeginning.setBackground(new java.awt.Color(244, 243, 243));
         cbMinuteBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbMinuteBeginning.setForeground(new java.awt.Color(35, 36, 37));
         cbMinuteBeginning.setMaximumRowCount(12);
@@ -254,90 +273,28 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         });
         containerBeginning.add(cbMinuteBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
 
-        add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 220, 55, 30));
+        jPanel2.add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 160, 55, 30));
 
-        containerMonth.setBackground(new java.awt.Color(232, 240, 255));
-        containerMonth.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLNotes.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLNotes.setForeground(new java.awt.Color(35, 36, 37));
+        jLNotes.setText("Notas:");
+        jPanel2.add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
 
-        cbMonth.setBackground(new java.awt.Color(232, 240, 255));
-        cbMonth.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbMonth.setForeground(new java.awt.Color(35, 36, 37));
-        cbMonth.setMaximumRowCount(12);
-        cbMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbMonth.setBorder(null);
-        cbMonth.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbMonth.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbMonth.setFocusable(false);
-        containerMonth.add(cbMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
-
-        add(containerMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 80, 30));
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText(":");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 160, 10, 30));
 
         jLDate.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLDate.setForeground(new java.awt.Color(35, 36, 37));
         jLDate.setText("Fecha:");
-        add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+        jPanel2.add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
 
-        containerDay.setBackground(new java.awt.Color(232, 240, 255));
-        containerDay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbDay.setBackground(new java.awt.Color(232, 240, 255));
-        cbDay.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbDay.setForeground(new java.awt.Color(35, 36, 37));
-        cbDay.setMaximumRowCount(12);
-        cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbDay.setBorder(null);
-        cbDay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbDay.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbDay.setFocusable(false);
-        containerDay.add(cbDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
-
-        add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 80, 30));
-
-        containerYear.setBackground(new java.awt.Color(232, 240, 255));
-        containerYear.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbYear.setBackground(new java.awt.Color(232, 240, 255));
-        cbYear.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbYear.setForeground(new java.awt.Color(35, 36, 37));
-        cbYear.setMaximumRowCount(12);
-        cbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbYear.setBorder(null);
-        cbYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbYear.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbYear.setFocusable(false);
-        containerYear.add(cbYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
-
-        add(containerYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 80, 30));
-
-        jLEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jLEnding.setForeground(new java.awt.Color(35, 36, 37));
-        jLEnding.setText("Final:");
-        add(jLEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, 10));
-
-        containerPatient.setBackground(new java.awt.Color(232, 240, 255));
-        containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbPatient.setBackground(new java.awt.Color(232, 240, 255));
-        cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbPatient.setForeground(new java.awt.Color(35, 36, 37));
-        cbPatient.setMaximumRowCount(12);
-        cbPatient.setBorder(null);
-        cbPatient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbPatient.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbPatient.setFocusable(false);
-        containerPatient.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
-
-        add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
-
-        jLService.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jLService.setForeground(new java.awt.Color(35, 36, 37));
-        jLService.setText("Servicio:");
-        add(jLService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
-
-        containerReason.setBackground(new java.awt.Color(232, 240, 255));
+        containerReason.setBackground(new java.awt.Color(244, 243, 243));
         containerReason.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tAReason.setBackground(new java.awt.Color(232, 240, 255));
+        tAReason.setBackground(new java.awt.Color(244, 243, 243));
         tAReason.setColumns(20);
         tAReason.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         tAReason.setForeground(new java.awt.Color(35, 36, 37));
@@ -352,12 +309,116 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         });
         containerReason.add(tAReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, 140));
 
-        add(containerReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 260, 160));
+        jPanel2.add(containerReason, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 160));
+
+        containerBeginning1.setBackground(new java.awt.Color(244, 243, 243));
+        containerBeginning1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbHourBeginning.setBackground(new java.awt.Color(244, 243, 243));
+        cbHourBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbHourBeginning.setForeground(new java.awt.Color(35, 36, 37));
+        cbHourBeginning.setMaximumRowCount(12);
+        cbHourBeginning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18" }));
+        cbHourBeginning.setSelectedIndex(-1);
+        cbHourBeginning.setBorder(null);
+        cbHourBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbHourBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbHourBeginning.setFocusable(false);
+        cbHourBeginning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHourBeginningActionPerformed(evt);
+            }
+        });
+        containerBeginning1.add(cbHourBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        jPanel2.add(containerBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 55, 30));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(":");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 160, 10, 30));
+
+        containerYear.setBackground(new java.awt.Color(244, 243, 243));
+        containerYear.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbYear.setBackground(new java.awt.Color(244, 243, 243));
+        cbYear.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbYear.setForeground(new java.awt.Color(35, 36, 37));
+        cbYear.setMaximumRowCount(12);
+        cbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbYear.setBorder(null);
+        cbYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbYear.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbYear.setFocusable(false);
+        containerYear.add(cbYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
+
+        jPanel2.add(containerYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 80, 30));
+
+        containerDay.setBackground(new java.awt.Color(244, 243, 243));
+        containerDay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbDay.setBackground(new java.awt.Color(244, 243, 243));
+        cbDay.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbDay.setForeground(new java.awt.Color(35, 36, 37));
+        cbDay.setMaximumRowCount(12);
+        cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbDay.setBorder(null);
+        cbDay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbDay.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbDay.setFocusable(false);
+        containerDay.add(cbDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
+
+        jPanel2.add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 80, 30));
+
+        jLPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLPatient.setForeground(new java.awt.Color(35, 36, 37));
+        jLPatient.setText("Paciente:");
+        jPanel2.add(jLPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 10));
+
+        containerMonth.setBackground(new java.awt.Color(244, 243, 243));
+        containerMonth.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbMonth.setBackground(new java.awt.Color(244, 243, 243));
+        cbMonth.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMonth.setForeground(new java.awt.Color(35, 36, 37));
+        cbMonth.setMaximumRowCount(12);
+        cbMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMonth.setBorder(null);
+        cbMonth.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMonth.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMonth.setFocusable(false);
+        containerMonth.add(cbMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
+
+        jPanel2.add(containerMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 80, 30));
+
+        containerEnding1.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbHourEnding.setBackground(new java.awt.Color(244, 243, 243));
+        cbHourEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbHourEnding.setForeground(new java.awt.Color(35, 36, 37));
+        cbHourEnding.setMaximumRowCount(12);
+        cbHourEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
+        cbHourEnding.setSelectedIndex(-1);
+        cbHourEnding.setBorder(null);
+        cbHourEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbHourEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbHourEnding.setEnabled(false);
+        cbHourEnding.setFocusable(false);
+        containerEnding1.add(cbHourEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        jPanel2.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 55, 30));
 
         jLBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLBeginning.setForeground(new java.awt.Color(35, 36, 37));
         jLBeginning.setText("Inicio:");
-        add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
+        jPanel2.add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+
+        jLService.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLService.setForeground(new java.awt.Color(35, 36, 37));
+        jLService.setText("Servicio:");
+        jPanel2.add(jLService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
 
         containerBtnSchedule.setBackground(new java.awt.Color(37, 119, 241));
         containerBtnSchedule.setLayout(new java.awt.BorderLayout());
@@ -385,59 +446,129 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         });
         containerBtnSchedule.add(btnSchedule, java.awt.BorderLayout.CENTER);
 
-        add(containerBtnSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 260, 40));
+        jPanel2.add(containerBtnSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 260, 40));
 
-        containerBeginning1.setBackground(new java.awt.Color(232, 240, 255));
-        containerBeginning1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerService.setBackground(new java.awt.Color(244, 243, 243));
+        containerService.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbHourBeginning.setBackground(new java.awt.Color(232, 240, 255));
-        cbHourBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbHourBeginning.setForeground(new java.awt.Color(35, 36, 37));
-        cbHourBeginning.setMaximumRowCount(12);
-        cbHourBeginning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18" }));
-        cbHourBeginning.setSelectedIndex(-1);
-        cbHourBeginning.setBorder(null);
-        cbHourBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbHourBeginning.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbHourBeginning.setFocusable(false);
-        cbHourBeginning.addActionListener(new java.awt.event.ActionListener() {
+        cbService.setBackground(new java.awt.Color(244, 243, 243));
+        cbService.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbService.setForeground(new java.awt.Color(35, 36, 37));
+        cbService.setMaximumRowCount(12);
+        cbService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nutricional", "Quirurgica", "Estetica" }));
+        cbService.setSelectedIndex(-1);
+        cbService.setBorder(null);
+        cbService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbService.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbService.setFocusable(false);
+        cbService.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbHourBeginningActionPerformed(evt);
+                cbServiceActionPerformed(evt);
             }
         });
-        containerBeginning1.add(cbHourBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+        containerService.add(cbService, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
-        add(containerBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 55, 30));
+        jPanel2.add(containerService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
 
-        containerEnding1.setBackground(new java.awt.Color(232, 240, 255));
-        containerEnding1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        containerPatient.setBackground(new java.awt.Color(244, 243, 243));
+        containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbHourEnding.setBackground(new java.awt.Color(232, 240, 255));
-        cbHourEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbHourEnding.setForeground(new java.awt.Color(35, 36, 37));
-        cbHourEnding.setMaximumRowCount(12);
-        cbHourEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
-        cbHourEnding.setSelectedIndex(-1);
-        cbHourEnding.setBorder(null);
-        cbHourEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbHourEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbHourEnding.setEnabled(false);
-        cbHourEnding.setFocusable(false);
-        containerEnding1.add(cbHourEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+        cbPatient.setBackground(new java.awt.Color(244, 243, 243));
+        cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbPatient.setForeground(new java.awt.Color(35, 36, 37));
+        cbPatient.setMaximumRowCount(12);
+        cbPatient.setBorder(null);
+        cbPatient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbPatient.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbPatient.setFocusable(false);
+        containerPatient.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
-        add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 55, 30));
+        jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(":");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 220, 10, 30));
+        containerEnding.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText(":");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 220, 10, 30));
+        cbMinuteEnding.setBackground(new java.awt.Color(244, 243, 243));
+        cbMinuteEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMinuteEnding.setForeground(new java.awt.Color(35, 36, 37));
+        cbMinuteEnding.setMaximumRowCount(12);
+        cbMinuteEnding.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
+        cbMinuteEnding.setSelectedIndex(-1);
+        cbMinuteEnding.setBorder(null);
+        cbMinuteEnding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMinuteEnding.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMinuteEnding.setEnabled(false);
+        cbMinuteEnding.setFocusable(false);
+        containerEnding.add(cbMinuteEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 75, 30));
+
+        jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 160, 55, 30));
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 625));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(204, 204, 204)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLSun.setBackground(new java.awt.Color(255, 255, 255));
+        jLSun.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLSun.setForeground(new java.awt.Color(35, 36, 37));
+        jLSun.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLSun.setText("Day");
+        jLSun.setToolTipText("");
+        jPanel1.add(jLSun, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 140, 30));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 60, 220, 50));
+
+        AppointmentsScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        AppointmentsScrollPane.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(204, 204, 204)));
+        AppointmentsScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        scrollAppointments.setBackground(new java.awt.Color(255, 255, 255));
+        scrollAppointments.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel3.setText("12:00");
+        scrollAppointments.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 123, 20, -1));
+
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel4.setText("14:00");
+        scrollAppointments.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 379, 20, -1));
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel5.setText("13:00");
+        scrollAppointments.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 251, 20, -1));
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel6.setText("15:00");
+        scrollAppointments.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 507, 20, -1));
+
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel7.setText("16:00");
+        scrollAppointments.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 635, 20, -1));
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel8.setText("17:00");
+        scrollAppointments.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 763, 20, -1));
+
+        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel9.setText("18:00");
+        scrollAppointments.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 891, 20, -1));
+
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel10.setText("19:00");
+        scrollAppointments.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1019, 20, -1));
+
+        AppointmentsScrollPane.setViewportView(scrollAppointments);
+
+        add(AppointmentsScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 110, 220, 575));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
@@ -473,10 +604,8 @@ public class ScheduleAppointment extends javax.swing.JPanel {
             } else {
                 type = AppointmentType.Esthetic;
             }
-
             
-            
-            if (AppointmentControl.getInstance().addAppointment(new Appointment(startTime, patient, new Medicine(14), new Payment(8), type, patientType, false, tAReason.getText()))) {
+            if (AppointmentControl.getInstance().addAppointment(new Appointment(startTime, patient, type, patientType, false, tAReason.getText()))) {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Agendar cita", "Cita agendada correctamente");
                 cleanFields();
             } else {
@@ -501,6 +630,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane AppointmentsScrollPane;
     private javax.swing.JButton btnSchedule;
     private javax.swing.JComboBox<String> cbDay;
     private javax.swing.JComboBox<String> cbHourBeginning;
@@ -528,9 +658,21 @@ public class ScheduleAppointment extends javax.swing.JPanel {
     private javax.swing.JLabel jLNotes;
     private javax.swing.JLabel jLPatient;
     private javax.swing.JLabel jLService;
+    private javax.swing.JLabel jLSun;
     private javax.swing.JLabel jLTitle;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel scrollAppointments;
     private javax.swing.JTextArea tAReason;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables

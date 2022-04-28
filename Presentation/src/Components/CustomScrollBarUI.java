@@ -54,8 +54,7 @@ public class CustomScrollBarUI extends BasicScrollBarUI{
     protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        c.setBounds(c.getX(), c.getY(), 10, 630);
-        c.setBackground(new Color(23,24,26));
+        c.setBounds(c.getX(), c.getY(), 16, 577);
     }
 
     @Override
@@ -65,8 +64,8 @@ public class CustomScrollBarUI extends BasicScrollBarUI{
         Color color = null;
         JScrollBar sb = (JScrollBar) c;
 
-        g2.setPaint(new Color(58,59,60));
-        g2.fillRoundRect(r.x+1, r.y+9, 7, r.height-20, 7, 7);
+        g2.setPaint(new Color(225, 224, 224));
+        g2.fillRoundRect(r.x+7, r.y+2, 7, r.height-8, 7, 7);
         g2.dispose();
     }
 

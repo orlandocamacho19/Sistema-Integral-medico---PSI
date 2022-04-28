@@ -86,7 +86,7 @@ public class Message extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        topBar.setBackground(new java.awt.Color(232, 240, 254));
+        topBar.setBackground(new java.awt.Color(244, 243, 243));
         topBar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         topBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -167,7 +167,7 @@ public class Message extends javax.swing.JFrame {
 
         content.add(containerBtnAprove, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 40));
 
-        roundedPanel1.setBackground(new java.awt.Color(232, 240, 254));
+        roundedPanel1.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

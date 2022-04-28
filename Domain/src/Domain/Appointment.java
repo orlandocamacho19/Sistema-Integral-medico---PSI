@@ -20,6 +20,22 @@ public class Appointment {
      */
     public Appointment() {
     }
+    
+    /**
+     * Constructor that replicates de appointment given in parameters
+     * @param appointment 
+     */
+    public Appointment(Appointment appointment) {
+        this.id_appointment = appointment.getId_appointment();
+        this.startTime = appointment.getStartTime();
+        this.patient = appointment.getPatient();
+        this.aType = appointment.getaType();
+        this.type = appointment.getType();
+        this.medicine = appointment.getMedicine();
+        this.payment = appointment.getPayment();
+        this.confirmation = appointment.isConfirmation();
+        this.reason = appointment.getReason();
+    }
 
     /**
      * Constructor that receives the appointment ID
@@ -59,6 +75,25 @@ public class Appointment {
         this.patient = patient;
         this.medicine = medicine;
         this.payment = payment;
+        this.aType = aType;
+        this.type = type;
+        this.confirmation = confirmation;
+        this.reason = reason;
+    }
+    
+    /**
+     * Contructor that receives the appointment start time, patient, appointment
+     * type, type, confirmation and reason
+     * @param startTime
+     * @param patient
+     * @param aType
+     * @param type
+     * @param confirmation
+     * @param reason 
+     */
+    public Appointment(Timestamp startTime, Patient patient, AppointmentType aType, Type type, boolean confirmation, String reason) {
+        this.startTime = startTime;
+        this.patient = patient;
         this.aType = aType;
         this.type = type;
         this.confirmation = confirmation;
@@ -317,7 +352,7 @@ public class Appointment {
      */
     @Override
     public String toString() {
-        String date = this.startTime.getDate() + "-" + (this.startTime.getMonth() + 1) + "-" + (this.startTime.getYear() + 1900);
+        String date = this.startTime.getDate() + "/" + (this.startTime.getMonth() + 1) + "/" + (this.startTime.getYear() + 1900);
         switch (aType) {
             case Nutritional:
                 date = "Nutricional - " + date;

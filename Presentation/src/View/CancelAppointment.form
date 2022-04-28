@@ -89,7 +89,7 @@
     <Container class="Components.RoundedPanel" name="containerScheduleDate">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -105,7 +105,7 @@
         <Component class="javax.swing.JComboBox" name="cbScheduleDate">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -160,7 +160,7 @@
     <Container class="Components.RoundedPanel" name="containerPatient">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -176,7 +176,7 @@
         <Component class="javax.swing.JComboBox" name="cbPatient">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -264,7 +264,7 @@
     <Container class="Components.RoundedPanel" name="containerService">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -280,7 +280,7 @@
         <Component class="javax.swing.JComboBox" name="cbService">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -337,7 +337,7 @@
     <Container class="Components.RoundedPanel" name="containerReason">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -353,7 +353,7 @@
         <Component class="javax.swing.JTextArea" name="tAReason">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="columns" type="int" value="20"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -421,7 +421,7 @@
     <Container class="Components.RoundedPanel" name="containerEnding">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -437,7 +437,7 @@
         <Component class="javax.swing.JComboBox" name="cbMinuteEnding">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -478,7 +478,7 @@
     <Container class="Components.RoundedPanel" name="containerBeginning">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -494,7 +494,7 @@
         <Component class="javax.swing.JComboBox" name="cbMinuteBeginning">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -535,7 +535,7 @@
     <Container class="Components.RoundedPanel" name="containerBeginning1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -551,7 +551,7 @@
         <Component class="javax.swing.JComboBox" name="cbHourBeginning">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -596,7 +596,7 @@
     <Container class="Components.RoundedPanel" name="containerEnding1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="f0" red="e8" type="rgb"/>
+          <Color blue="f3" green="f3" red="f4" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -612,7 +612,7 @@
         <Component class="javax.swing.JComboBox" name="cbHourEnding">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="f0" red="e8" type="rgb"/>
+              <Color blue="f3" green="f3" red="f4" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>

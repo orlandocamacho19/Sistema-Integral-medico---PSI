@@ -17,35 +17,35 @@ import javax.swing.JPanel;
  *
  * @author orlandocamacho
  */
-public class RoundedPanel extends JPanel {
+public class RoundedApp extends JPanel {
 
     private Color backgroundColor;
-    private int cornerRadius = 15;
+    private int cornerRadius = 10;
     Graphics g;
 
-    public RoundedPanel(LayoutManager layout, int radius) {
+    public RoundedApp(LayoutManager layout, int radius) {
         super(layout);
         cornerRadius = radius;
     }
 
-    public RoundedPanel(LayoutManager layout, int radius, Color bgColor) {
+    public RoundedApp(LayoutManager layout, int radius, Color bgColor) {
         super(layout);
         cornerRadius = radius;
         backgroundColor = bgColor;
     }
 
-    public RoundedPanel(int radius) {
+    public RoundedApp(int radius) {
         super();
         cornerRadius = radius;
     }
 
-    public RoundedPanel(int radius, Color bgColor) {
+    public RoundedApp(int radius, Color bgColor) {
         super();
         cornerRadius = radius;
         backgroundColor = bgColor;
     }
 
-    public RoundedPanel() {
+    public RoundedApp() {
         super();
         setOpaque(false);
     }

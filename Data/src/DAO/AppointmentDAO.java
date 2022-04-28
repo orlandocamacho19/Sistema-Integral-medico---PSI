@@ -42,20 +42,18 @@ public class AppointmentDAO extends ConnectionDB {
     public void insert(Appointment appointment) {
         try {
             this.connect();
-            String sql = "INSERT INTO appointments (start_time, id_patient, id_medicine, id_payment, appointment_type, type, confirmation, reason) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO appointments (start_time, id_patient, appointment_type, type, confirmation, reason) VALUES (?, ?, ?, ?, ?, ?);";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
 
             ps.setTimestamp(1, appointment.getStartTime());
             ps.setInt(2, appointment.getPatient().getID());
-            ps.setInt(3, appointment.getMedicine().getId_medicine());
-            ps.setInt(4, appointment.getPayment().getId_payment());
-            ps.setString(5, appointment.getaType().toString());
-            ps.setString(6, appointment.getType().toString());
-            ps.setBoolean(7, appointment.isConfirmation());
-            ps.setString(8, appointment.getReason());
+            ps.setString(3, appointment.getaType().toString());
+            ps.setString(4, appointment.getType().toString());
+            ps.setBoolean(5, appointment.isConfirmation());
+            ps.setString(6, appointment.getReason());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -69,17 +67,15 @@ public class AppointmentDAO extends ConnectionDB {
     public void update(int id, Appointment appointment) {
         try {
             this.connect();
-            String sql = "update appointments set start_time=?, id_patient=?, id_medicine=?, id_payment=?, appointment_type=?, type=?, confirmation=?, reason=? where id_appointment=?";
+            String sql = "update appointments set start_time=?, id_patient=?, appointment_type=?, type=?, confirmation=?, reason=? where id_appointment=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setTimestamp(1, appointment.getStartTime());
             ps.setInt(2, appointment.getPatient().getID());
-            ps.setInt(3, appointment.getMedicine().getId_medicine());
-            ps.setInt(4, appointment.getPayment().getId_payment());
-            ps.setString(5, appointment.getaType().toString());
-            ps.setString(6, appointment.getType().toString());
-            ps.setBoolean(7, appointment.isConfirmation());
-            ps.setString(8, appointment.getReason());
-            ps.setInt(9, id);
+            ps.setString(3, appointment.getaType().toString());
+            ps.setString(4, appointment.getType().toString());
+            ps.setBoolean(5, appointment.isConfirmation());
+            ps.setString(6, appointment.getReason());
+            ps.setInt(7, id);
             ps.executeUpdate();
         } catch (Exception e) {
             e.getStackTrace();
@@ -124,11 +120,15 @@ public class AppointmentDAO extends ConnectionDB {
                 Patient p = new Patient((int) res.getObject("id_patient"));
                 appointment.setPatient(p);
 
-                Medicine m = new Medicine((int) res.getObject("id_medicine"));
-                appointment.setMedicine(m);
-
-                Payment pa = new Payment((int) res.getObject("id_payment"));
-                appointment.setPayment(pa);
+                if (res.getObject("id_medicine") != null) {
+                   Medicine m = new Medicine((int) res.getObject("id_medicine"));
+                    appointment.setMedicine(m); 
+                }
+                
+                if (res.getObject("id_payment") != null) {
+                    Payment pa = new Payment((int) res.getObject("id_payment"));
+                    appointment.setPayment(pa);
+                }
 
                 appointment.setaType(AppointmentType.valueOf((String) res.getObject("appointment_type")));
                 appointment.setType(Type.valueOf((String) res.getObject("type")));

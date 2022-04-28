@@ -122,13 +122,13 @@ public class PatientDAO extends ConnectionDB {
      * @param patient Patient
      * @return Patient
      */
-    public boolean consultByID(Patient patient) {
+    public Patient consultByID(Patient patient) {
         for (int i = 0; i < consultAll().size(); i++) {
             if (consultAll().get(i).getID() == patient.getID()) {
-                return true;
+                return consultAll().get(i);
             }
         }
-        return false;
+        return null;
     }
 
 }

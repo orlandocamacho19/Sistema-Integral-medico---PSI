@@ -12,6 +12,7 @@ import SIM.MessageType;
 import control.AppointmentControl;
 import control.PatientControl;
 import java.awt.Color;
+import java.util.List;
 
 /**
  *
@@ -32,56 +33,74 @@ public class CancelAppointment extends javax.swing.JPanel {
         for (Patient patient : PatientControl.getInstance().getPatients()) {
             cbPatient.addItem(patient);
         }
-        cbPatient.setSelectedIndex(0);
+        cbPatient.setSelectedIndex(-1);
     }
     
     private void loadAppointments(){
-        this.cbScheduleDate.removeAllItems();
-        Patient patient = (Patient) cbPatient.getSelectedItem();
-        for (Appointment appointment : AppointmentControl.getInstance().getAppointment()) {
-            if (patient.getID() == appointment.getPatient().getID()) {
-                this.cbScheduleDate.addItem(appointment);
+        if (cbPatient.getSelectedIndex() == -1) {
+            this.fillService();
+            this.fillHours();
+
+        } else {
+            this.cbScheduleDate.removeAllItems();
+            Patient patient = (Patient) cbPatient.getSelectedItem();
+            List<Appointment> appointments = AppointmentControl.getInstance().getAppointmentByPatient(patient);
+
+            if (appointments != null) {
+                for (Appointment appointment : appointments) {
+                    this.cbScheduleDate.addItem(appointment);
+                }
+                cbScheduleDate.setSelectedIndex(0);
             }
         }
-        cbScheduleDate.setSelectedIndex(0);
     }
     
     private void fillService(){
         Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
-        if (app.getaType() == AppointmentType.Nutritional) {
-            cbService.setSelectedIndex(0);
-        } else if (app.getaType() == AppointmentType.Surgical) {
-            cbService.setSelectedIndex(1);
+        if (app != null) {
+            if (app.getaType() == AppointmentType.Nutritional) {
+                cbService.setSelectedIndex(0);
+            } else if (app.getaType() == AppointmentType.Surgical) {
+                cbService.setSelectedIndex(1);
+            } else {
+                cbService.setSelectedIndex(2);
+            }
         } else {
-            cbService.setSelectedIndex(2);
+            cbService.setSelectedIndex(-1);
         }
     }
     
-private void fillHours(){
+    private void fillHours() {
         Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
-        cbHourBeginning.setSelectedItem(String.valueOf(app.getStartTime().getHours()));
-        
-        if (app.getStartTime().getMinutes() != 0) {
-            cbMinuteBeginning.setSelectedItem(String.valueOf(app.getStartTime().getMinutes()));
-        } else {
-            cbMinuteBeginning.setSelectedIndex(0);
-        }
-        
-        if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
-            if (cbMinuteBeginning.getSelectedIndex() == 0 || cbMinuteBeginning.getSelectedIndex() == 1 || cbMinuteBeginning.getSelectedIndex() == 2) {
-                cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex());
-                cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex() + 1);
+        if (app != null) {
+            cbHourBeginning.setSelectedItem(String.valueOf(app.getStartTime().getHours()));
+
+            if (app.getStartTime().getMinutes() != 0) {
+                cbMinuteBeginning.setSelectedItem(String.valueOf(app.getStartTime().getMinutes()));
+            } else {
+                cbMinuteBeginning.setSelectedIndex(0);
+            }
+
+            if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
+                if (cbMinuteBeginning.getSelectedIndex() == 0 || cbMinuteBeginning.getSelectedIndex() == 1 || cbMinuteBeginning.getSelectedIndex() == 2) {
+                    cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex());
+                    cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex() + 1);
+                } else {
+                    cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
+                    cbMinuteEnding.setSelectedIndex(0);
+                }
             } else {
                 cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
-                cbMinuteEnding.setSelectedIndex(0);
-            }    
+                cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
+            }
+
+            this.tAReason.setText(app.getReason());
         } else {
-            cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
-            cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
+            cbHourBeginning.setSelectedIndex(-1);
+            cbMinuteBeginning.setSelectedIndex(-1);
+            cbHourEnding.setSelectedIndex(-1);
+            cbMinuteEnding.setSelectedIndex(-1);
         }
-        
-        
-        this.tAReason.setText(app.getReason());
     }
     
     private void updateHour() {
@@ -100,7 +119,8 @@ private void fillHours(){
     }
     
     private void cleanFields() {
-        cbPatient.setSelectedIndex(0);
+        cbPatient.setSelectedIndex(-1);
+        tAReason.setText("");
         loadAppointments();
     }
 
@@ -163,10 +183,10 @@ private void fillHours(){
         jLPatient.setText("Paciente:");
         add(jLPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
 
-        containerScheduleDate.setBackground(new java.awt.Color(232, 240, 255));
+        containerScheduleDate.setBackground(new java.awt.Color(244, 243, 243));
         containerScheduleDate.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbScheduleDate.setBackground(new java.awt.Color(232, 240, 255));
+        cbScheduleDate.setBackground(new java.awt.Color(244, 243, 243));
         cbScheduleDate.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbScheduleDate.setForeground(new java.awt.Color(35, 36, 37));
         cbScheduleDate.setMaximumRowCount(12);
@@ -189,10 +209,10 @@ private void fillHours(){
         jLDate.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
 
-        containerPatient.setBackground(new java.awt.Color(232, 240, 255));
+        containerPatient.setBackground(new java.awt.Color(244, 243, 243));
         containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbPatient.setBackground(new java.awt.Color(232, 240, 255));
+        cbPatient.setBackground(new java.awt.Color(244, 243, 243));
         cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbPatient.setForeground(new java.awt.Color(35, 36, 37));
         cbPatient.setMaximumRowCount(12);
@@ -226,10 +246,10 @@ private void fillHours(){
         jLNotes.setText("Notas:");
         add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, 10));
 
-        containerService.setBackground(new java.awt.Color(232, 240, 255));
+        containerService.setBackground(new java.awt.Color(244, 243, 243));
         containerService.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbService.setBackground(new java.awt.Color(232, 240, 255));
+        cbService.setBackground(new java.awt.Color(244, 243, 243));
         cbService.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbService.setForeground(new java.awt.Color(35, 36, 37));
         cbService.setMaximumRowCount(12);
@@ -249,10 +269,10 @@ private void fillHours(){
         jLService.setText("Servicio:");
         add(jLService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
 
-        containerReason.setBackground(new java.awt.Color(232, 240, 255));
+        containerReason.setBackground(new java.awt.Color(244, 243, 243));
         containerReason.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tAReason.setBackground(new java.awt.Color(232, 240, 255));
+        tAReason.setBackground(new java.awt.Color(244, 243, 243));
         tAReason.setColumns(20);
         tAReason.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         tAReason.setForeground(new java.awt.Color(35, 36, 37));
@@ -293,10 +313,10 @@ private void fillHours(){
 
         add(containerBtnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 260, 40));
 
-        containerEnding.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbMinuteEnding.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteEnding.setBackground(new java.awt.Color(244, 243, 243));
         cbMinuteEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbMinuteEnding.setForeground(new java.awt.Color(35, 36, 37));
         cbMinuteEnding.setMaximumRowCount(12);
@@ -310,10 +330,10 @@ private void fillHours(){
 
         add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 220, 55, 30));
 
-        containerBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning.setBackground(new java.awt.Color(244, 243, 243));
         containerBeginning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbMinuteBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        cbMinuteBeginning.setBackground(new java.awt.Color(244, 243, 243));
         cbMinuteBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbMinuteBeginning.setForeground(new java.awt.Color(35, 36, 37));
         cbMinuteBeginning.setMaximumRowCount(12);
@@ -327,10 +347,10 @@ private void fillHours(){
 
         add(containerBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 220, 55, 30));
 
-        containerBeginning1.setBackground(new java.awt.Color(232, 240, 255));
+        containerBeginning1.setBackground(new java.awt.Color(244, 243, 243));
         containerBeginning1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbHourBeginning.setBackground(new java.awt.Color(232, 240, 255));
+        cbHourBeginning.setBackground(new java.awt.Color(244, 243, 243));
         cbHourBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbHourBeginning.setForeground(new java.awt.Color(35, 36, 37));
         cbHourBeginning.setMaximumRowCount(12);
@@ -344,10 +364,10 @@ private void fillHours(){
 
         add(containerBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 55, 30));
 
-        containerEnding1.setBackground(new java.awt.Color(232, 240, 255));
+        containerEnding1.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbHourEnding.setBackground(new java.awt.Color(232, 240, 255));
+        cbHourEnding.setBackground(new java.awt.Color(244, 243, 243));
         cbHourEnding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         cbHourEnding.setForeground(new java.awt.Color(35, 36, 37));
         cbHourEnding.setMaximumRowCount(12);
