@@ -267,7 +267,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnReschedule = new javax.swing.JButton();
         title = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -311,6 +310,7 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         containerNewYear = new Components.RoundedPanel();
         cbNewYear = new javax.swing.JComboBox<>();
         containerBtnReschedule = new Components.RoundedPanel();
+        btnReschedule = new javax.swing.JButton();
         containerEnding = new Components.RoundedPanel();
         cbMinuteEnding = new javax.swing.JComboBox<>();
         containerBeginning3 = new Components.RoundedPanel();
@@ -440,28 +440,6 @@ public class RescheduleAppointment extends javax.swing.JPanel {
         roundedPanel39 = new Components.RoundedPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-
-        btnReschedule.setBackground(new java.awt.Color(37, 119, 241));
-        btnReschedule.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        btnReschedule.setForeground(new java.awt.Color(255, 255, 255));
-        btnReschedule.setText("Reagendar cita");
-        btnReschedule.setBorderPainted(false);
-        btnReschedule.setContentAreaFilled(false);
-        btnReschedule.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                btnReschedulenMouseMoved(evt);
-            }
-        });
-        btnReschedule.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnRescheduleMouseExited(evt);
-            }
-        });
-        btnReschedule.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRescheduleActionPerformed(evt);
-            }
-        });
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -798,6 +776,30 @@ public class RescheduleAppointment extends javax.swing.JPanel {
 
         containerBtnReschedule.setBackground(new java.awt.Color(37, 119, 241));
         containerBtnReschedule.setLayout(new java.awt.BorderLayout());
+
+        btnReschedule.setBackground(new java.awt.Color(37, 119, 241));
+        btnReschedule.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        btnReschedule.setForeground(new java.awt.Color(255, 255, 255));
+        btnReschedule.setText("Reagendar cita");
+        btnReschedule.setBorderPainted(false);
+        btnReschedule.setContentAreaFilled(false);
+        btnReschedule.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnReschedulenMouseMoved(evt);
+            }
+        });
+        btnReschedule.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRescheduleMouseExited(evt);
+            }
+        });
+        btnReschedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRescheduleActionPerformed(evt);
+            }
+        });
+        containerBtnReschedule.add(btnReschedule, java.awt.BorderLayout.CENTER);
+
         jPanel1.add(containerBtnReschedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 260, 40));
 
         containerEnding.setBackground(new java.awt.Color(244, 243, 243));

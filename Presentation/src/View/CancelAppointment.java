@@ -28,7 +28,7 @@ import javax.swing.JSeparator;
 public class CancelAppointment extends javax.swing.JPanel {
 
     Timestamp currentTime = Timestamp.from(Instant.now());
-     
+
     /**
      * Creates new form ScheduleAppointment
      */
@@ -39,13 +39,13 @@ public class CancelAppointment extends javax.swing.JPanel {
         scrollAppointments.setSize(260, 1029);
         scrollAppointments.setPreferredSize(new java.awt.Dimension(260, 1029));
         revalidate();
-        
+
         renderAppointments(currentTime);
-        
+
         this.loadPatients();
     }
-    
-        private void renderAppointments(Timestamp currentTime) {
+
+    private void renderAppointments(Timestamp currentTime) {
         switch (currentTime.getDay()) {
             case 0:
                 jLDay.setText("Dom " + currentTime.getDate());
@@ -69,7 +69,7 @@ public class CancelAppointment extends javax.swing.JPanel {
                 jLDay.setText("Sab " + currentTime.getDate());
                 break;
         }
-        
+
         scrollAppointments.removeAll();
 
         List<Appointment> appointmentsByDay = AppointmentControl.getInstance().getAppointmentByDay(currentTime);
@@ -94,12 +94,12 @@ public class CancelAppointment extends javax.swing.JPanel {
         for (int i = 0; i < 8; i++) {
             JSeparator jSeparator = new javax.swing.JSeparator();
             JLabel jLabel = new javax.swing.JLabel();
-            
+
             jSeparator.setForeground(new java.awt.Color(204, 204, 204));
             jLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 8)); // NOI18N
             jLabel.setForeground(new java.awt.Color(35, 36, 37));
-            jLabel.setText(hour +":00");
-            
+            jLabel.setText(hour + ":00");
+
             scrollAppointments.add(jLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, sepY, 20, -1));
             scrollAppointments.add(jSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, sepY, 220, -1));
             sepY += 128;
@@ -107,16 +107,15 @@ public class CancelAppointment extends javax.swing.JPanel {
         }
     }
 
-    
-    private void loadPatients(){
+    private void loadPatients() {
         this.cbPatient.removeAllItems();
         for (Patient patient : PatientControl.getInstance().getPatients()) {
             cbPatient.addItem(patient);
         }
         cbPatient.setSelectedIndex(-1);
     }
-    
-    private void loadAppointments(){
+
+    private void loadAppointments() {
         if (cbPatient.getSelectedIndex() == -1) {
             this.fillService();
             this.fillHours();
@@ -134,8 +133,8 @@ public class CancelAppointment extends javax.swing.JPanel {
             }
         }
     }
-    
-    private void fillService(){
+
+    private void fillService() {
         Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
         if (app != null) {
             if (app.getaType() == AppointmentType.Nutritional) {
@@ -149,7 +148,7 @@ public class CancelAppointment extends javax.swing.JPanel {
             cbService.setSelectedIndex(-1);
         }
     }
-    
+
     private void fillHours() {
         Appointment app = (Appointment) cbScheduleDate.getSelectedItem();
         if (app != null) {
@@ -182,7 +181,7 @@ public class CancelAppointment extends javax.swing.JPanel {
             cbMinuteEnding.setSelectedIndex(-1);
         }
     }
-    
+
     private void updateHour() {
         if (cbService.getSelectedItem().toString().equals("Nutricional") || cbService.getSelectedItem().toString().equals("Estetica")) {
             if (cbMinuteBeginning.getSelectedIndex() == 0 || cbMinuteBeginning.getSelectedIndex() == 1 || cbMinuteBeginning.getSelectedIndex() == 2) {
@@ -191,13 +190,13 @@ public class CancelAppointment extends javax.swing.JPanel {
             } else {
                 cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
                 cbMinuteEnding.setSelectedIndex(0);
-            }    
+            }
         } else {
             cbHourEnding.setSelectedIndex(cbHourBeginning.getSelectedIndex() + 1);
             cbMinuteEnding.setSelectedIndex(cbMinuteBeginning.getSelectedIndex());
         }
     }
-    
+
     private void cleanFields() {
         cbPatient.setSelectedIndex(-1);
         tAReason.setText("");
@@ -1307,19 +1306,23 @@ public class CancelAppointment extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelnMouseMoved
-        containerBtnCancel.setBackground(new Color(35,111,229));
+        containerBtnCancel.setBackground(new Color(35, 111, 229));
     }//GEN-LAST:event_btnCancelnMouseMoved
 
     private void btnCancelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseExited
-        containerBtnCancel.setBackground(new Color(37,119,241));
+        containerBtnCancel.setBackground(new Color(37, 119, 241));
     }//GEN-LAST:event_btnCancelMouseExited
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         Appointment app = (Appointment) this.cbScheduleDate.getSelectedItem();
-        if(AppointmentControl.getInstance().deleteAppointment(app)){
-            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Cancelar cita", "Cita cancelada correctamente");
-            cleanFields();
-            renderAppointments(currentTime);
+        if (app != null) {
+            if (AppointmentControl.getInstance().deleteAppointment(app)) {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Cancelar cita", "Cita cancelada correctamente");
+                cleanFields();
+                renderAppointments(currentTime);
+            } else {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Cancelar cita", "Imposible cancelar cita");
+            }
         } else {
             App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Cancelar cita", "Imposible cancelar cita");
         }

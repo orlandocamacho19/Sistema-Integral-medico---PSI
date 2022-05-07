@@ -7,6 +7,8 @@ package Components;
 import Domain.Appointment;
 import Domain.AppointmentType;
 import Domain.Type;
+import SIM.App;
+import View.AppointmentInfo;
 import control.PatientControl;
 import java.awt.Color;
 
@@ -88,6 +90,12 @@ public class AppointmentNERP extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rPBorder.setBackground(new java.awt.Color(0, 153, 51));
@@ -113,6 +121,10 @@ public class AppointmentNERP extends javax.swing.JPanel {
 
         add(rPBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 30));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        new AppointmentInfo(App.GetSingleton().getMainFrame(), true);
+    }//GEN-LAST:event_formMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

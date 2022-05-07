@@ -65,6 +65,7 @@ public class AppointmentSRP extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rPBorder.setBackground(new java.awt.Color(0, 153, 51));
