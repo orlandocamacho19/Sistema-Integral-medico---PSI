@@ -36,12 +36,13 @@ public class PatientDAO extends ConnectionDB {
     public void insert(Patient patient) {
         try {
             this.connect();
-            String sql = "insert into patients (name, phone, birth_date) values (?, ?, ?)";
+            String sql = "insert into patients (name, phone, birth_date, email, address) values (?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, patient.getName());
             ps.setString(2, patient.getPhone());
             ps.setDate(3, (Date) patient.getBirthDate());
-
+            ps.setString(4, patient.getEmail());
+            ps.setString(5, patient.getAddress());
             ps.executeUpdate();
         } catch (Exception e) {
             e.getStackTrace();
@@ -58,12 +59,14 @@ public class PatientDAO extends ConnectionDB {
     public void update(int id, Patient patient) {
         try {
             this.connect();
-            String sql = "update patients set name=?, phone=?, birth_date=? where id_patient=?";
+            String sql = "update patients set name=?, phone=?, birth_date=?, email=?, address=? where id_patient=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, patient.getName());
             ps.setString(2, patient.getPhone());
             ps.setDate(3, (Date) patient.getBirthDate());
-            ps.setInt(4, id);
+            ps.setString(4, patient.getEmail());
+            ps.setString(5, patient.getAddress());
+            ps.setInt(6, id);
             ps.executeUpdate();
         } catch (Exception e) {
             e.getStackTrace();
@@ -107,6 +110,8 @@ public class PatientDAO extends ConnectionDB {
                 patient.setName(res.getString("name"));
                 patient.setPhone(res.getString("phone"));
                 patient.setBirthDate(res.getDate("birth_date"));
+                patient.setEmail(res.getString("emain"));
+                patient.setAddress(res.getString("address"));
                 medicines.add(patient);
 
             }

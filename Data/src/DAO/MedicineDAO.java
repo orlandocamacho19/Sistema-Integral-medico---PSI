@@ -36,13 +36,14 @@ public class MedicineDAO extends ConnectionDB {
     public void insert(Medicine medicine) {
         try {
             this.connect();
-            String sql = "insert into medicines (name, amount, ingest, indications, due_date) values (?, ?, ?, ?, ?)";
+            String sql = "insert into medicines (name, amount, ingredient, mgIngredient, indications, active) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, medicine.getName());
             ps.setDouble(2, medicine.getAmount());
-            ps.setDouble(3, medicine.getIngest());
-            ps.setString(4, medicine.getIndications());
-            ps.setDate(5, (Date) medicine.getDueDate());
+            ps.setString(3, medicine.getIngredient());
+            ps.setInt(4, medicine.getMgIngredient());
+            ps.setString(5, medicine.getIndications());
+            ps.setBoolean(6, medicine.isActive());
 
             ps.executeUpdate();
         } catch (Exception e) {
@@ -59,14 +60,15 @@ public class MedicineDAO extends ConnectionDB {
     public void update(int id, Medicine medicine) {
         try {
             this.connect();
-            String sql = "update medicines set name=?, amount=?, ingest=?, indications=?, due_date=? where id_medicine=?";
+            String sql = "update medicines set name=?, amount=?, ingredient=?, mgIngredient=?, indication=?, sactive=? where id_medicine=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, medicine.getName());
             ps.setDouble(2, medicine.getAmount());
-            ps.setDouble(3, medicine.getIngest());
-            ps.setString(4, medicine.getIndications());
-            ps.setDate(5, (Date) medicine.getDueDate());
-            ps.setInt(6, id);
+            ps.setString(3, medicine.getIngredient());
+            ps.setInt(4, medicine.getMgIngredient());
+            ps.setString(5, medicine.getIndications());
+            ps.setBoolean(6, medicine.isActive());
+            ps.setInt(7, id);
             ps.executeUpdate();
         } catch (Exception e) {
             e.getStackTrace();
@@ -109,9 +111,10 @@ public class MedicineDAO extends ConnectionDB {
                 medicine.setId_medicine(res.getInt("id_medicine"));
                 medicine.setName(res.getString("name"));
                 medicine.setAmount(res.getDouble("amount"));
-                medicine.setIngest(res.getDouble("ingest"));
+                medicine.setIngredient(res.getString("ingredient"));
+                medicine.setMgIngredient(res.getInt("mgIngredient"));
                 medicine.setIndications(res.getString("indications"));
-                medicine.setDueDate(res.getDate("due_date"));
+                medicine.setActive(res.getBoolean("active"));
                 medicines.add(medicine);
 
             }

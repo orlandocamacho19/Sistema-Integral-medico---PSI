@@ -11,6 +11,8 @@ public class Patient {
     private String name;
     private String phone;
     private Date birthDate;
+    private String email;
+    private String address;
     private List<MedicalNote> medicalNotes = new ArrayList<>();
     private List<Medicine> medicines = new ArrayList<>();
 
@@ -30,31 +32,39 @@ public class Patient {
     }
 
     /**
-     * Constructor that receives the patient ID, name, phone and birthDate
+     * Constructor that receives the patient ID, name, phone, birthDate, email, address 
      *
      * @param id_patient patient ID
      * @param name Name
      * @param phone Phone number
      * @param birthDate Birthdate
+     * @param email Email
+     * @param address Address
      */
-    public Patient(int id_patient, String name, String phone, Date birthDate) {
+    public Patient(int id_patient, String name, String phone, Date birthDate, String email, String address) {
         this.id_patient = id_patient;
         this.name = name;
         this.phone = phone;
         this.birthDate = birthDate;
+        this.email = email;
+        this.address = address;
     }
 
     /**
-     * Constructor that receives the patient name, phone and birthDate
+     * Constructor that receives the patient name, phone, birthDate, email, address 
      *
      * @param name Name
      * @param phone Phone nuymber
      * @param birthDate Birthdate
+     * @param email Email
+     * @param address Address
      */
-    public Patient(String name, String phone, Date birthDate) {
+    public Patient(String name, String phone, Date birthDate, String email, String address) {
         this.name = name;
         this.phone = phone;
         this.birthDate = birthDate;
+        this.email = email;
+        this.address = address;
     }
 
     /**
@@ -163,6 +173,22 @@ public class Patient {
      */
     public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     /**

@@ -8,9 +8,10 @@ public class Medicine {
     private int id_medicine;
     private String name;
     private double amount;
-    private double ingest;
+    private String ingredient;
+    private int mgIngredient;
     private String indications;
-    private Date dueDate;
+    private boolean active;
 
     /**
      * Constructor
@@ -28,41 +29,45 @@ public class Medicine {
     }
 
     /**
-     * Constructor that receives the medicine ID, name, amount, ingest,
+     * Constructor that receives the medicine ID, name, amount, ingredient, mgIngrediente, active and indications
      * indications, and due date
      *
      * @param id_medicine Medicine ID
      * @param name Name
      * @param amount Amount
-     * @param ingest Ingest
-     * @param indications Indications
-     * @param dueDate Due date
+     * @param ingredient Ingredient
+     * @param mgIngredient mgIngredient
+     * @param indications
+     * @param active Active
      */
-    public Medicine(int id_medicine, String name, double amount, double ingest, String indications, Date dueDate) {
+    public Medicine(int id_medicine, String name, double amount, String ingredient, int mgIngredient, String indications, boolean active) {
         this.id_medicine = id_medicine;
         this.name = name;
         this.amount = amount;
-        this.ingest = ingest;
+        this.ingredient = ingredient;
+        this.mgIngredient = mgIngredient;
         this.indications = indications;
-        this.dueDate = dueDate;
+        this.active = active;
     }
 
     /**
-     * Constructor that receives the medicine name, amount, ingest, indications
+     * Constructor that receives the medicine name, amount, ingredient, mgIngrediente, active and indications
      * and due date
      *
      * @param name Name
      * @param amount Amount
-     * @param ingest Ingest
-     * @param indications Indications
-     * @param dueDate Due date
+     * @param ingredient Ingredient
+     * @param mgIngredient mgIngredient
+     * @param indications
+     * @param active Active
      */
-    public Medicine(String name, double amount, double ingest, String indications, Date dueDate) {
+    public Medicine(String name, double amount, String ingredient, int mgIngredient, String indications, boolean active) {
         this.name = name;
         this.amount = amount;
-        this.ingest = ingest;
+        this.ingredient = ingredient;
+        this.mgIngredient = mgIngredient;
         this.indications = indications;
-        this.dueDate = dueDate;
+        this.active = active;
     }
 
     /**
@@ -120,25 +125,43 @@ public class Medicine {
     }
 
     /**
-     * Return the ingest
+     * Return the ingredient
      *
-     * @return Ingest
+     * @return Ingredient
      */
-    public double getIngest() {
-        return ingest;
+    public String getIngredient() {
+        return ingredient;
+    }
+
+     /**
+     * Set the ingredient
+     *
+     * @param ingredient  Ingredient
+     */
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
+    }
+
+     /**
+     * Return the mgIngredient
+     *
+     * @return mgIngredient
+     */
+    public int getMgIngredient() {
+        return mgIngredient;
+    }
+
+     /**
+     * Set the mg ingredient
+     *
+     * @param mgIngredient mgIngredient
+     */
+    public void setMgIngredient(int mgIngredient) {
+        this.mgIngredient = mgIngredient;
     }
 
     /**
-     * Set the ingest
-     *
-     * @param ingest Ingest
-     */
-    public void setIngest(double ingest) {
-        this.ingest = ingest;
-    }
-
-    /**
-     * Return the indications
+     * Return indications
      *
      * @return Indications
      */
@@ -149,28 +172,28 @@ public class Medicine {
     /**
      * Set the indications
      *
-     * @param indications
+     * @param indications Indications
      */
     public void setIndications(String indications) {
         this.indications = indications;
     }
 
-    /**
-     * Return the due date
+     /**
+     * Return active
      *
-     * @return Due date
+     * @return Active
      */
-    public Date getDueDate() {
-        return dueDate;
+    public boolean isActive() {
+        return active;
     }
 
     /**
-     * Set the due date
+     * Set the mactive
      *
-     * @param dueDate Due date
+     * @param active Active
      */
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     /**
@@ -213,7 +236,7 @@ public class Medicine {
      */
     @Override
     public String toString() {
-        return "Medicine: " + "Id: " + id_medicine + ", Name: " + name + ", Amount: " + amount + ", Ingest: " + ingest + ", Indications: " + indications + ", Due Date: " + dueDate;
+        return "Medicine: " + "Id: " + id_medicine + ", Name: " + name + ", Amount: " + amount + ", Ingredient: " + ingredient + ", Mg. Ingredient: " + mgIngredient + ", Active: " + active;
     }
 
 }
