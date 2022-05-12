@@ -45,6 +45,10 @@ public class RegisterPatient extends javax.swing.JPanel {
         containerPatient = new Components.RoundedPanel();
         jTextField1 = new javax.swing.JTextField();
         containerEnding = new Components.RoundedPanel();
+        jLBeginning2 = new javax.swing.JLabel();
+        containerEnding3 = new Components.RoundedPanel();
+        jLBeginning3 = new javax.swing.JLabel();
+        containerEnding4 = new Components.RoundedPanel();
         jPanel3 = new javax.swing.JPanel();
         jLPatient1 = new javax.swing.JLabel();
         jLDate1 = new javax.swing.JLabel();
@@ -57,11 +61,21 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField5 = new javax.swing.JTextField();
         jLPatient2 = new javax.swing.JLabel();
         roundedPanel7 = new Components.RoundedPanel();
+        jLBeginning4 = new javax.swing.JLabel();
+        containerEnding5 = new Components.RoundedPanel();
+        jTextField6 = new javax.swing.JTextField();
+        jLBeginning5 = new javax.swing.JLabel();
+        containerEnding6 = new Components.RoundedPanel();
+        jTextField7 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLDay3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         roundedPanel3 = new Components.RoundedPanel();
         jLabel6 = new javax.swing.JLabel();
+        roundedPanel8 = new Components.RoundedPanel();
+        jLabel8 = new javax.swing.JLabel();
+        roundedPanel9 = new Components.RoundedPanel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLDay2 = new javax.swing.JLabel();
         roundedPanel5 = new Components.RoundedPanel();
@@ -162,8 +176,8 @@ public class RegisterPatient extends javax.swing.JPanel {
 
         jLBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLBeginning.setForeground(new java.awt.Color(35, 36, 37));
-        jLBeginning.setText("Telefono:");
-        jPanel2.add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+        jLBeginning.setText("Email:");
+        jPanel2.add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
 
         containerBtnSchedule.setBackground(new java.awt.Color(37, 119, 241));
         containerBtnSchedule.setLayout(new java.awt.BorderLayout());
@@ -202,7 +216,25 @@ public class RegisterPatient extends javax.swing.JPanel {
 
         containerEnding.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
+        jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
+
+        jLBeginning2.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning2.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning2.setText("Telefono:");
+        jPanel2.add(jLBeginning2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+
+        containerEnding3.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(containerEnding3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
+
+        jLBeginning3.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning3.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning3.setText("Dirección:");
+        jPanel2.add(jLBeginning3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
+
+        containerEnding4.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(containerEnding4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 625));
 
@@ -212,17 +244,17 @@ public class RegisterPatient extends javax.swing.JPanel {
         jLPatient1.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLPatient1.setForeground(new java.awt.Color(35, 36, 37));
         jLPatient1.setText("Medicamentos:");
-        jPanel3.add(jLPatient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, 10));
+        jPanel3.add(jLPatient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, 10));
 
         jLDate1.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLDate1.setForeground(new java.awt.Color(35, 36, 37));
         jLDate1.setText("Fecha de nacimiento:");
-        jPanel3.add(jLDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
+        jPanel3.add(jLDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, 10));
 
         jLBeginning1.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLBeginning1.setForeground(new java.awt.Color(35, 36, 37));
         jLBeginning1.setText("Telefono:");
-        jPanel3.add(jLBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+        jPanel3.add(jLBeginning1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
 
         containerPatient1.setBackground(new java.awt.Color(244, 243, 243));
         containerPatient1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -244,9 +276,9 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField4.setForeground(new java.awt.Color(35, 36, 37));
         jTextField4.setBorder(null);
         jTextField4.setIgnoreRepaint(true);
-        containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+        containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
 
-        jPanel3.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
+        jPanel3.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 160, 30));
 
         containerEnding2.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -258,7 +290,7 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField5.setIgnoreRepaint(true);
         containerEnding2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
-        jPanel3.add(containerEnding2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
+        jPanel3.add(containerEnding2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
 
         jLPatient2.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLPatient2.setForeground(new java.awt.Color(35, 36, 37));
@@ -267,9 +299,43 @@ public class RegisterPatient extends javax.swing.JPanel {
 
         roundedPanel7.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 160, 150));
+        jPanel3.add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 160, 150));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 110, 480, 210));
+        jLBeginning4.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning4.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning4.setText("Email:");
+        jPanel3.add(jLBeginning4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+
+        containerEnding5.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField6.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField6.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField6.setBorder(null);
+        jTextField6.setIgnoreRepaint(true);
+        containerEnding5.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
+        jPanel3.add(containerEnding5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
+
+        jLBeginning5.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning5.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning5.setText("Dirección:");
+        jPanel3.add(jLBeginning5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
+
+        containerEnding6.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField7.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField7.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField7.setBorder(null);
+        jTextField7.setIgnoreRepaint(true);
+        containerEnding6.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
+        jPanel3.add(containerEnding6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
+
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 110, 480, 270));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
@@ -296,9 +362,29 @@ public class RegisterPatient extends javax.swing.JPanel {
         jLabel6.setText("Sin citas");
         roundedPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        jPanel7.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, 110));
+        jPanel7.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 138, 133, 97));
 
-        add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 480, 315));
+        roundedPanel8.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel8.setText("Sin citas");
+        roundedPanel8.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jPanel7.add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 133, 97));
+
+        roundedPanel9.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel9.setText("Sin citas");
+        roundedPanel9.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jPanel7.add(roundedPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(173, 20, 133, 97));
+
+        add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 480, 255));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(204, 204, 204)));
@@ -350,7 +436,7 @@ public class RegisterPatient extends javax.swing.JPanel {
         jLDay1.setToolTipText("");
         jPanel4.add(jLDay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 360, 30));
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 480, 50));
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 480, 50));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(204, 204, 204)));
@@ -420,12 +506,20 @@ public class RegisterPatient extends javax.swing.JPanel {
     private Components.RoundedPanel containerEnding;
     private Components.RoundedPanel containerEnding1;
     private Components.RoundedPanel containerEnding2;
+    private Components.RoundedPanel containerEnding3;
+    private Components.RoundedPanel containerEnding4;
+    private Components.RoundedPanel containerEnding5;
+    private Components.RoundedPanel containerEnding6;
     private Components.RoundedPanel containerMonth;
     private Components.RoundedPanel containerPatient;
     private Components.RoundedPanel containerPatient1;
     private Components.RoundedPanel containerYear;
     private javax.swing.JLabel jLBeginning;
     private javax.swing.JLabel jLBeginning1;
+    private javax.swing.JLabel jLBeginning2;
+    private javax.swing.JLabel jLBeginning3;
+    private javax.swing.JLabel jLBeginning4;
+    private javax.swing.JLabel jLBeginning5;
     private javax.swing.JLabel jLDate;
     private javax.swing.JLabel jLDate1;
     private javax.swing.JLabel jLDay1;
@@ -440,6 +534,8 @@ public class RegisterPatient extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -452,6 +548,8 @@ public class RegisterPatient extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     private javax.swing.JButton nextMonth1;
     private javax.swing.JButton previousMonth1;
     private Components.RoundedIndicator roundedIndicator1;
@@ -462,6 +560,8 @@ public class RegisterPatient extends javax.swing.JPanel {
     private Components.RoundedPanel roundedPanel5;
     private Components.RoundedPanel roundedPanel6;
     private Components.RoundedPanel roundedPanel7;
+    private Components.RoundedPanel roundedPanel8;
+    private Components.RoundedPanel roundedPanel9;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
 }

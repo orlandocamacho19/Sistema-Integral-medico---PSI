@@ -31,25 +31,23 @@ public class RegisterMedicine extends javax.swing.JPanel {
         title = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLDate = new javax.swing.JLabel();
-        containerDay = new Components.RoundedPanel();
         jLPatient = new javax.swing.JLabel();
-        jLBeginning = new javax.swing.JLabel();
         containerBtnSchedule = new Components.RoundedPanel();
         btnSchedule = new javax.swing.JButton();
         containerPatient = new Components.RoundedPanel();
         jTextField1 = new javax.swing.JTextField();
+        jLDate = new javax.swing.JLabel();
+        containerDay = new Components.RoundedPanel();
+        jTextField2 = new javax.swing.JTextField();
+        jLBeginning = new javax.swing.JLabel();
         containerEnding = new Components.RoundedPanel();
+        jTextField3 = new javax.swing.JTextField();
         jLDate1 = new javax.swing.JLabel();
-        containerDay1 = new Components.RoundedPanel();
-        cbDay = new javax.swing.JComboBox<>();
-        containerYear = new Components.RoundedPanel();
-        cbYear = new javax.swing.JComboBox<>();
-        containerMonth = new Components.RoundedPanel();
-        cbMonth = new javax.swing.JComboBox<>();
         containerReason = new Components.RoundedPanel();
         tAReason = new javax.swing.JTextArea();
         jLNotes = new javax.swing.JLabel();
+        containerEnding1 = new Components.RoundedPanel();
+        jTextField4 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLDay3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -76,26 +74,10 @@ public class RegisterMedicine extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLDate.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jLDate.setForeground(new java.awt.Color(35, 36, 37));
-        jLDate.setText("Ingerir hasta:");
-        jLDate.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel2.add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 20));
-
-        containerDay.setBackground(new java.awt.Color(244, 243, 243));
-        containerDay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
-
         jLPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLPatient.setForeground(new java.awt.Color(35, 36, 37));
         jLPatient.setText("Nombre:");
         jPanel2.add(jLPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 10));
-
-        jLBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jLBeginning.setForeground(new java.awt.Color(35, 36, 37));
-        jLBeginning.setText("Ingesta:");
-        jLBeginning.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel2.add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
 
         containerBtnSchedule.setBackground(new java.awt.Color(37, 119, 241));
         containerBtnSchedule.setLayout(new java.awt.BorderLayout());
@@ -137,65 +119,46 @@ public class RegisterMedicine extends javax.swing.JPanel {
 
         jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
 
+        jLDate.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLDate.setForeground(new java.awt.Color(35, 36, 37));
+        jLDate.setText("Miligramos:");
+        jLDate.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanel2.add(jLDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 20));
+
+        containerDay.setBackground(new java.awt.Color(244, 243, 243));
+        containerDay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField2.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField2.setBorder(null);
+        jTextField2.setIgnoreRepaint(true);
+        containerDay.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
+        jPanel2.add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
+
+        jLBeginning.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLBeginning.setForeground(new java.awt.Color(35, 36, 37));
+        jLBeginning.setText("Ingrediente activo:");
+        jLBeginning.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanel2.add(jLBeginning, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
+
         containerEnding.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
+
+        jTextField3.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField3.setBorder(null);
+        jTextField3.setIgnoreRepaint(true);
+        containerEnding.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
+        jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
 
         jLDate1.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jLDate1.setForeground(new java.awt.Color(35, 36, 37));
         jLDate1.setText("Cantidad:");
         jPanel2.add(jLDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 10));
-
-        containerDay1.setBackground(new java.awt.Color(244, 243, 243));
-        containerDay1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbDay.setBackground(new java.awt.Color(244, 243, 243));
-        cbDay.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbDay.setForeground(new java.awt.Color(35, 36, 37));
-        cbDay.setMaximumRowCount(12);
-        cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbDay.setSelectedIndex(-1);
-        cbDay.setBorder(null);
-        cbDay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbDay.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbDay.setFocusable(false);
-        containerDay1.add(cbDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
-
-        jPanel2.add(containerDay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 80, 30));
-
-        containerYear.setBackground(new java.awt.Color(244, 243, 243));
-        containerYear.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbYear.setBackground(new java.awt.Color(244, 243, 243));
-        cbYear.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbYear.setForeground(new java.awt.Color(35, 36, 37));
-        cbYear.setMaximumRowCount(12);
-        cbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbYear.setSelectedIndex(-1);
-        cbYear.setBorder(null);
-        cbYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbYear.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbYear.setFocusable(false);
-        containerYear.add(cbYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
-
-        jPanel2.add(containerYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 80, 30));
-
-        containerMonth.setBackground(new java.awt.Color(244, 243, 243));
-        containerMonth.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cbMonth.setBackground(new java.awt.Color(244, 243, 243));
-        cbMonth.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        cbMonth.setForeground(new java.awt.Color(35, 36, 37));
-        cbMonth.setMaximumRowCount(12);
-        cbMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbMonth.setSelectedIndex(-1);
-        cbMonth.setBorder(null);
-        cbMonth.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cbMonth.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        cbMonth.setFocusable(false);
-        containerMonth.add(cbMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
-
-        jPanel2.add(containerMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 80, 30));
 
         containerReason.setBackground(new java.awt.Color(244, 243, 243));
         containerReason.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -221,6 +184,18 @@ public class RegisterMedicine extends javax.swing.JPanel {
         jLNotes.setForeground(new java.awt.Color(35, 36, 37));
         jLNotes.setText("Indicaciones:");
         jPanel2.add(jLNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 10));
+
+        containerEnding1.setBackground(new java.awt.Color(244, 243, 243));
+        containerEnding1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField4.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField4.setBorder(null);
+        jTextField4.setIgnoreRepaint(true);
+        containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
+        jPanel2.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 625));
 
@@ -279,11 +254,6 @@ public class RegisterMedicine extends javax.swing.JPanel {
         containerBtnSchedule.setBackground(new Color(37, 119, 241));
     }//GEN-LAST:event_btnScheduleMouseExited
 
-    private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
-        if (tAReason.getText().length() == 200)
-        evt.consume();
-    }//GEN-LAST:event_tAReasonKeyTyped
-
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnScheduleActionPerformed
@@ -292,20 +262,20 @@ public class RegisterMedicine extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tAReason2KeyTyped
 
+    private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
+        if (tAReason.getText().length() == 200)
+        evt.consume();
+    }//GEN-LAST:event_tAReasonKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSchedule;
-    private javax.swing.JComboBox<String> cbDay;
-    private javax.swing.JComboBox<String> cbMonth;
-    private javax.swing.JComboBox<String> cbYear;
     private Components.RoundedPanel containerBtnSchedule;
     private Components.RoundedPanel containerDay;
-    private Components.RoundedPanel containerDay1;
     private Components.RoundedPanel containerEnding;
-    private Components.RoundedPanel containerMonth;
+    private Components.RoundedPanel containerEnding1;
     private Components.RoundedPanel containerPatient;
     private Components.RoundedPanel containerReason;
-    private Components.RoundedPanel containerYear;
     private javax.swing.JLabel jLBeginning;
     private javax.swing.JLabel jLDate;
     private javax.swing.JLabel jLDate1;
@@ -318,6 +288,9 @@ public class RegisterMedicine extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private Components.RoundedPanel roundedPanel3;
     private javax.swing.JTextArea tAReason;
     private javax.swing.JTextArea tAReason2;

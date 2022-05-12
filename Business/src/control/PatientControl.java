@@ -37,7 +37,7 @@ public class PatientControl {
      */
     public Boolean addPatient(Patient patient) {
         for (int i = 0; i < pd.consultAll().size(); i++) {
-            if (patient.getID() == pd.consultAll().get(i).getID()) {
+            if (patient.equals(pd.consultAll().get(i))){
                 return false;
             } else {
                 pd.insert(patient);

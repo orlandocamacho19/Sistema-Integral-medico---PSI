@@ -214,7 +214,7 @@ public class Medicine {
      * @param obj object
      * @return True if they are equal, false otherwise
      */
-    @Override
+    @Override    
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -226,7 +226,13 @@ public class Medicine {
             return false;
         }
         final Medicine other = (Medicine) obj;
-        return Objects.equals(this.id_medicine, other.id_medicine);
+        if (this.id_medicine != other.id_medicine) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return Objects.equals(this.ingredient, other.ingredient);
     }
 
     /**

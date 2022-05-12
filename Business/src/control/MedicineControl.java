@@ -34,7 +34,11 @@ public class MedicineControl {
      * @param medicine Medicine
      * @return if was possible add
      */
-    public Boolean addMedicine(Medicine medicine) {
+    public boolean addMedicine(Medicine medicine) {
+        if (md.consultAll().contains(medicine)) {
+            return false;
+        }
+        
         if (md.consultByID(medicine)) {
             return false;
         } else {
@@ -50,7 +54,7 @@ public class MedicineControl {
      * @param medicine Medicine
      * @return if was possible update
      */
-    public Boolean editMedicine(Medicine medicine) {
+    public boolean editMedicine(Medicine medicine) {
         for (int i = 0; i < md.consultAll().size(); i++) {
             if (medicine.getId_medicine() == md.consultAll().get(i).getId_medicine()) {
                 md.update(md.consultAll().get(i).getId_medicine(), medicine);
@@ -67,7 +71,7 @@ public class MedicineControl {
      * @param medicine Medicine
      * @return if was possible delete
      */
-    public Boolean deleteMedicine(Medicine medicine) {
+    public boolean deleteMedicine(Medicine medicine) {
         for (int i = 0; i < md.consultAll().size(); i++) {
             if (medicine.getId_medicine() == md.consultAll().get(i).getId_medicine()) {
                 md.delete(medicine.getId_medicine());
@@ -87,4 +91,30 @@ public class MedicineControl {
             System.out.println(md.consultAll());
         }
     }
+    
+    /**
+     * Returns if was posible to set as active in the database the medicine 
+     * received in parameters
+     * @param medicine Medicine
+     * @return is was posible set as active
+     */
+    public boolean activeMed(Medicine medicine){
+        medicine.setActive(true);
+        return editMedicine(medicine);
+    }
+    
+    /**
+     * Returns if was posible to set as desactive in the database the medicine 
+     * received in parameters
+     * @param medicine Medicine
+     * @return is was posible set as desactive
+     */
+    public boolean desactiveMed(Medicine medicine){
+        medicine.setActive(false);
+        return editMedicine(medicine);
+    }
+    
+    
+    
+    
 }
