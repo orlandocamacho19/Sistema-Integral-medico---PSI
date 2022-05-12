@@ -1,8 +1,9 @@
 /Domain/build/
 /Domain/dist/
+/Domain/nbproject/private/private.properties
 /Data/build/
-/Business/nbproject/private/
-/Presentation/nbproject/private/
+/Business/nbproject/private/.
+/Presentation/nbproject/private/.
 /Presentation/build/
 /Business/build/
 /Data/dist/
@@ -10,3 +11,4 @@
 /Presentation/dist/
 /WebApplication1/nbproject/private/
 /WebApplication1/build/
+/Data/nbproject/private/.

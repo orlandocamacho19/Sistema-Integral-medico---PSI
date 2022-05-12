@@ -5,9 +5,12 @@ import Domain.Patient;
 import Domain.Payment;
 import Domain.Type;
 import control.AppointmentControl;
+import control.MedicineControl;
 import control.PatientControl;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /*
@@ -25,10 +28,11 @@ public class test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Timestamp currentTime = Timestamp.valueOf("2022-04-26 12:30:00");
-        Object[] appointments = AppointmentControl.getInstance().getAppointmentByWeek(currentTime);
-        for (Object appointment : appointments) {            
-            System.out.println((List<Appointment>) appointment);
-        }
+        // Agrega Paciente
+        Patient pt = new Patient("Juancho", "6543219780", Date.valueOf(LocalDate.now()), "email@mail.com", "calle si");
+        System.out.println(PatientControl.getInstance().addPatient(pt));
+        // Agrega medicina
+        Medicine med = new Medicine("Paracetamol", 12, "Dunno", 5, "Tomeselo B)", true);
+        System.out.println(MedicineControl.getInstance().addMedicine(med));
     }
 }

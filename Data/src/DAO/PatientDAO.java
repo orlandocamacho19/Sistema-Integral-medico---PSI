@@ -36,7 +36,7 @@ public class PatientDAO extends ConnectionDB {
     public void insert(Patient patient) {
         try {
             this.connect();
-            String sql = "insert into patients (name, phone, birth_date, email, address) values (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO patients (name, phone, birth_date, email, address) values (?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, patient.getName());
             ps.setString(2, patient.getPhone());
@@ -45,7 +45,7 @@ public class PatientDAO extends ConnectionDB {
             ps.setString(5, patient.getAddress());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println(e.toString());
         }
     }
 
@@ -98,7 +98,7 @@ public class PatientDAO extends ConnectionDB {
      */
     public List<Patient> consultAll() {
         ResultSet res;
-        List medicines = new ArrayList();
+        List patients = new ArrayList();
         try {
             this.connect();
             String sql = "SELECT * FROM patients";
@@ -110,15 +110,15 @@ public class PatientDAO extends ConnectionDB {
                 patient.setName(res.getString("name"));
                 patient.setPhone(res.getString("phone"));
                 patient.setBirthDate(res.getDate("birth_date"));
-                patient.setEmail(res.getString("emain"));
+                patient.setEmail(res.getString("email"));
                 patient.setAddress(res.getString("address"));
-                medicines.add(patient);
+                patients.add(patient);
 
             }
         } catch (Exception e) {
             e.getStackTrace();
         }
-        return medicines;
+        return patients;
     }
 
     /**
