@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: intento
+-- Host: localhost    Database: intento
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -26,8 +26,8 @@ CREATE TABLE `appointments` (
   `id_appointment` int NOT NULL AUTO_INCREMENT,
   `start_time` datetime NOT NULL,
   `id_patient` int NOT NULL,
-  `id_medicine` int DEFAULT NULL,
-  `id_payment` int DEFAULT NULL,
+  `id_medicine` int NOT NULL,
+  `id_payment` int NOT NULL,
   `appointment_type` enum('Nutritional','Surgical','Esthetic') NOT NULL,
   `type` enum('New','Recurrent') NOT NULL,
   `confirmation` tinyint NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `appointments` (
   CONSTRAINT `fk_appoinment_medicine` FOREIGN KEY (`id_medicine`) REFERENCES `medicines` (`id_medicine`),
   CONSTRAINT `fk_appointment_patient` FOREIGN KEY (`id_patient`) REFERENCES `patients` (`id_patient`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_appointment_payment` FOREIGN KEY (`id_payment`) REFERENCES `payments` (`id_payment`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (19,'2022-03-25 00:00:00',10,14,8,'Surgical','Recurrent',1,''),(34,'2022-03-25 01:00:00',10,14,8,'Surgical','New',0,''),(35,'2022-03-25 02:00:00',10,14,8,'Nutritional','New',0,''),(36,'2022-03-25 02:15:00',10,14,8,'Nutritional','New',0,''),(37,'2022-03-25 02:45:00',10,14,8,'Nutritional','New',0,''),(38,'2022-03-25 03:00:00',11,14,8,'Surgical','New',0,''),(39,'2022-03-30 22:45:00',11,14,8,'Surgical','New',0,'');
+INSERT INTO `appointments` VALUES (19,'2022-03-25 00:00:00',10,14,8,'Surgical','Recurrent',1,''),(34,'2022-03-25 01:00:00',10,14,8,'Surgical','New',0,''),(35,'2022-03-25 02:00:00',10,14,8,'Nutritional','New',0,''),(36,'2022-03-25 02:15:00',10,14,8,'Nutritional','New',0,''),(37,'2022-03-25 02:45:00',10,14,8,'Nutritional','New',0,''),(38,'2022-03-25 03:00:00',11,14,8,'Surgical','New',0,''),(39,'2022-03-30 22:45:00',11,14,8,'Surgical','New',0,''),(40,'2022-03-31 23:45:00',11,14,8,'Nutritional','New',1,'');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,9 +93,10 @@ CREATE TABLE `medicines` (
   `id_medicine` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `amount` double NOT NULL,
-  `ingest` double NOT NULL,
+  `ingredient` varchar(80) NOT NULL,
+  `mgIngredient` int NOT NULL,
   `indications` varchar(200) NOT NULL,
-  `due_date` date NOT NULL,
+  `active` tinyint NOT NULL,
   PRIMARY KEY (`id_medicine`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -106,7 +107,7 @@ CREATE TABLE `medicines` (
 
 LOCK TABLES `medicines` WRITE;
 /*!40000 ALTER TABLE `medicines` DISABLE KEYS */;
-INSERT INTO `medicines` VALUES (14,'Paracetamol',10,500,'Una al dia','2022-03-23');
+INSERT INTO `medicines` VALUES (14,'Paracetamol',10,'',0,'',0);
 /*!40000 ALTER TABLE `medicines` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,6 +123,8 @@ CREATE TABLE `patients` (
   `name` varchar(100) NOT NULL,
   `phone` varchar(10) NOT NULL,
   `birth_date` date NOT NULL,
+  `email` varchar(80) NOT NULL,
+  `address` varchar(200) NOT NULL,
   PRIMARY KEY (`id_patient`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -132,7 +135,7 @@ CREATE TABLE `patients` (
 
 LOCK TABLES `patients` WRITE;
 /*!40000 ALTER TABLE `patients` DISABLE KEYS */;
-INSERT INTO `patients` VALUES (10,'Manuel De Jesus Valenzuela Vazquez','6441643488','2001-11-30'),(11,'Orlando Camacho Gámez','6312996045','2001-05-19');
+INSERT INTO `patients` VALUES (10,'Manuel De Jesus Valenzuela Vazquez','6441643488','2001-11-30','',''),(11,'Orlando Camacho Gámez','6312996045','2001-05-19','','');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-30 21:50:31
+-- Dump completed on 2022-05-11 21:59:17
