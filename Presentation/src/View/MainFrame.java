@@ -74,6 +74,14 @@ public class MainFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         cancelApointment = new Components.RoundedPanel();
         jButton4 = new javax.swing.JButton();
+        editMedicine = new Components.RoundedPanel();
+        jButton8 = new javax.swing.JButton();
+        registerPatient = new Components.RoundedPanel();
+        jButton5 = new javax.swing.JButton();
+        editPatient = new Components.RoundedPanel();
+        jButton6 = new javax.swing.JButton();
+        registerMedicine = new Components.RoundedPanel();
+        jButton7 = new javax.swing.JButton();
         content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -291,6 +299,86 @@ public class MainFrame extends javax.swing.JFrame {
 
         lateralMenu.add(cancelApointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, 30));
 
+        editMedicine.setBackground(new java.awt.Color(244, 243, 243));
+        editMedicine.setLayout(new java.awt.BorderLayout());
+
+        jButton8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(0, 0, 0));
+        jButton8.setText("Editar medicamento");
+        jButton8.setBorderPainted(false);
+        jButton8.setContentAreaFilled(false);
+        jButton8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButton8.setIconTextGap(0);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        editMedicine.add(jButton8, java.awt.BorderLayout.CENTER);
+
+        lateralMenu.add(editMedicine, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, 30));
+
+        registerPatient.setBackground(new java.awt.Color(244, 243, 243));
+        registerPatient.setLayout(new java.awt.BorderLayout());
+
+        jButton5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(0, 0, 0));
+        jButton5.setText("Registrar paciente");
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
+        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButton5.setIconTextGap(0);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        registerPatient.add(jButton5, java.awt.BorderLayout.CENTER);
+
+        lateralMenu.add(registerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 180, 30));
+
+        editPatient.setBackground(new java.awt.Color(244, 243, 243));
+        editPatient.setLayout(new java.awt.BorderLayout());
+
+        jButton6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Editar paciente");
+        jButton6.setBorderPainted(false);
+        jButton6.setContentAreaFilled(false);
+        jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButton6.setIconTextGap(0);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        editPatient.add(jButton6, java.awt.BorderLayout.CENTER);
+
+        lateralMenu.add(editPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 180, 30));
+
+        registerMedicine.setBackground(new java.awt.Color(244, 243, 243));
+        registerMedicine.setLayout(new java.awt.BorderLayout());
+
+        jButton7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(0, 0, 0));
+        jButton7.setText("Registrar medicina");
+        jButton7.setBorderPainted(false);
+        jButton7.setContentAreaFilled(false);
+        jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButton7.setIconTextGap(0);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        registerMedicine.add(jButton7, java.awt.BorderLayout.CENTER);
+
+        lateralMenu.add(registerMedicine, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, 30));
+
         getContentPane().add(lateralMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 35, 200, 685));
 
         content.setBackground(new java.awt.Color(255, 255, 255));
@@ -391,6 +479,10 @@ public class MainFrame extends javax.swing.JFrame {
             scheduleApointments.setBackground(new Color(244,243,243));
             editApointment.setBackground(new Color(244,243,243));
             cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(244,243,243));
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -401,6 +493,10 @@ public class MainFrame extends javax.swing.JFrame {
             scheduleApointments.setBackground(new Color(225, 224, 224));
             editApointment.setBackground(new Color(244,243,243));
             cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(244,243,243));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -411,6 +507,10 @@ public class MainFrame extends javax.swing.JFrame {
             scheduleApointments.setBackground(new Color(244,243,243));
             editApointment.setBackground(new Color(225, 224, 224));
             cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(244,243,243));
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -421,8 +521,68 @@ public class MainFrame extends javax.swing.JFrame {
             scheduleApointments.setBackground(new Color(244,243,243));
             editApointment.setBackground(new Color(244,243,243));
             cancelApointment.setBackground(new Color(225, 224, 224));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(244,243,243));
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (App.GetSingleton().getState() != AppState.REGISTERPATIENT) {
+            App.GetSingleton().setState(AppState.REGISTERPATIENT);
+            manageApointments.setBackground(new Color(244,243,243));
+            scheduleApointments.setBackground(new Color(244,243,243));
+            editApointment.setBackground(new Color(244,243,243));
+            cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(225, 224, 224));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(244,243,243));
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if (App.GetSingleton().getState() != AppState.EDITPATIENT) {
+            App.GetSingleton().setState(AppState.EDITPATIENT);
+            manageApointments.setBackground(new Color(244,243,243));
+            scheduleApointments.setBackground(new Color(244,243,243));
+            editApointment.setBackground(new Color(244,243,243));
+            cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(225, 224, 224));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(244,243,243));
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if (App.GetSingleton().getState() != AppState.REGISTERMEDICINE) {
+            App.GetSingleton().setState(AppState.REGISTERMEDICINE);
+            manageApointments.setBackground(new Color(244,243,243));
+            scheduleApointments.setBackground(new Color(244,243,243));
+            editApointment.setBackground(new Color(244,243,243));
+            cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(225, 224, 224));
+            editMedicine.setBackground(new Color(244,243,243));
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        if (App.GetSingleton().getState() != AppState.EDITMEDICINE) {
+            App.GetSingleton().setState(AppState.EDITMEDICINE);
+            manageApointments.setBackground(new Color(244,243,243));
+            scheduleApointments.setBackground(new Color(244,243,243));
+            editApointment.setBackground(new Color(244,243,243));
+            cancelApointment.setBackground(new Color(244,243,243));
+            registerPatient.setBackground(new Color(244,243,243));
+            editPatient.setBackground(new Color(244,243,243));
+            registerMedicine.setBackground(new Color(244,243,243));
+            editMedicine.setBackground(new Color(225, 224, 224));
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DisposeButton;
@@ -434,13 +594,21 @@ public class MainFrame extends javax.swing.JFrame {
     private Components.RoundedPanel cancelApointment;
     private javax.swing.JPanel content;
     private Components.RoundedPanel editApointment;
+    private Components.RoundedPanel editMedicine;
+    private Components.RoundedPanel editPatient;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel lateralMenu;
     private Components.RoundedPanel manageApointments;
+    private Components.RoundedPanel registerMedicine;
+    private Components.RoundedPanel registerPatient;
     private Components.RoundedPanel scheduleApointments;
     private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables

@@ -28,7 +28,7 @@ public class ConnectionDB {
     public void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/intento?user=root&password=9103");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/intento?user=root&password=Orlandocg19");
         } catch (Exception e) {
             e.getStackTrace();
         }

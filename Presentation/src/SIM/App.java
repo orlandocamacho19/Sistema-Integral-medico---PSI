@@ -55,6 +55,18 @@ public class App {
             case CANCELAPPOINTMENTS:
                 mainFrame.setContent(new CancelAppointment());
                 break;
+            case REGISTERPATIENT:
+                mainFrame.setContent(new RegisterPatient());
+                break;
+            case EDITPATIENT:
+                mainFrame.setContent(new EditPatient());
+                break;
+            case REGISTERMEDICINE:
+                mainFrame.setContent(new RegisterMedicine());
+                break;
+            case EDITMEDICINE:
+                mainFrame.setContent(new EditMedicine());
+                break;
         }
     }
     

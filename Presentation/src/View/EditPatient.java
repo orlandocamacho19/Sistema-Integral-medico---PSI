@@ -4,6 +4,7 @@
  */
 package View;
 
+import Domain.Patient;
 import java.awt.Color;
 
 /**
@@ -59,12 +60,15 @@ public class EditPatient extends javax.swing.JPanel {
         containerBtnSchedule = new Components.RoundedPanel();
         btnSchedule = new javax.swing.JButton();
         containerPatient = new Components.RoundedPanel();
-        jTextField1 = new javax.swing.JTextField();
+        cbPatient = new javax.swing.JComboBox<>();
         containerEnding = new Components.RoundedPanel();
+        jTextField8 = new javax.swing.JTextField();
         jLBeginning2 = new javax.swing.JLabel();
         containerEnding3 = new Components.RoundedPanel();
+        jTextField2 = new javax.swing.JTextField();
         jLBeginning3 = new javax.swing.JLabel();
         containerEnding4 = new Components.RoundedPanel();
+        jTextField9 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLPatient1 = new javax.swing.JLabel();
         jLDate1 = new javax.swing.JLabel();
@@ -292,17 +296,28 @@ public class EditPatient extends javax.swing.JPanel {
         containerPatient.setBackground(new java.awt.Color(244, 243, 243));
         containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setBackground(new java.awt.Color(244, 243, 243));
-        jTextField1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(35, 36, 37));
-        jTextField1.setBorder(null);
-        jTextField1.setIgnoreRepaint(true);
-        containerPatient.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+        cbPatient.setBackground(new java.awt.Color(244, 243, 243));
+        cbPatient.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbPatient.setForeground(new java.awt.Color(35, 36, 37));
+        cbPatient.setMaximumRowCount(12);
+        cbPatient.setBorder(null);
+        cbPatient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbPatient.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbPatient.setFocusable(false);
+        containerPatient.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
         jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
 
         containerEnding.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField8.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField8.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField8.setBorder(null);
+        jTextField8.setIgnoreRepaint(true);
+        containerEnding.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
 
         jLBeginning2.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
@@ -312,6 +327,14 @@ public class EditPatient extends javax.swing.JPanel {
 
         containerEnding3.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField2.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField2.setBorder(null);
+        jTextField2.setIgnoreRepaint(true);
+        containerEnding3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
         jPanel2.add(containerEnding3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
 
         jLBeginning3.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
@@ -321,6 +344,14 @@ public class EditPatient extends javax.swing.JPanel {
 
         containerEnding4.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField9.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField9.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField9.setBorder(null);
+        jTextField9.setIgnoreRepaint(true);
+        containerEnding4.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
         jPanel2.add(containerEnding4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 625));
@@ -501,6 +532,7 @@ public class EditPatient extends javax.swing.JPanel {
     private javax.swing.JButton btnSchedule;
     private javax.swing.JComboBox<String> cbDay;
     private javax.swing.JComboBox<String> cbMonth;
+    private javax.swing.JComboBox<Patient> cbPatient;
     private javax.swing.JComboBox<String> cbYear;
     private Components.RoundedPanel containerBtnSchedule;
     private Components.RoundedPanel containerDay;
@@ -545,12 +577,14 @@ public class EditPatient extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JButton nextMonth1;
     private javax.swing.JButton previousMonth1;
     private Components.RoundedIndicator roundedIndicator1;

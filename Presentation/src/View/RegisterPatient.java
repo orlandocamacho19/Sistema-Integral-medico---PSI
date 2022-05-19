@@ -5,6 +5,11 @@
 package View;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -17,6 +22,61 @@ public class RegisterPatient extends javax.swing.JPanel {
      */
     public RegisterPatient() {
         initComponents();
+        
+        Date date = new Date();
+        int year = date.getYear() - 1;
+        int month = date.getMonth();
+        int day = date.getDate() - 1;
+
+        this.fillComboBoxDay(month + 1, year + 1901);
+        this.fillComboBoxMonthYear();
+
+        cbDay.setSelectedIndex(day);
+        cbMonth.setSelectedIndex(month);
+        cbYear.setSelectedIndex(year);
+    }
+    
+    private void fillComboBoxDay(int month, int year) {
+        Calendar mycal = new GregorianCalendar(year, month, 0);
+        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        ArrayList<String> days = new ArrayList<String>();
+
+        for (int i = 0; i < daysInMonth; i++) {
+            days.add(String.valueOf(i + 1));
+        }
+
+        cbDay.setModel(new DefaultComboBoxModel<String>(days.toArray(new String[0])));
+    }
+
+    private void fillComboBoxMonthYear() {
+        ArrayList<String> months = new ArrayList<String>();
+        ArrayList<String> years = new ArrayList<String>();
+
+        for (int i = 0; i < 12; i++) {
+            months.add(String.valueOf(i + 1));
+        }
+
+        java.util.Date date = new java.util.Date();
+        int year = date.getYear();
+
+        for (int i = 0; i < year; i++) {
+            years.add(String.valueOf(i + 1901));
+        }
+
+        cbMonth.setModel(new DefaultComboBoxModel<String>(months.toArray(new String[0])));
+        cbYear.setModel(new DefaultComboBoxModel<String>(years.toArray(new String[0])));
+    }
+    
+    private boolean validateFields() {
+        if (jTextField1.getText().isBlank() || jTextField1.getText().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+    
+    private void cleanFields() {
+        jTextField1.setText("");
     }
 
     /**
@@ -45,10 +105,13 @@ public class RegisterPatient extends javax.swing.JPanel {
         containerPatient = new Components.RoundedPanel();
         jTextField1 = new javax.swing.JTextField();
         containerEnding = new Components.RoundedPanel();
+        jTextField8 = new javax.swing.JTextField();
         jLBeginning2 = new javax.swing.JLabel();
         containerEnding3 = new Components.RoundedPanel();
+        jTextField2 = new javax.swing.JTextField();
         jLBeginning3 = new javax.swing.JLabel();
         containerEnding4 = new Components.RoundedPanel();
+        jTextField9 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLPatient1 = new javax.swing.JLabel();
         jLDate1 = new javax.swing.JLabel();
@@ -216,6 +279,14 @@ public class RegisterPatient extends javax.swing.JPanel {
 
         containerEnding.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField8.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField8.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField8.setBorder(null);
+        jTextField8.setIgnoreRepaint(true);
+        containerEnding.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
 
         jLBeginning2.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
@@ -225,6 +296,14 @@ public class RegisterPatient extends javax.swing.JPanel {
 
         containerEnding3.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField2.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField2.setBorder(null);
+        jTextField2.setIgnoreRepaint(true);
+        containerEnding3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
         jPanel2.add(containerEnding3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
 
         jLBeginning3.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
@@ -234,6 +313,14 @@ public class RegisterPatient extends javax.swing.JPanel {
 
         containerEnding4.setBackground(new java.awt.Color(244, 243, 243));
         containerEnding4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField9.setBackground(new java.awt.Color(244, 243, 243));
+        jTextField9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jTextField9.setForeground(new java.awt.Color(35, 36, 37));
+        jTextField9.setBorder(null);
+        jTextField9.setIgnoreRepaint(true);
+        containerEnding4.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+
         jPanel2.add(containerEnding4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 625));
@@ -545,11 +632,14 @@ public class RegisterPatient extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JButton nextMonth1;
     private javax.swing.JButton previousMonth1;
     private Components.RoundedIndicator roundedIndicator1;
