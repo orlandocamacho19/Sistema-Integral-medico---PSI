@@ -235,14 +235,11 @@ public class Medicine {
         return Objects.equals(this.ingredient, other.ingredient);
     }
 
-    /**
-     * String of the attributes of the object
-     *
-     * @return String
-     */
     @Override
     public String toString() {
-        return "Medicine: " + "Id: " + id_medicine + ", Name: " + name + ", Amount: " + amount + ", Ingredient: " + ingredient + ", Mg. Ingredient: " + mgIngredient + ", Active: " + active;
+        return name;
     }
+
+    
 
 }

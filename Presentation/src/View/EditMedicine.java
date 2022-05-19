@@ -24,9 +24,6 @@ public class EditMedicine extends javax.swing.JPanel {
     }
     
     private boolean validateFields() {
-        if (jTextField1.getText().isBlank() || jTextField1.getText().isEmpty()) {
-            return false;
-        }
         if (jTextField2.getText().isBlank() || jTextField2.getText().isEmpty()) {
             return false;
         }
@@ -49,7 +46,6 @@ public class EditMedicine extends javax.swing.JPanel {
     }
     
     private void cleanFields() {
-        jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
@@ -80,7 +76,7 @@ public class EditMedicine extends javax.swing.JPanel {
         containerBtnSchedule = new Components.RoundedPanel();
         btnSchedule = new javax.swing.JButton();
         containerPatient = new Components.RoundedPanel();
-        jTextField1 = new javax.swing.JTextField();
+        cbMedicine = new javax.swing.JComboBox<>();
         containerEnding = new Components.RoundedPanel();
         jTextField3 = new javax.swing.JTextField();
         jLDate1 = new javax.swing.JLabel();
@@ -175,12 +171,15 @@ public class EditMedicine extends javax.swing.JPanel {
         containerPatient.setBackground(new java.awt.Color(244, 243, 243));
         containerPatient.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setBackground(new java.awt.Color(244, 243, 243));
-        jTextField1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(35, 36, 37));
-        jTextField1.setBorder(null);
-        jTextField1.setIgnoreRepaint(true);
-        containerPatient.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
+        cbMedicine.setBackground(new java.awt.Color(244, 243, 243));
+        cbMedicine.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        cbMedicine.setForeground(new java.awt.Color(35, 36, 37));
+        cbMedicine.setMaximumRowCount(12);
+        cbMedicine.setBorder(null);
+        cbMedicine.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbMedicine.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        cbMedicine.setFocusable(false);
+        containerPatient.add(cbMedicine, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
         jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
 
@@ -298,7 +297,6 @@ public class EditMedicine extends javax.swing.JPanel {
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
         if (validateFields()) {
             Medicine md = new Medicine();
-            md.setName(jTextField1.getText());
             md.setAmount(Double.valueOf(jTextField2.getText()));
             md.setIngredient(jTextField4.getText());
             md.setMgIngredient(Integer.valueOf(jTextField3.getText()));
@@ -326,6 +324,7 @@ public class EditMedicine extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSchedule;
+    private javax.swing.JComboBox<Medicine> cbMedicine;
     private Components.RoundedPanel containerBtnSchedule;
     private Components.RoundedPanel containerDay;
     private Components.RoundedPanel containerEnding;
@@ -343,7 +342,6 @@ public class EditMedicine extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
