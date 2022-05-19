@@ -5,7 +5,19 @@
 package View;
 
 import Domain.Patient;
+import SIM.App;
+import SIM.MessageType;
+import control.PatientControl;
 import java.awt.Color;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -18,6 +30,9 @@ public class EditPatient extends javax.swing.JPanel {
      */
     public EditPatient() {
         initComponents();
+        this.loadPatients();
+
+        cleanFields();
     }
 
     /**
@@ -181,7 +196,6 @@ public class EditPatient extends javax.swing.JPanel {
         nextMonth1.setBorderPainted(false);
         nextMonth1.setContentAreaFilled(false);
         nextMonth1.setFocusPainted(false);
-        nextMonth1.setIgnoreRepaint(true);
         roundedPanel5.add(nextMonth1, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(roundedPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 30, 30));
@@ -193,7 +207,6 @@ public class EditPatient extends javax.swing.JPanel {
         previousMonth1.setBorderPainted(false);
         previousMonth1.setContentAreaFilled(false);
         previousMonth1.setFocusPainted(false);
-        previousMonth1.setIgnoreRepaint(true);
         roundedPanel6.add(previousMonth1, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
@@ -289,6 +302,11 @@ public class EditPatient extends javax.swing.JPanel {
                 btnScheduleMouseExited(evt);
             }
         });
+        btnSchedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnScheduleActionPerformed(evt);
+            }
+        });
         containerBtnSchedule.add(btnSchedule, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(containerBtnSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 260, 40));
@@ -304,6 +322,11 @@ public class EditPatient extends javax.swing.JPanel {
         cbPatient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbPatient.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbPatient.setFocusable(false);
+        cbPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPatientActionPerformed(evt);
+            }
+        });
         containerPatient.add(cbPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
         jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
@@ -315,7 +338,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(35, 36, 37));
         jTextField8.setBorder(null);
-        jTextField8.setIgnoreRepaint(true);
         containerEnding.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -332,7 +354,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(35, 36, 37));
         jTextField2.setBorder(null);
-        jTextField2.setIgnoreRepaint(true);
         containerEnding3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
@@ -349,7 +370,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField9.setForeground(new java.awt.Color(35, 36, 37));
         jTextField9.setBorder(null);
-        jTextField9.setIgnoreRepaint(true);
         containerEnding4.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
@@ -381,7 +401,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(35, 36, 37));
         jTextField3.setBorder(null);
-        jTextField3.setIgnoreRepaint(true);
         containerPatient1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerPatient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
@@ -393,7 +412,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(35, 36, 37));
         jTextField4.setBorder(null);
-        jTextField4.setIgnoreRepaint(true);
         containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
 
         jPanel3.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 160, 30));
@@ -405,7 +423,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(35, 36, 37));
         jTextField5.setBorder(null);
-        jTextField5.setIgnoreRepaint(true);
         containerEnding2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerEnding2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
@@ -431,7 +448,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(35, 36, 37));
         jTextField6.setBorder(null);
-        jTextField6.setIgnoreRepaint(true);
         containerEnding5.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerEnding5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
@@ -448,7 +464,6 @@ public class EditPatient extends javax.swing.JPanel {
         jTextField7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(35, 36, 37));
         jTextField7.setBorder(null);
-        jTextField7.setIgnoreRepaint(true);
         containerEnding6.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerEnding6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -527,7 +542,144 @@ public class EditPatient extends javax.swing.JPanel {
         containerBtnSchedule.setBackground(new Color(37, 119, 241));
     }//GEN-LAST:event_btnScheduleMouseExited
 
+    private void cbPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPatientActionPerformed
+        if (cbPatient.getSelectedItem() != null) {
+            Patient patient = (Patient) cbPatient.getSelectedItem();
+            patient = PatientControl.getInstance().getPatientsByID(patient);
 
+            jTextField2.setText(patient.getPhone());
+            jTextField8.setText(patient.getEmail());
+            jTextField9.setText(patient.getAddress());
+
+            String[] birthDate = patient.getBirthDate().toString().split("-");
+            int year = Integer.parseInt(birthDate[0]);
+            int month = Integer.parseInt(birthDate[1]);
+            int day = Integer.parseInt(birthDate[2]);
+
+            this.fillComboBoxDay(month + 1, year);
+            this.fillComboBoxMonthYear();
+
+            cbDay.setSelectedIndex(day - 1);
+            cbMonth.setSelectedIndex(month - 1);
+
+            int cuenta = cbYear.getItemCount();
+            for (int i = 0; i < cuenta; i++) {
+                if (year == Integer.parseInt(cbYear.getItemAt(i))) {
+                    cbYear.setSelectedIndex(i);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_cbPatientActionPerformed
+
+    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
+        if ((Patient) cbPatient.getSelectedItem() != null) {
+            Patient patient = (Patient) cbPatient.getSelectedItem();
+
+            if (cbDay.getSelectedItem() == null || cbMonth.getSelectedItem() == null || cbYear.getSelectedItem() == null || !validateFields()) {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Editar paciente", "Imposible editar paciente - Verifique los datos");
+            } else {
+                Date dt = Date.valueOf(LocalDate.of((cbYear.getSelectedIndex() + 1901), (cbMonth.getSelectedIndex() + 1), (cbDay.getSelectedIndex() + 1)));
+                patient.setAddress(jTextField9.getText());
+                patient.setEmail(jTextField8.getText());
+                patient.setPhone(jTextField2.getText());
+                patient.setBirthDate(dt);
+
+                System.out.println(patient.getName() + "\n" + patient.getEmail() + "\n" + patient.getAddress() + "\n" + patient.getPhone() + "\n" + patient.getBirthDate().toString());
+                if (PatientControl.getInstance().editPatient(patient)) {
+                    App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Editar Paciente", "Paciente editado correctamente");
+                    cleanFields();
+                } else {
+                    App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Editar Paciente", "Imposible editar paciente - Verifique los datos");
+                }
+            }
+        } else {
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Editar Paciente", "Imposible editar paciente - Seleccione un paciente");
+        }
+    }//GEN-LAST:event_btnScheduleActionPerformed
+
+    private boolean validateFields() {
+        if (jTextField2.getText().isEmpty() || jTextField2.getText().isBlank()) {
+            return false;
+        }
+        if (jTextField8.getText().isEmpty() || jTextField8.getText().isBlank()) {
+            return false;
+        }
+        if (jTextField9.getText().isEmpty() || jTextField9.getText().isBlank()) {
+            return false;
+        }
+        if (jTextField9.getText().length() > 200 || jTextField8.getText().length() > 80 || jTextField2.getText().length() > 10) {
+            return false;
+        }
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher mtch = pattern.matcher(jTextField8.getText());
+        if (!mtch.matches()) {
+            return false;
+        }
+        return true;
+    }
+
+    private void cleanFields() {
+        java.util.Date date = new java.util.Date();
+        int year = date.getYear() - 1;
+        int month = date.getMonth();
+        int day = date.getDate() - 1;
+
+        this.fillComboBoxDay(month + 1, year + 1901);
+        this.fillComboBoxMonthYear();
+
+        cbPatient.setSelectedIndex(-1);
+
+        cbDay.setSelectedIndex(day);
+        cbMonth.setSelectedIndex(month);
+        cbYear.setSelectedIndex(year);
+        ///////////////////////////////
+        cbPatient.setSelectedIndex(-1);
+        jTextField2.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+    }
+
+    private void loadPatients() {
+        for (Patient patient : PatientControl.getInstance().getPatients()) {
+            cbPatient.addItem(patient);
+        }
+        cbPatient.setSelectedIndex(-1);
+    }
+
+    private void fillComboBoxDay(int month, int year) {
+        Calendar mycal = new GregorianCalendar(year, month, 0);
+        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        ArrayList<String> days = new ArrayList<String>();
+
+        for (int i = 0; i < daysInMonth; i++) {
+            days.add(String.valueOf(i + 1));
+        }
+
+        cbDay.setModel(new DefaultComboBoxModel<String>(days.toArray(new String[0])));
+    }
+
+    private void fillComboBoxMonthYear() {
+        ArrayList<String> months = new ArrayList<String>();
+        ArrayList<String> years = new ArrayList<String>();
+
+        for (int i = 0; i < 12; i++) {
+            months.add(String.valueOf(i + 1));
+        }
+
+        java.util.Date date = new java.util.Date();
+        int year = date.getYear();
+
+        for (int i = 0; i < year; i++) {
+            years.add(String.valueOf(i + 1901));
+        }
+
+        cbMonth.setModel(new DefaultComboBoxModel<String>(months.toArray(new String[0])));
+        cbYear.setModel(new DefaultComboBoxModel<String>(years.toArray(new String[0])));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSchedule;
     private javax.swing.JComboBox<String> cbDay;
