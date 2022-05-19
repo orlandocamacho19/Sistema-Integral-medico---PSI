@@ -4,10 +4,15 @@
  */
 package View;
 
+import Domain.Patient;
+import SIM.App;
+import SIM.MessageType;
+import control.PatientControl;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultComboBoxModel;
 
@@ -23,7 +28,7 @@ public class RegisterPatient extends javax.swing.JPanel {
     public RegisterPatient() {
         initComponents();
         
-        Date date = new Date();
+        java.util.Date date = new java.util.Date();
         int year = date.getYear() - 1;
         int month = date.getMonth();
         int day = date.getDate() - 1;
@@ -70,6 +75,15 @@ public class RegisterPatient extends javax.swing.JPanel {
     
     private boolean validateFields() {
         if (jTextField1.getText().isBlank() || jTextField1.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField2.getText().isBlank() || jTextField2.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField9.getText().isBlank() || jTextField9.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField8.getText().isBlank() || jTextField8.getText().isEmpty()) {
             return false;
         }
         return true;
@@ -261,6 +275,11 @@ public class RegisterPatient extends javax.swing.JPanel {
                 btnScheduleMouseExited(evt);
             }
         });
+        btnSchedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnScheduleActionPerformed(evt);
+            }
+        });
         containerBtnSchedule.add(btnSchedule, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(containerBtnSchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 260, 40));
@@ -272,7 +291,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(35, 36, 37));
         jTextField1.setBorder(null);
-        jTextField1.setIgnoreRepaint(true);
         containerPatient.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
@@ -284,7 +302,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(35, 36, 37));
         jTextField8.setBorder(null);
-        jTextField8.setIgnoreRepaint(true);
         containerEnding.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -301,7 +318,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(35, 36, 37));
         jTextField2.setBorder(null);
-        jTextField2.setIgnoreRepaint(true);
         containerEnding3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
@@ -318,7 +334,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField9.setForeground(new java.awt.Color(35, 36, 37));
         jTextField9.setBorder(null);
-        jTextField9.setIgnoreRepaint(true);
         containerEnding4.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 260, 30));
@@ -350,7 +365,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(35, 36, 37));
         jTextField3.setBorder(null);
-        jTextField3.setIgnoreRepaint(true);
         containerPatient1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerPatient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
@@ -362,7 +376,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(35, 36, 37));
         jTextField4.setBorder(null);
-        jTextField4.setIgnoreRepaint(true);
         containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
 
         jPanel3.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 160, 30));
@@ -374,7 +387,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(35, 36, 37));
         jTextField5.setBorder(null);
-        jTextField5.setIgnoreRepaint(true);
         containerEnding2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerEnding2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
@@ -400,7 +412,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(35, 36, 37));
         jTextField6.setBorder(null);
-        jTextField6.setIgnoreRepaint(true);
         containerEnding5.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerEnding5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
@@ -417,7 +428,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         jTextField7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(35, 36, 37));
         jTextField7.setBorder(null);
-        jTextField7.setIgnoreRepaint(true);
         containerEnding6.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel3.add(containerEnding6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -492,7 +502,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         nextMonth1.setBorderPainted(false);
         nextMonth1.setContentAreaFilled(false);
         nextMonth1.setFocusPainted(false);
-        nextMonth1.setIgnoreRepaint(true);
         roundedPanel5.add(nextMonth1, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(roundedPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 30, 30));
@@ -504,7 +513,6 @@ public class RegisterPatient extends javax.swing.JPanel {
         previousMonth1.setBorderPainted(false);
         previousMonth1.setContentAreaFilled(false);
         previousMonth1.setFocusPainted(false);
-        previousMonth1.setIgnoreRepaint(true);
         roundedPanel6.add(previousMonth1, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
@@ -581,6 +589,27 @@ public class RegisterPatient extends javax.swing.JPanel {
     private void btnScheduleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnScheduleMouseExited
         containerBtnSchedule.setBackground(new Color(37, 119, 241));
     }//GEN-LAST:event_btnScheduleMouseExited
+
+    private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
+        if (validateFields()) {
+            Patient pt = new Patient();
+            pt.setName(jTextField1.getText());
+            // (cbYear.getSelectedIndex() + 1901) + "-" + (cbMonth.getSelectedIndex() + 1) + "-" + (cbDay.getSelectedIndex() + 1)
+            Date dt = Date.valueOf(LocalDate.of((cbYear.getSelectedIndex() + 1901), (cbMonth.getSelectedIndex() + 1), (cbDay.getSelectedIndex() + 1)));
+            pt.setBirthDate(dt);
+            pt.setAddress(jTextField9.getText());
+            pt.setEmail(jTextField8.getText());
+            pt.setPhone(jTextField2.getText());
+            if (PatientControl.getInstance().addPatient(pt)) {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Registrar Paciente", "Paciente registrado correctamente");
+                cleanFields();
+            } else {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Verifique los datos");
+            }
+        } else {
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Campos vacios");
+        }
+    }//GEN-LAST:event_btnScheduleActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
