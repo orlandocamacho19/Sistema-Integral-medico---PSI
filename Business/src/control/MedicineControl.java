@@ -2,6 +2,7 @@ package control;
 
 import DAO.MedicineDAO;
 import Domain.Medicine;
+import java.util.List;
 
 public class MedicineControl {
 
@@ -84,12 +85,13 @@ public class MedicineControl {
     /**
      * Returns all the users in the database
      */
-    public void getMedicines() {
+    public List<Medicine> getMedicines() {
         if (md.consultAll().isEmpty()) {
             System.out.println("The database has not medicines at this time");
         } else {
-            System.out.println(md.consultAll());
+            return md.consultAll();
         }
+        return null;
     }
     
     /**

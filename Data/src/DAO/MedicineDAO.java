@@ -60,7 +60,7 @@ public class MedicineDAO extends ConnectionDB {
     public void update(int id, Medicine medicine) {
         try {
             this.connect();
-            String sql = "update medicines set name=?, amount=?, ingredient=?, mgIngredient=?, indication=?, sactive=? where id_medicine=?";
+            String sql = "update medicines set name=?, amount=?, ingredient=?, mgIngredient=?, indications=?, active=? where id_medicine=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, medicine.getName());
             ps.setDouble(2, medicine.getAmount());
@@ -71,7 +71,7 @@ public class MedicineDAO extends ConnectionDB {
             ps.setInt(7, id);
             ps.executeUpdate();
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println(e.toString());
         }
     }
 

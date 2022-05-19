@@ -21,9 +21,14 @@ public class EditMedicine extends javax.swing.JPanel {
      */
     public EditMedicine() {
         initComponents();
+        this.loadMedicines();
+        this.cleanFields();
     }
-    
+
     private boolean validateFields() {
+        if (this.cbMedicine.getSelectedIndex() == -1) {
+            return false;
+        }
         if (jTextField2.getText().isBlank() || jTextField2.getText().isEmpty()) {
             return false;
         }
@@ -44,16 +49,31 @@ public class EditMedicine extends javax.swing.JPanel {
         }
         return true;
     }
-    
+
     private void cleanFields() {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         tAReason.setText("");
+        this.cbMedicine.setSelectedIndex(-1);
     }
-    
+
+    private void loadMedicineInfo() {
+        if (this.cbMedicine.getSelectedIndex() != -1) {
+            Medicine med = (Medicine) this.cbMedicine.getSelectedItem();
+            jTextField2.setText(String.valueOf(med.getAmount()));
+            jTextField4.setText(med.getIngredient());
+            jTextField3.setText(String.valueOf(med.getMgIngredient()));
+            tAReason.setText(med.getIndications());
+        }
+    }
+
     private void loadMedicines() {
-        
+        this.cbMedicine.removeAllItems();
+        MedicineControl.getInstance().getMedicines().forEach(medicine -> {
+            this.cbMedicine.addItem(medicine);
+        });
+        this.cbMedicine.setSelectedIndex(-1);
     }
 
     /**
@@ -124,7 +144,6 @@ public class EditMedicine extends javax.swing.JPanel {
         jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(35, 36, 37));
         jTextField2.setBorder(null);
-        jTextField2.setIgnoreRepaint(true);
         containerDay.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
@@ -179,6 +198,11 @@ public class EditMedicine extends javax.swing.JPanel {
         cbMedicine.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbMedicine.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         cbMedicine.setFocusable(false);
+        cbMedicine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMedicineActionPerformed(evt);
+            }
+        });
         containerPatient.add(cbMedicine, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 290, 30));
 
         jPanel2.add(containerPatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 260, 30));
@@ -190,7 +214,6 @@ public class EditMedicine extends javax.swing.JPanel {
         jTextField3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(35, 36, 37));
         jTextField3.setBorder(null);
-        jTextField3.setIgnoreRepaint(true);
         containerEnding.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -210,7 +233,6 @@ public class EditMedicine extends javax.swing.JPanel {
         tAReason.setLineWrap(true);
         tAReason.setRows(7);
         tAReason.setTabSize(4);
-        tAReason.setIgnoreRepaint(true);
         tAReason.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tAReasonKeyTyped(evt);
@@ -232,7 +254,6 @@ public class EditMedicine extends javax.swing.JPanel {
         jTextField4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(35, 36, 37));
         jTextField4.setBorder(null);
-        jTextField4.setIgnoreRepaint(true);
         containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
@@ -271,7 +292,6 @@ public class EditMedicine extends javax.swing.JPanel {
         tAReason2.setRows(7);
         tAReason2.setTabSize(4);
         tAReason2.setText("Sin medicamentos");
-        tAReason2.setIgnoreRepaint(true);
         tAReason2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tAReason2KeyTyped(evt);
@@ -296,12 +316,12 @@ public class EditMedicine extends javax.swing.JPanel {
 
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
         if (validateFields()) {
-            Medicine md = new Medicine();
+            Medicine md = (Medicine) this.cbMedicine.getSelectedItem();
             md.setAmount(Double.valueOf(jTextField2.getText()));
             md.setIngredient(jTextField4.getText());
             md.setMgIngredient(Integer.valueOf(jTextField3.getText()));
             md.setIndications(tAReason.getText().trim());
-            if (MedicineControl.getInstance().addMedicine(md)) {
+            if (MedicineControl.getInstance().editMedicine(md)) {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Registrar Medicamento", "Medicamento registrado correctamente");
                 cleanFields();
             } else {
@@ -314,12 +334,16 @@ public class EditMedicine extends javax.swing.JPanel {
 
     private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
         if (tAReason.getText().length() == 200)
-        evt.consume();
+            evt.consume();
     }//GEN-LAST:event_tAReasonKeyTyped
 
     private void tAReason2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReason2KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_tAReason2KeyTyped
+
+    private void cbMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMedicineActionPerformed
+        this.loadMedicineInfo();
+    }//GEN-LAST:event_cbMedicineActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
