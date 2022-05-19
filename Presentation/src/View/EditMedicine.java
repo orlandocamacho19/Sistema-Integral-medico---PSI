@@ -4,6 +4,10 @@
  */
 package View;
 
+import Domain.Medicine;
+import SIM.App;
+import SIM.MessageType;
+import control.MedicineControl;
 import java.awt.Color;
 
 /**
@@ -17,6 +21,43 @@ public class EditMedicine extends javax.swing.JPanel {
      */
     public EditMedicine() {
         initComponents();
+    }
+    
+    private boolean validateFields() {
+        if (jTextField1.getText().isBlank() || jTextField1.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField2.getText().isBlank() || jTextField2.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField4.getText().isBlank() || jTextField4.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField3.getText().isBlank() || jTextField3.getText().isEmpty()) {
+            return false;
+        }
+        if (tAReason.getText().trim().isBlank() || tAReason.getText().trim().isEmpty()) {
+            return false;
+        }
+        try {
+            Integer.valueOf(jTextField3.getText());
+            Double.valueOf(jTextField2.getText());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    private void cleanFields() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        tAReason.setText("");
+    }
+    
+    private void loadMedicines() {
+        
     }
 
     /**
@@ -255,7 +296,22 @@ public class EditMedicine extends javax.swing.JPanel {
     }//GEN-LAST:event_btnScheduleMouseExited
 
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
-        // TODO add your handling code here:
+        if (validateFields()) {
+            Medicine md = new Medicine();
+            md.setName(jTextField1.getText());
+            md.setAmount(Double.valueOf(jTextField2.getText()));
+            md.setIngredient(jTextField4.getText());
+            md.setMgIngredient(Integer.valueOf(jTextField3.getText()));
+            md.setIndications(tAReason.getText().trim());
+            if (MedicineControl.getInstance().addMedicine(md)) {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Registrar Medicamento", "Medicamento registrado correctamente");
+                cleanFields();
+            } else {
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Medicamento", "Imposible registrar medicamento - Verifique los datos");
+            }
+        } else {
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Medicamento", "Imposible registrar medicamento - Campos vacios o incorrectos.");
+        }
     }//GEN-LAST:event_btnScheduleActionPerformed
 
     private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped

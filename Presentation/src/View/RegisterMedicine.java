@@ -45,6 +45,10 @@ public class RegisterMedicine extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             return false;
         }
+        if (jTextField1.getText().length() > 100 || jTextField4.getText().length() > 80
+                || tAReason.getText().trim().length() > 200) {
+            return false;
+        }
         return true;
     }
     

@@ -14,6 +14,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -84,6 +86,16 @@ public class RegisterPatient extends javax.swing.JPanel {
             return false;
         }
         if (jTextField8.getText().isBlank() || jTextField8.getText().isEmpty()) {
+            return false;
+        }
+        if (jTextField1.getText().length() > 100 || jTextField9.getText().length() > 200
+                || jTextField8.getText().length() > 80 || jTextField2.getText().length() > 10) {
+            return false;
+        }
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher mtch = pattern.matcher(jTextField8.getText());
+        if (!mtch.matches()) {
             return false;
         }
         return true;
@@ -610,7 +622,7 @@ public class RegisterPatient extends javax.swing.JPanel {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Paciente", "Imposible registrar paciente - Verifique los datos");
             }
         } else {
-            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Paciente", "Imposible registrar paciente - Campos vacios");
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Paciente", "Imposible registrar paciente - Campos vacios o incorrectos.");
         }
     }//GEN-LAST:event_btnScheduleActionPerformed
 
