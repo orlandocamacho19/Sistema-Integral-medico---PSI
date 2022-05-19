@@ -91,6 +91,9 @@ public class RegisterPatient extends javax.swing.JPanel {
     
     private void cleanFields() {
         jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField9.setText("");
+        jTextField8.setText("");
     }
 
     /**
@@ -604,10 +607,10 @@ public class RegisterPatient extends javax.swing.JPanel {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Registrar Paciente", "Paciente registrado correctamente");
                 cleanFields();
             } else {
-                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Verifique los datos");
+                App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Paciente", "Imposible registrar paciente - Verifique los datos");
             }
         } else {
-            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Campos vacios");
+            App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Paciente", "Imposible registrar paciente - Campos vacios");
         }
     }//GEN-LAST:event_btnScheduleActionPerformed
 
