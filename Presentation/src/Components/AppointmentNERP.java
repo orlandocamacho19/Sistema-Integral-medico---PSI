@@ -123,7 +123,7 @@ public class AppointmentNERP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        new AppointmentInfo(App.GetSingleton().getMainFrame(), true);
+        
     }//GEN-LAST:event_formMousePressed
 
 

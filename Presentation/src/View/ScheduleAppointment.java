@@ -49,6 +49,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         revalidate();
         
         renderAppointments(currentTime);
+        renderInfoAppointmentsToday();
         
         this.loadPatients();
 
@@ -126,6 +127,33 @@ public class ScheduleAppointment extends javax.swing.JPanel {
             hour += 1;
         }
     }
+    
+    private void renderInfoAppointmentsToday(){
+        List<Appointment> appointmentsByDay = AppointmentControl.getInstance().getAppointmentByDay(currentTime);
+        int nutritionalApp = 0;
+        int estheticsApp = 0;
+        int surgicalApp = 0;
+        int confirmApp = 0;
+        
+        for (Appointment appointment : appointmentsByDay) {
+            if (appointment.getaType() == AppointmentType.Nutritional) {
+                nutritionalApp += 1;
+            } else if ((appointment.getaType() == AppointmentType.Esthetic)){
+                estheticsApp += 1;
+            } else {
+                surgicalApp += 1; 
+            }
+            
+            if (appointment.isConfirmation()) {
+                confirmApp += 1;
+            }
+            
+            jLabel14.setText(String.valueOf(nutritionalApp));
+            jLabel15.setText(String.valueOf(estheticsApp));
+            jLabel16.setText(String.valueOf(surgicalApp));
+            jLabel24.setText(confirmApp + "/" + appointmentsByDay.size());
+        }
+    } 
 
     private void loadPatients() {
         for (Patient patient : PatientControl.getInstance().getPatients()) {
@@ -717,7 +745,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLDay1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLDay1.setForeground(new java.awt.Color(35, 36, 37));
         jLDay1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLDay1.setText("Abril 2022");
+        jLDay1.setText("Mayo 2022");
         jLDay1.setToolTipText("");
         jPanel1.add(jLDay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 400, 30));
 
@@ -804,57 +832,62 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel23.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(35, 36, 37));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("2");
+        jLabel23.setText("7");
         roundedPanel6.add(jLabel23, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 40, 40));
 
-        roundedPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel7.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel7.setLayout(new java.awt.BorderLayout());
 
+        jLabel17.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(35, 36, 37));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("27");
+        jLabel17.setText("1");
         roundedPanel7.add(jLabel17, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 40, 40));
 
-        roundedPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel8.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel8.setLayout(new java.awt.BorderLayout());
 
+        jLabel18.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(35, 36, 37));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("28");
+        jLabel18.setText("2");
         roundedPanel8.add(jLabel18, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 40, 40));
 
-        roundedPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel9.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel9.setLayout(new java.awt.BorderLayout());
 
+        jLabel19.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(35, 36, 37));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("29");
+        jLabel19.setText("3");
         roundedPanel9.add(jLabel19, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 40, 40));
 
-        roundedPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel10.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel10.setLayout(new java.awt.BorderLayout());
 
+        jLabel20.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(35, 36, 37));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("30");
+        jLabel20.setText("4");
         roundedPanel10.add(jLabel20, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 40, 40));
 
-        roundedPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel11.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel11.setLayout(new java.awt.BorderLayout());
 
+        jLabel21.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(35, 36, 37));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("31");
+        jLabel21.setText("5");
         roundedPanel11.add(jLabel21, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 40, 40));
@@ -865,7 +898,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel22.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(35, 36, 37));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("1");
+        jLabel22.setText("6");
         roundedPanel12.add(jLabel22, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 40, 40));
@@ -876,7 +909,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel52.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel52.setForeground(new java.awt.Color(35, 36, 37));
         jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("9");
+        jLabel52.setText("14");
         roundedPanel13.add(jLabel52, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 40, 40));
@@ -887,7 +920,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel53.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel53.setForeground(new java.awt.Color(35, 36, 37));
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel53.setText("3");
+        jLabel53.setText("8");
         roundedPanel14.add(jLabel53, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 40, 40));
@@ -898,7 +931,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel54.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel54.setForeground(new java.awt.Color(35, 36, 37));
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel54.setText("4");
+        jLabel54.setText("9");
         roundedPanel15.add(jLabel54, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 40, 40));
@@ -909,7 +942,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel55.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel55.setForeground(new java.awt.Color(35, 36, 37));
         jLabel55.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel55.setText("5");
+        jLabel55.setText("10");
         roundedPanel16.add(jLabel55, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 40, 40));
@@ -920,7 +953,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel56.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel56.setForeground(new java.awt.Color(35, 36, 37));
         jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel56.setText("6");
+        jLabel56.setText("11");
         roundedPanel17.add(jLabel56, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 40, 40));
@@ -931,7 +964,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel57.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel57.setForeground(new java.awt.Color(35, 36, 37));
         jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel57.setText("7");
+        jLabel57.setText("12");
         roundedPanel18.add(jLabel57, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 40, 40));
@@ -942,7 +975,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel58.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel58.setForeground(new java.awt.Color(35, 36, 37));
         jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel58.setText("8");
+        jLabel58.setText("13");
         roundedPanel19.add(jLabel58, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 40, 40));
@@ -953,7 +986,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel59.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel59.setForeground(new java.awt.Color(35, 36, 37));
         jLabel59.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel59.setText("12");
+        jLabel59.setText("17");
         roundedPanel20.add(jLabel59, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 40, 40));
@@ -964,7 +997,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel60.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel60.setForeground(new java.awt.Color(35, 36, 37));
         jLabel60.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel60.setText("11");
+        jLabel60.setText("16");
         roundedPanel21.add(jLabel60, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 40, 40));
@@ -975,7 +1008,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel61.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel61.setForeground(new java.awt.Color(35, 36, 37));
         jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel61.setText("13");
+        jLabel61.setText("18");
         roundedPanel22.add(jLabel61, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 40, 40));
@@ -986,7 +1019,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel62.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel62.setForeground(new java.awt.Color(35, 36, 37));
         jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel62.setText("14");
+        jLabel62.setText("19");
         roundedPanel23.add(jLabel62, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 40, 40));
@@ -997,7 +1030,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel63.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel63.setForeground(new java.awt.Color(35, 36, 37));
         jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel63.setText("16");
+        jLabel63.setText("21");
         roundedPanel24.add(jLabel63, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 40, 40));
@@ -1008,7 +1041,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel64.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel64.setForeground(new java.awt.Color(35, 36, 37));
         jLabel64.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel64.setText("15");
+        jLabel64.setText("20");
         roundedPanel25.add(jLabel64, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 40, 40));
@@ -1019,7 +1052,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel65.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel65.setForeground(new java.awt.Color(35, 36, 37));
         jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel65.setText("10");
+        jLabel65.setText("15");
         roundedPanel26.add(jLabel65, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 40, 40));
@@ -1030,7 +1063,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel66.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel66.setForeground(new java.awt.Color(35, 36, 37));
         jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel66.setText("19");
+        jLabel66.setText("24");
         roundedPanel27.add(jLabel66, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 40, 40));
@@ -1041,7 +1074,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel67.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel67.setForeground(new java.awt.Color(35, 36, 37));
         jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel67.setText("18");
+        jLabel67.setText("23");
         roundedPanel28.add(jLabel67, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 40, 40));
@@ -1052,7 +1085,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel68.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel68.setForeground(new java.awt.Color(35, 36, 37));
         jLabel68.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel68.setText("20");
+        jLabel68.setText("25");
         roundedPanel29.add(jLabel68, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 40, 40));
@@ -1063,7 +1096,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel69.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel69.setForeground(new java.awt.Color(35, 36, 37));
         jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel69.setText("21");
+        jLabel69.setText("26");
         roundedPanel30.add(jLabel69, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 40, 40));
@@ -1074,7 +1107,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel70.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel70.setForeground(new java.awt.Color(35, 36, 37));
         jLabel70.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel70.setText("23");
+        jLabel70.setText("28");
         roundedPanel31.add(jLabel70, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, 40, 40));
@@ -1085,7 +1118,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel71.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel71.setForeground(new java.awt.Color(35, 36, 37));
         jLabel71.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel71.setText("22");
+        jLabel71.setText("27");
         roundedPanel32.add(jLabel71, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, 40, 40));
@@ -1096,7 +1129,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel72.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel72.setForeground(new java.awt.Color(35, 36, 37));
         jLabel72.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel72.setText("17");
+        jLabel72.setText("22");
         roundedPanel33.add(jLabel72, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 40, 40));
@@ -1107,29 +1140,27 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel80.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel80.setForeground(new java.awt.Color(35, 36, 37));
         jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel80.setText("26");
+        jLabel80.setText("31");
         roundedPanel41.add(jLabel80, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 40, 40));
 
-        roundedPanel42.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel42.setBackground(new java.awt.Color(255, 255, 255));
         roundedPanel42.setLayout(new java.awt.BorderLayout());
 
-        jLabel81.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel81.setForeground(new java.awt.Color(35, 36, 37));
         jLabel81.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel81.setText("27");
+        jLabel81.setText("1");
         roundedPanel42.add(jLabel81, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 40, 40));
 
-        roundedPanel43.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel43.setBackground(new java.awt.Color(255, 255, 255));
         roundedPanel43.setLayout(new java.awt.BorderLayout());
 
-        jLabel82.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel82.setForeground(new java.awt.Color(35, 36, 37));
         jLabel82.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel82.setText("29");
+        jLabel82.setText("3");
         roundedPanel43.add(jLabel82, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, 40, 40));
@@ -1140,18 +1171,17 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel83.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel83.setForeground(new java.awt.Color(35, 36, 37));
         jLabel83.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel83.setText("25");
+        jLabel83.setText("30");
         roundedPanel44.add(jLabel83, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 40, 40));
 
-        roundedPanel45.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel45.setBackground(new java.awt.Color(255, 255, 255));
         roundedPanel45.setLayout(new java.awt.BorderLayout());
 
-        jLabel84.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel84.setForeground(new java.awt.Color(35, 36, 37));
         jLabel84.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel84.setText("30");
+        jLabel84.setText("4");
         roundedPanel45.add(jLabel84, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 40, 40));
@@ -1162,18 +1192,17 @@ public class ScheduleAppointment extends javax.swing.JPanel {
         jLabel85.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel85.setForeground(new java.awt.Color(35, 36, 37));
         jLabel85.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel85.setText("24");
+        jLabel85.setText("29");
         roundedPanel46.add(jLabel85, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 40, 40));
 
-        roundedPanel47.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel47.setBackground(new java.awt.Color(255, 255, 255));
         roundedPanel47.setLayout(new java.awt.BorderLayout());
 
-        jLabel86.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel86.setForeground(new java.awt.Color(35, 36, 37));
         jLabel86.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel86.setText("28");
+        jLabel86.setText("2");
         roundedPanel47.add(jLabel86, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 40, 40));
@@ -1183,7 +1212,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel87.setForeground(new java.awt.Color(35, 36, 37));
         jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel87.setText("3");
+        jLabel87.setText("7");
         roundedPanel48.add(jLabel87, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 40, 40));
@@ -1193,7 +1222,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel88.setForeground(new java.awt.Color(35, 36, 37));
         jLabel88.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel88.setText("4");
+        jLabel88.setText("8");
         roundedPanel49.add(jLabel88, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 40, 40));
@@ -1203,7 +1232,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel89.setForeground(new java.awt.Color(35, 36, 37));
         jLabel89.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel89.setText("6");
+        jLabel89.setText("10");
         roundedPanel50.add(jLabel89, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, 40, 40));
@@ -1213,7 +1242,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel90.setForeground(new java.awt.Color(35, 36, 37));
         jLabel90.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel90.setText("2");
+        jLabel90.setText("6");
         roundedPanel51.add(jLabel90, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 40, 40));
@@ -1223,7 +1252,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel91.setForeground(new java.awt.Color(35, 36, 37));
         jLabel91.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel91.setText("7");
+        jLabel91.setText("11");
         roundedPanel52.add(jLabel91, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, 40, 40));
@@ -1233,7 +1262,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel92.setForeground(new java.awt.Color(35, 36, 37));
         jLabel92.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel92.setText("1");
+        jLabel92.setText("5");
         roundedPanel53.add(jLabel92, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 40, 40));
@@ -1243,7 +1272,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
 
         jLabel93.setForeground(new java.awt.Color(35, 36, 37));
         jLabel93.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel93.setText("5");
+        jLabel93.setText("9");
         roundedPanel54.add(jLabel93, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(roundedPanel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 40, 40));
@@ -1389,6 +1418,7 @@ public class ScheduleAppointment extends javax.swing.JPanel {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Agendar cita", "Cita agendada correctamente");
                 cleanFields();
                 renderAppointments(currentTime);
+                renderInfoAppointmentsToday();
             } else {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Agendar cita", "Imposible agendar cita - Verifique los datos");
             }

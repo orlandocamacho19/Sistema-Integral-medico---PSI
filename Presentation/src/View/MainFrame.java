@@ -304,7 +304,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jButton8.setForeground(new java.awt.Color(0, 0, 0));
-        jButton8.setText("Editar medicamento");
+        jButton8.setText("Editar medicina");
         jButton8.setBorderPainted(false);
         jButton8.setContentAreaFilled(false);
         jButton8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);

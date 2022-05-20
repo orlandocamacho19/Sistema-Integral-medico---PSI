@@ -4,11 +4,14 @@
  */
 package View;
 
+import Components.CustomScrollBarUI;
+import Components.MedicineInfo;
 import Domain.Medicine;
 import SIM.App;
 import SIM.MessageType;
 import control.MedicineControl;
 import java.awt.Color;
+import java.util.List;
 
 /**
  *
@@ -21,37 +24,94 @@ public class RegisterMedicine extends javax.swing.JPanel {
      */
     public RegisterMedicine() {
         initComponents();
+        
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        scrollMedicines.setSize(780, 575);
+        scrollMedicines.setPreferredSize(new java.awt.Dimension(780, 575));
+        revalidate();
+        
+        renderMedicines();
+        
+        
+    }
+    
+    private void renderMedicines(){
+        scrollMedicines.removeAll();
+        
+        List<Medicine> medicines = MedicineControl.getInstance().getMedicines();
+        
+        if (medicines != null) {
+            if (medicines.size() > 12) {
+                int rows = (int) Math.ceil(medicines.size() / 3.0);
+                scrollMedicines.setSize(575, (130 * rows) + 20);
+                scrollMedicines.setPreferredSize(new java.awt.Dimension(575, (130 * rows) + 20));
+                revalidate();
+            }
+        }
+        
+        if (medicines != null) {
+            int medC = 1;
+            int coorY = 20;
+            int coorX = 20;
+            for (Medicine medicine : medicines) {
+                MedicineInfo medicineInfo = new MedicineInfo(medicine);
+                scrollMedicines.add(medicineInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(coorX, coorY, -1, -1));
+                coorX += 253;
+                if (medC%3 == 0) {
+                    coorY += 130;
+                    coorX = 20;
+                }
+                medC += 1;
+                
+            }
+        }
+        revalidate();
     }
     
     private boolean validateFields() {
-        if (jTextField1.getText().isBlank() || jTextField1.getText().isEmpty()) {
+        if (!jTextField1.getText().isBlank() || !jTextField1.getText().isEmpty()) {
+            if (jTextField1.getText().length() > 100) {
+                return false;
+            }
+        } else {
             return false;
         }
-        if (jTextField2.getText().isBlank() || jTextField2.getText().isEmpty()) {
+
+        if (!jTextField2.getText().isBlank() || !jTextField2.getText().isEmpty()) {
+            try {
+                Integer.valueOf(jTextField2.getText());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        } else {
             return false;
         }
-        if (jTextField4.getText().isBlank() || jTextField4.getText().isEmpty()) {
+
+        if (!jTextField4.getText().isBlank() || !jTextField4.getText().isEmpty()) {
+            if (jTextField4.getText().length() > 80) {
+                return false;
+            }
+        }
+
+        if (!jTextField3.getText().isBlank() || !jTextField3.getText().isEmpty()) {
+            try {
+                Integer.valueOf(jTextField3.getText());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        } else {
             return false;
         }
-        if (jTextField3.getText().isBlank() || jTextField3.getText().isEmpty()) {
-            return false;
+
+        if (!tAReason.getText().trim().isBlank() || !tAReason.getText().trim().isEmpty()) {
+            if (tAReason.getText().trim().length() > 200) {
+                return false;
+            }
         }
-        if (tAReason.getText().trim().isBlank() || tAReason.getText().trim().isEmpty()) {
-            return false;
-        }
-        try {
-            Integer.valueOf(jTextField3.getText());
-            Double.valueOf(jTextField2.getText());
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        if (jTextField1.getText().length() > 100 || jTextField4.getText().length() > 80
-                || tAReason.getText().trim().length() > 200) {
-            return false;
-        }
+
         return true;
     }
-    
+
     private void cleanFields() {
         jTextField1.setText("");
         jTextField2.setText("");
@@ -92,9 +152,33 @@ public class RegisterMedicine extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jLDay3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        scrollMedicines = new javax.swing.JPanel();
         roundedPanel3 = new Components.RoundedPanel();
-        tAReason2 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        roundedPanel4 = new Components.RoundedPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        roundedPanel5 = new Components.RoundedPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        roundedPanel6 = new Components.RoundedPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        roundedPanel7 = new Components.RoundedPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        roundedPanel8 = new Components.RoundedPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1080, 685));
@@ -106,7 +190,7 @@ public class RegisterMedicine extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 22)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel2.setText("Registrar medicamento");
+        jLabel2.setText("Registrar medicina");
         title.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 60));
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
@@ -126,7 +210,7 @@ public class RegisterMedicine extends javax.swing.JPanel {
         btnSchedule.setBackground(new java.awt.Color(37, 119, 241));
         btnSchedule.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         btnSchedule.setForeground(new java.awt.Color(255, 255, 255));
-        btnSchedule.setText("Registrar medicamento");
+        btnSchedule.setText("Registrar medicina");
         btnSchedule.setBorderPainted(false);
         btnSchedule.setContentAreaFilled(false);
         btnSchedule.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -174,6 +258,11 @@ public class RegisterMedicine extends javax.swing.JPanel {
         jTextField2.setForeground(new java.awt.Color(35, 36, 37));
         jTextField2.setBorder(null);
         jTextField2.setIgnoreRepaint(true);
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
         containerDay.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
@@ -192,6 +281,11 @@ public class RegisterMedicine extends javax.swing.JPanel {
         jTextField3.setForeground(new java.awt.Color(35, 36, 37));
         jTextField3.setBorder(null);
         jTextField3.setIgnoreRepaint(true);
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
         containerEnding.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -256,33 +350,145 @@ public class RegisterMedicine extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        scrollMedicines.setBackground(new java.awt.Color(255, 255, 255));
+        scrollMedicines.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         roundedPanel3.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tAReason2.setBackground(new java.awt.Color(244, 243, 243));
-        tAReason2.setColumns(20);
-        tAReason2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        tAReason2.setForeground(new java.awt.Color(35, 36, 37));
-        tAReason2.setLineWrap(true);
-        tAReason2.setRows(7);
-        tAReason2.setTabSize(4);
-        tAReason2.setText("Sin medicamentos");
-        tAReason2.setIgnoreRepaint(true);
-        tAReason2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tAReason2KeyTyped(evt);
-            }
-        });
-        roundedPanel3.add(tAReason2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 90));
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel1.setText("Nombrej medicamento");
+        roundedPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        jPanel1.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 220, 110));
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel3.setText("Ingrediente activo");
+        roundedPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
-        jScrollPane1.setViewportView(jPanel1);
+        scrollMedicines.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 20, 233, 110));
+
+        roundedPanel4.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel4.setText("Nombrej medicamento");
+        roundedPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel5.setText("Ingrediente activo");
+        roundedPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, -1));
+
+        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel9.setText("10 mg");
+        roundedPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 80, 60, 20));
+
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel10.setText("10 pz");
+        roundedPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 60, 20));
+
+        scrollMedicines.add(roundedPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 233, 110));
+
+        roundedPanel5.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel6.setText("Nombrej medicamento");
+        roundedPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel7.setText("Ingrediente activo");
+        roundedPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        scrollMedicines.add(roundedPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 20, 233, 110));
+
+        roundedPanel6.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel8.setText("Nombrej medicamento");
+        roundedPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
+
+        jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel11.setText("Ingrediente activo");
+        roundedPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, -1));
+
+        jLabel12.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel12.setText("10 mg");
+        roundedPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 80, 60, 20));
+
+        jLabel13.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel13.setText("10 pz");
+        roundedPanel6.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 60, 20));
+
+        scrollMedicines.add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 233, 110));
+
+        roundedPanel7.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel14.setText("Nombrej medicamento");
+        roundedPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
+
+        jLabel15.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel15.setText("Ingrediente activo");
+        roundedPanel7.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, -1));
+
+        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel16.setText("10 mg");
+        roundedPanel7.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 80, 60, 20));
+
+        jLabel17.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel17.setText("10 pz");
+        roundedPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 60, 20));
+
+        scrollMedicines.add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 233, 110));
+
+        roundedPanel8.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel18.setText("Nombrej medicamento");
+        roundedPanel8.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
+
+        jLabel19.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel19.setText("Ingrediente activo");
+        roundedPanel8.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, -1));
+
+        jLabel20.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel20.setText("10 mg");
+        roundedPanel8.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 80, 60, 20));
+
+        jLabel21.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel21.setText("10 pz");
+        roundedPanel8.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 60, 20));
+
+        scrollMedicines.add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 233, 110));
+
+        jScrollPane1.setViewportView(scrollMedicines);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 780, 575));
     }// </editor-fold>//GEN-END:initComponents
@@ -299,12 +505,13 @@ public class RegisterMedicine extends javax.swing.JPanel {
         if (validateFields()) {
             Medicine md = new Medicine();
             md.setName(jTextField1.getText());
-            md.setAmount(Double.valueOf(jTextField2.getText()));
+            md.setAmount(Integer.valueOf(jTextField2.getText()));
             md.setIngredient(jTextField4.getText());
             md.setMgIngredient(Integer.valueOf(jTextField3.getText()));
             md.setIndications(tAReason.getText().trim());
             if (MedicineControl.getInstance().addMedicine(md)) {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Registrar Medicamento", "Medicamento registrado correctamente");
+                renderMedicines();
                 cleanFields();
             } else {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Medicamento", "Imposible registrar medicamento - Verifique los datos");
@@ -314,14 +521,26 @@ public class RegisterMedicine extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnScheduleActionPerformed
 
-    private void tAReason2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReason2KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tAReason2KeyTyped
-
     private void tAReasonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tAReasonKeyTyped
         if (tAReason.getText().length() == 200)
         evt.consume();
     }//GEN-LAST:event_tAReasonKeyTyped
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        char c=evt.getKeyChar();
+        
+	if(Character.isLetter(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        char c=evt.getKeyChar();
+        
+	if(Character.isLetter(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField3KeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -338,8 +557,27 @@ public class RegisterMedicine extends javax.swing.JPanel {
     private javax.swing.JLabel jLDay3;
     private javax.swing.JLabel jLNotes;
     private javax.swing.JLabel jLPatient;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
@@ -348,8 +586,13 @@ public class RegisterMedicine extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private Components.RoundedPanel roundedPanel3;
+    private Components.RoundedPanel roundedPanel4;
+    private Components.RoundedPanel roundedPanel5;
+    private Components.RoundedPanel roundedPanel6;
+    private Components.RoundedPanel roundedPanel7;
+    private Components.RoundedPanel roundedPanel8;
+    private javax.swing.JPanel scrollMedicines;
     private javax.swing.JTextArea tAReason;
-    private javax.swing.JTextArea tAReason2;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
 }

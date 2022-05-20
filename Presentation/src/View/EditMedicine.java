@@ -4,11 +4,14 @@
  */
 package View;
 
+import Components.CustomScrollBarUI;
+import Components.MedicineInfo;
 import Domain.Medicine;
 import SIM.App;
 import SIM.MessageType;
 import control.MedicineControl;
 import java.awt.Color;
+import java.util.List;
 
 /**
  *
@@ -23,30 +26,85 @@ public class EditMedicine extends javax.swing.JPanel {
         initComponents();
         this.loadMedicines();
         this.cleanFields();
+        
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        scrollMedicines.setSize(780, 575);
+        scrollMedicines.setPreferredSize(new java.awt.Dimension(575, 780));
+        revalidate();
+        
+        renderMedicines();
+    }
+    
+     private void renderMedicines(){
+        scrollMedicines.removeAll();
+        
+        List<Medicine> medicines = MedicineControl.getInstance().getMedicines();
+        
+        if (medicines != null) {
+            if (medicines.size() > 12) {
+                int rows = (int) Math.ceil(medicines.size() / 3.0);
+                
+                scrollMedicines.setSize(780, 130 * rows + 20);
+                scrollMedicines.setPreferredSize(new java.awt.Dimension(780, 130 * rows + 20));
+                revalidate();
+            }
+        }
+        
+        if (medicines != null) {
+            int medC = 1;
+            int coorY = 20;
+            int coorX = 20;
+            for (Medicine medicine : medicines) {
+                MedicineInfo medicineInfo = new MedicineInfo(medicine);
+                scrollMedicines.add(medicineInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(coorX, coorY, -1, -1));
+                coorX += 253;
+                if (medC%3 == 0) {
+                    coorY += 130;
+                    coorX = 20;
+                }
+                medC += 1;
+                
+            }
+        }
+        revalidate();
     }
 
     private boolean validateFields() {
         if (this.cbMedicine.getSelectedIndex() == -1) {
             return false;
         }
-        if (jTextField2.getText().isBlank() || jTextField2.getText().isEmpty()) {
+        if (!jTextField2.getText().isBlank() || !jTextField2.getText().isEmpty()) {
+            try {
+                Integer.valueOf(jTextField2.getText());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        } else {
             return false;
         }
-        if (jTextField4.getText().isBlank() || jTextField4.getText().isEmpty()) {
+
+        if (!jTextField4.getText().isBlank() || !jTextField4.getText().isEmpty()) {
+            if (jTextField4.getText().length() > 80) {
+                return false;
+            }
+        }
+
+        if (!jTextField3.getText().isBlank() || !jTextField3.getText().isEmpty()) {
+            try {
+                Integer.valueOf(jTextField3.getText());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        } else {
             return false;
         }
-        if (jTextField3.getText().isBlank() || jTextField3.getText().isEmpty()) {
-            return false;
+
+        if (!tAReason.getText().trim().isBlank() || !tAReason.getText().trim().isEmpty()) {
+            if (tAReason.getText().trim().length() > 200) {
+                return false;
+            }
         }
-        if (tAReason.getText().trim().isBlank() || tAReason.getText().trim().isEmpty()) {
-            return false;
-        }
-        try {
-            Integer.valueOf(jTextField3.getText());
-            Double.valueOf(jTextField2.getText());
-        } catch (NumberFormatException e) {
-            return false;
-        }
+
         return true;
     }
 
@@ -108,7 +166,7 @@ public class EditMedicine extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jLDay3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        scrollMedicines = new javax.swing.JPanel();
         roundedPanel3 = new Components.RoundedPanel();
         tAReason2 = new javax.swing.JTextArea();
 
@@ -122,7 +180,7 @@ public class EditMedicine extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 22)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel2.setText("Editar medicamento");
+        jLabel2.setText("Editar medicina");
         title.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 60));
 
         add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 60));
@@ -144,6 +202,7 @@ public class EditMedicine extends javax.swing.JPanel {
         jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(35, 36, 37));
         jTextField2.setBorder(null);
+        jTextField2.setIgnoreRepaint(true);
         containerDay.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 260, 30));
@@ -165,7 +224,7 @@ public class EditMedicine extends javax.swing.JPanel {
         btnSchedule.setBackground(new java.awt.Color(37, 119, 241));
         btnSchedule.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         btnSchedule.setForeground(new java.awt.Color(255, 255, 255));
-        btnSchedule.setText("Editar medicamento");
+        btnSchedule.setText("Editar medicina");
         btnSchedule.setBorderPainted(false);
         btnSchedule.setContentAreaFilled(false);
         btnSchedule.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -214,6 +273,7 @@ public class EditMedicine extends javax.swing.JPanel {
         jTextField3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(35, 36, 37));
         jTextField3.setBorder(null);
+        jTextField3.setIgnoreRepaint(true);
         containerEnding.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 260, 30));
@@ -233,6 +293,7 @@ public class EditMedicine extends javax.swing.JPanel {
         tAReason.setLineWrap(true);
         tAReason.setRows(7);
         tAReason.setTabSize(4);
+        tAReason.setIgnoreRepaint(true);
         tAReason.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tAReasonKeyTyped(evt);
@@ -254,6 +315,7 @@ public class EditMedicine extends javax.swing.JPanel {
         jTextField4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(35, 36, 37));
         jTextField4.setBorder(null);
+        jTextField4.setIgnoreRepaint(true);
         containerEnding1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 240, 30));
 
         jPanel2.add(containerEnding1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 260, 30));
@@ -276,10 +338,9 @@ public class EditMedicine extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        scrollMedicines.setBackground(new java.awt.Color(255, 255, 255));
+        scrollMedicines.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         roundedPanel3.setBackground(new java.awt.Color(244, 243, 243));
         roundedPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -292,6 +353,7 @@ public class EditMedicine extends javax.swing.JPanel {
         tAReason2.setRows(7);
         tAReason2.setTabSize(4);
         tAReason2.setText("Sin medicamentos");
+        tAReason2.setIgnoreRepaint(true);
         tAReason2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tAReason2KeyTyped(evt);
@@ -299,9 +361,9 @@ public class EditMedicine extends javax.swing.JPanel {
         });
         roundedPanel3.add(tAReason2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 90));
 
-        jPanel1.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 220, 110));
+        scrollMedicines.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 220, 110));
 
-        jScrollPane1.setViewportView(jPanel1);
+        jScrollPane1.setViewportView(scrollMedicines);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 780, 575));
     }// </editor-fold>//GEN-END:initComponents
@@ -317,12 +379,13 @@ public class EditMedicine extends javax.swing.JPanel {
     private void btnScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScheduleActionPerformed
         if (validateFields()) {
             Medicine md = (Medicine) this.cbMedicine.getSelectedItem();
-            md.setAmount(Double.valueOf(jTextField2.getText()));
+            md.setAmount(Integer.valueOf(jTextField2.getText()));
             md.setIngredient(jTextField4.getText());
             md.setMgIngredient(Integer.valueOf(jTextField3.getText()));
             md.setIndications(tAReason.getText().trim());
             if (MedicineControl.getInstance().editMedicine(md)) {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Registrar Medicamento", "Medicamento registrado correctamente");
+                renderMedicines();
                 cleanFields();
             } else {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Registrar Medicamento", "Imposible registrar medicamento - Verifique los datos");
@@ -362,7 +425,6 @@ public class EditMedicine extends javax.swing.JPanel {
     private javax.swing.JLabel jLNotes;
     private javax.swing.JLabel jLPatient;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
@@ -370,6 +432,7 @@ public class EditMedicine extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private Components.RoundedPanel roundedPanel3;
+    private javax.swing.JPanel scrollMedicines;
     private javax.swing.JTextArea tAReason;
     private javax.swing.JTextArea tAReason2;
     private javax.swing.JPanel title;

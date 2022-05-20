@@ -39,7 +39,7 @@ public class MedicineDAO extends ConnectionDB {
             String sql = "insert into medicines (name, amount, ingredient, mgIngredient, indications, active) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, medicine.getName());
-            ps.setDouble(2, medicine.getAmount());
+            ps.setInt(2, medicine.getAmount());
             ps.setString(3, medicine.getIngredient());
             ps.setInt(4, medicine.getMgIngredient());
             ps.setString(5, medicine.getIndications());
@@ -63,7 +63,7 @@ public class MedicineDAO extends ConnectionDB {
             String sql = "update medicines set name=?, amount=?, ingredient=?, mgIngredient=?, indications=?, active=? where id_medicine=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, medicine.getName());
-            ps.setDouble(2, medicine.getAmount());
+            ps.setInt(2, medicine.getAmount());
             ps.setString(3, medicine.getIngredient());
             ps.setInt(4, medicine.getMgIngredient());
             ps.setString(5, medicine.getIndications());
@@ -110,7 +110,7 @@ public class MedicineDAO extends ConnectionDB {
                 Medicine medicine = new Medicine();
                 medicine.setId_medicine(res.getInt("id_medicine"));
                 medicine.setName(res.getString("name"));
-                medicine.setAmount(res.getDouble("amount"));
+                medicine.setAmount(res.getInt("amount"));
                 medicine.setIngredient(res.getString("ingredient"));
                 medicine.setMgIngredient(res.getInt("mgIngredient"));
                 medicine.setIndications(res.getString("indications"));

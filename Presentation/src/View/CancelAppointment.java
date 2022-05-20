@@ -41,6 +41,7 @@ public class CancelAppointment extends javax.swing.JPanel {
         revalidate();
 
         renderAppointments(currentTime);
+        renderInfoAppointmentsToday();
 
         this.loadPatients();
     }
@@ -107,6 +108,33 @@ public class CancelAppointment extends javax.swing.JPanel {
         }
     }
 
+    private void renderInfoAppointmentsToday(){
+        List<Appointment> appointmentsByDay = AppointmentControl.getInstance().getAppointmentByDay(currentTime);
+        int nutritionalApp = 0;
+        int estheticsApp = 0;
+        int surgicalApp = 0;
+        int confirmApp = 0;
+        
+        for (Appointment appointment : appointmentsByDay) {
+            if (appointment.getaType() == AppointmentType.Nutritional) {
+                nutritionalApp += 1;
+            } else if ((appointment.getaType() == AppointmentType.Esthetic)){
+                estheticsApp += 1;
+            } else {
+                surgicalApp += 1; 
+            }
+            
+            if (appointment.isConfirmation()) {
+                confirmApp += 1;
+            }
+            
+            jLabel14.setText(String.valueOf(nutritionalApp));
+            jLabel26.setText(String.valueOf(estheticsApp));
+            jLabel16.setText(String.valueOf(surgicalApp));
+            jLabel24.setText(confirmApp + "/" + appointmentsByDay.size());
+        }
+    }
+    
     private void loadPatients() {
         this.cbPatient.removeAllItems();
         for (Patient patient : PatientControl.getInstance().getPatients()) {
@@ -249,15 +277,39 @@ public class CancelAppointment extends javax.swing.JPanel {
         cbHourEnding = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLDay1 = new javax.swing.JLabel();
+        roundedPanel3 = new Components.RoundedPanel();
+        nextMonth = new javax.swing.JButton();
+        roundedPanel4 = new Components.RoundedPanel();
+        previousMonth = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLPatient1 = new javax.swing.JLabel();
+        roundedPanel34 = new Components.RoundedPanel();
+        roundedPanel40 = new Components.RoundedPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        roundedPanel35 = new Components.RoundedPanel();
+        roundedPanel38 = new Components.RoundedPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        roundedPanel36 = new Components.RoundedPanel();
+        roundedPanel55 = new Components.RoundedPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        roundedPanel37 = new Components.RoundedPanel();
+        roundedPanel39 = new Components.RoundedPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         roundedPanel5 = new Components.RoundedPanel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         roundedPanel6 = new Components.RoundedPanel();
         jLabel23 = new javax.swing.JLabel();
         roundedPanel7 = new Components.RoundedPanel();
@@ -342,30 +394,6 @@ public class CancelAppointment extends javax.swing.JPanel {
         jLabel92 = new javax.swing.JLabel();
         roundedPanel54 = new Components.RoundedPanel();
         jLabel93 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLDay1 = new javax.swing.JLabel();
-        roundedPanel3 = new Components.RoundedPanel();
-        nextMonth = new javax.swing.JButton();
-        roundedPanel4 = new Components.RoundedPanel();
-        previousMonth = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jLPatient1 = new javax.swing.JLabel();
-        roundedPanel34 = new Components.RoundedPanel();
-        roundedPanel40 = new Components.RoundedPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        roundedPanel35 = new Components.RoundedPanel();
-        roundedPanel38 = new Components.RoundedPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        roundedPanel36 = new Components.RoundedPanel();
-        roundedPanel55 = new Components.RoundedPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        roundedPanel37 = new Components.RoundedPanel();
-        roundedPanel39 = new Components.RoundedPanel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1080, 685));
@@ -663,509 +691,6 @@ public class CancelAppointment extends javax.swing.JPanel {
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 300, 625));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        roundedPanel5.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Lun");
-        roundedPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 40, 40));
-
-        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Mar");
-        roundedPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 40, 40));
-
-        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Mie");
-        roundedPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 40, 40));
-
-        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Jue");
-        roundedPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 40, 40));
-
-        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Vie");
-        roundedPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 40, 40));
-
-        jLabel11.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Sab");
-        roundedPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 40, 40));
-
-        jLabel12.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Dom");
-        roundedPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 40, 40));
-
-        jPanel4.add(roundedPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 440, 40));
-
-        roundedPanel6.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel6.setLayout(new java.awt.BorderLayout());
-
-        jLabel23.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("2");
-        roundedPanel6.add(jLabel23, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 40, 40));
-
-        roundedPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel7.setLayout(new java.awt.BorderLayout());
-
-        jLabel17.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("27");
-        roundedPanel7.add(jLabel17, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 40, 40));
-
-        roundedPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel8.setLayout(new java.awt.BorderLayout());
-
-        jLabel18.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("28");
-        roundedPanel8.add(jLabel18, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 40, 40));
-
-        roundedPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel9.setLayout(new java.awt.BorderLayout());
-
-        jLabel19.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("29");
-        roundedPanel9.add(jLabel19, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 40, 40));
-
-        roundedPanel10.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel10.setLayout(new java.awt.BorderLayout());
-
-        jLabel20.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("30");
-        roundedPanel10.add(jLabel20, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 40, 40));
-
-        roundedPanel11.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel11.setLayout(new java.awt.BorderLayout());
-
-        jLabel21.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("31");
-        roundedPanel11.add(jLabel21, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 40, 40));
-
-        roundedPanel12.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel12.setLayout(new java.awt.BorderLayout());
-
-        jLabel22.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("1");
-        roundedPanel12.add(jLabel22, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 40, 40));
-
-        roundedPanel13.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel13.setLayout(new java.awt.BorderLayout());
-
-        jLabel52.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel52.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("9");
-        roundedPanel13.add(jLabel52, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 40, 40));
-
-        roundedPanel14.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel14.setLayout(new java.awt.BorderLayout());
-
-        jLabel53.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel53.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel53.setText("3");
-        roundedPanel14.add(jLabel53, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 40, 40));
-
-        roundedPanel15.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel15.setLayout(new java.awt.BorderLayout());
-
-        jLabel54.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel54.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel54.setText("4");
-        roundedPanel15.add(jLabel54, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 40, 40));
-
-        roundedPanel16.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel16.setLayout(new java.awt.BorderLayout());
-
-        jLabel55.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel55.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel55.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel55.setText("5");
-        roundedPanel16.add(jLabel55, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 40, 40));
-
-        roundedPanel17.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel17.setLayout(new java.awt.BorderLayout());
-
-        jLabel56.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel56.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel56.setText("6");
-        roundedPanel17.add(jLabel56, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 40, 40));
-
-        roundedPanel18.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel18.setLayout(new java.awt.BorderLayout());
-
-        jLabel57.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel57.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel57.setText("7");
-        roundedPanel18.add(jLabel57, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 40, 40));
-
-        roundedPanel19.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel19.setLayout(new java.awt.BorderLayout());
-
-        jLabel58.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel58.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel58.setText("8");
-        roundedPanel19.add(jLabel58, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 40, 40));
-
-        roundedPanel20.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel20.setLayout(new java.awt.BorderLayout());
-
-        jLabel59.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel59.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel59.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel59.setText("12");
-        roundedPanel20.add(jLabel59, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 40, 40));
-
-        roundedPanel21.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel21.setLayout(new java.awt.BorderLayout());
-
-        jLabel60.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel60.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel60.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel60.setText("11");
-        roundedPanel21.add(jLabel60, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 40, 40));
-
-        roundedPanel22.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel22.setLayout(new java.awt.BorderLayout());
-
-        jLabel61.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel61.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel61.setText("13");
-        roundedPanel22.add(jLabel61, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 40, 40));
-
-        roundedPanel23.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel23.setLayout(new java.awt.BorderLayout());
-
-        jLabel62.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel62.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel62.setText("14");
-        roundedPanel23.add(jLabel62, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 40, 40));
-
-        roundedPanel24.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel24.setLayout(new java.awt.BorderLayout());
-
-        jLabel63.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel63.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel63.setText("16");
-        roundedPanel24.add(jLabel63, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 40, 40));
-
-        roundedPanel25.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel25.setLayout(new java.awt.BorderLayout());
-
-        jLabel64.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel64.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel64.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel64.setText("15");
-        roundedPanel25.add(jLabel64, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 40, 40));
-
-        roundedPanel26.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel26.setLayout(new java.awt.BorderLayout());
-
-        jLabel65.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel65.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel65.setText("10");
-        roundedPanel26.add(jLabel65, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 40, 40));
-
-        roundedPanel27.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel27.setLayout(new java.awt.BorderLayout());
-
-        jLabel66.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel66.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel66.setText("19");
-        roundedPanel27.add(jLabel66, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 40, 40));
-
-        roundedPanel28.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel28.setLayout(new java.awt.BorderLayout());
-
-        jLabel67.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel67.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel67.setText("18");
-        roundedPanel28.add(jLabel67, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 40, 40));
-
-        roundedPanel29.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel29.setLayout(new java.awt.BorderLayout());
-
-        jLabel68.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel68.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel68.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel68.setText("20");
-        roundedPanel29.add(jLabel68, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 40, 40));
-
-        roundedPanel30.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel30.setLayout(new java.awt.BorderLayout());
-
-        jLabel69.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel69.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel69.setText("21");
-        roundedPanel30.add(jLabel69, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 40, 40));
-
-        roundedPanel31.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel31.setLayout(new java.awt.BorderLayout());
-
-        jLabel70.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel70.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel70.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel70.setText("23");
-        roundedPanel31.add(jLabel70, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, 40, 40));
-
-        roundedPanel32.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel32.setLayout(new java.awt.BorderLayout());
-
-        jLabel71.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel71.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel71.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel71.setText("22");
-        roundedPanel32.add(jLabel71, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, 40, 40));
-
-        roundedPanel33.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel33.setLayout(new java.awt.BorderLayout());
-
-        jLabel72.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel72.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel72.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel72.setText("17");
-        roundedPanel33.add(jLabel72, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 40, 40));
-
-        roundedPanel41.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel41.setLayout(new java.awt.BorderLayout());
-
-        jLabel80.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel80.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel80.setText("26");
-        roundedPanel41.add(jLabel80, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 40, 40));
-
-        roundedPanel42.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel42.setLayout(new java.awt.BorderLayout());
-
-        jLabel81.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel81.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel81.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel81.setText("27");
-        roundedPanel42.add(jLabel81, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 40, 40));
-
-        roundedPanel43.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel43.setLayout(new java.awt.BorderLayout());
-
-        jLabel82.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel82.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel82.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel82.setText("29");
-        roundedPanel43.add(jLabel82, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, 40, 40));
-
-        roundedPanel44.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel44.setLayout(new java.awt.BorderLayout());
-
-        jLabel83.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel83.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel83.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel83.setText("25");
-        roundedPanel44.add(jLabel83, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 40, 40));
-
-        roundedPanel45.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel45.setLayout(new java.awt.BorderLayout());
-
-        jLabel84.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel84.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel84.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel84.setText("30");
-        roundedPanel45.add(jLabel84, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 40, 40));
-
-        roundedPanel46.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel46.setLayout(new java.awt.BorderLayout());
-
-        jLabel85.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel85.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel85.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel85.setText("24");
-        roundedPanel46.add(jLabel85, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 40, 40));
-
-        roundedPanel47.setBackground(new java.awt.Color(244, 243, 243));
-        roundedPanel47.setLayout(new java.awt.BorderLayout());
-
-        jLabel86.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel86.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel86.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel86.setText("28");
-        roundedPanel47.add(jLabel86, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 40, 40));
-
-        roundedPanel48.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel48.setLayout(new java.awt.BorderLayout());
-
-        jLabel87.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel87.setText("3");
-        roundedPanel48.add(jLabel87, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 40, 40));
-
-        roundedPanel49.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel49.setLayout(new java.awt.BorderLayout());
-
-        jLabel88.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel88.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel88.setText("4");
-        roundedPanel49.add(jLabel88, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 40, 40));
-
-        roundedPanel50.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel50.setLayout(new java.awt.BorderLayout());
-
-        jLabel89.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel89.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel89.setText("6");
-        roundedPanel50.add(jLabel89, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, 40, 40));
-
-        roundedPanel51.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel51.setLayout(new java.awt.BorderLayout());
-
-        jLabel90.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel90.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel90.setText("2");
-        roundedPanel51.add(jLabel90, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 40, 40));
-
-        roundedPanel52.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel52.setLayout(new java.awt.BorderLayout());
-
-        jLabel91.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel91.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel91.setText("7");
-        roundedPanel52.add(jLabel91, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, 40, 40));
-
-        roundedPanel53.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel53.setLayout(new java.awt.BorderLayout());
-
-        jLabel92.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel92.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel92.setText("1");
-        roundedPanel53.add(jLabel92, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 40, 40));
-
-        roundedPanel54.setBackground(new java.awt.Color(255, 255, 255));
-        roundedPanel54.setLayout(new java.awt.BorderLayout());
-
-        jLabel93.setForeground(new java.awt.Color(35, 36, 37));
-        jLabel93.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel93.setText("5");
-        roundedPanel54.add(jLabel93, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(roundedPanel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 40, 40));
-
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 520, 390));
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1174,7 +699,7 @@ public class CancelAppointment extends javax.swing.JPanel {
         jLDay1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLDay1.setForeground(new java.awt.Color(35, 36, 37));
         jLDay1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLDay1.setText("Abril 2022");
+        jLDay1.setText("Mayo 2022");
         jLDay1.setToolTipText("");
         jPanel3.add(jLDay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 400, 30));
 
@@ -1303,6 +828,510 @@ public class CancelAppointment extends javax.swing.JPanel {
         jPanel5.add(roundedPanel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 40, 101, 130));
 
         add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 500, 520, 185));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        roundedPanel5.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Lun");
+        roundedPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 40, 40));
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Mar");
+        roundedPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 40, 40));
+
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Mie");
+        roundedPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 40, 40));
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Jue");
+        roundedPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 40, 40));
+
+        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Vie");
+        roundedPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 40, 40));
+
+        jLabel27.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("Sab");
+        roundedPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 40, 40));
+
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Dom");
+        roundedPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 40, 40));
+
+        jPanel4.add(roundedPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 440, 40));
+
+        roundedPanel6.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel6.setLayout(new java.awt.BorderLayout());
+
+        jLabel23.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("7");
+        roundedPanel6.add(jLabel23, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 40, 40));
+
+        roundedPanel7.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel7.setLayout(new java.awt.BorderLayout());
+
+        jLabel17.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("1");
+        roundedPanel7.add(jLabel17, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 40, 40));
+
+        roundedPanel8.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel8.setLayout(new java.awt.BorderLayout());
+
+        jLabel18.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("2");
+        roundedPanel8.add(jLabel18, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 40, 40));
+
+        roundedPanel9.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel9.setLayout(new java.awt.BorderLayout());
+
+        jLabel19.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("3");
+        roundedPanel9.add(jLabel19, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 40, 40));
+
+        roundedPanel10.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel10.setLayout(new java.awt.BorderLayout());
+
+        jLabel20.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("4");
+        roundedPanel10.add(jLabel20, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 40, 40));
+
+        roundedPanel11.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel11.setLayout(new java.awt.BorderLayout());
+
+        jLabel21.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("5");
+        roundedPanel11.add(jLabel21, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 40, 40));
+
+        roundedPanel12.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel12.setLayout(new java.awt.BorderLayout());
+
+        jLabel22.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("6");
+        roundedPanel12.add(jLabel22, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 40, 40));
+
+        roundedPanel13.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel13.setLayout(new java.awt.BorderLayout());
+
+        jLabel52.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel52.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel52.setText("14");
+        roundedPanel13.add(jLabel52, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 40, 40));
+
+        roundedPanel14.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel14.setLayout(new java.awt.BorderLayout());
+
+        jLabel53.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel53.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel53.setText("8");
+        roundedPanel14.add(jLabel53, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 40, 40));
+
+        roundedPanel15.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel15.setLayout(new java.awt.BorderLayout());
+
+        jLabel54.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel54.setText("9");
+        roundedPanel15.add(jLabel54, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 40, 40));
+
+        roundedPanel16.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel16.setLayout(new java.awt.BorderLayout());
+
+        jLabel55.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel55.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel55.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel55.setText("10");
+        roundedPanel16.add(jLabel55, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 40, 40));
+
+        roundedPanel17.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel17.setLayout(new java.awt.BorderLayout());
+
+        jLabel56.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel56.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel56.setText("11");
+        roundedPanel17.add(jLabel56, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 40, 40));
+
+        roundedPanel18.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel18.setLayout(new java.awt.BorderLayout());
+
+        jLabel57.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel57.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel57.setText("12");
+        roundedPanel18.add(jLabel57, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 40, 40));
+
+        roundedPanel19.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel19.setLayout(new java.awt.BorderLayout());
+
+        jLabel58.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel58.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel58.setText("13");
+        roundedPanel19.add(jLabel58, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 40, 40));
+
+        roundedPanel20.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel20.setLayout(new java.awt.BorderLayout());
+
+        jLabel59.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel59.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel59.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel59.setText("17");
+        roundedPanel20.add(jLabel59, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 40, 40));
+
+        roundedPanel21.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel21.setLayout(new java.awt.BorderLayout());
+
+        jLabel60.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel60.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel60.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel60.setText("16");
+        roundedPanel21.add(jLabel60, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 40, 40));
+
+        roundedPanel22.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel22.setLayout(new java.awt.BorderLayout());
+
+        jLabel61.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel61.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel61.setText("18");
+        roundedPanel22.add(jLabel61, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 40, 40));
+
+        roundedPanel23.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel23.setLayout(new java.awt.BorderLayout());
+
+        jLabel62.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel62.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel62.setText("19");
+        roundedPanel23.add(jLabel62, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 40, 40));
+
+        roundedPanel24.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel24.setLayout(new java.awt.BorderLayout());
+
+        jLabel63.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel63.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel63.setText("21");
+        roundedPanel24.add(jLabel63, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 40, 40));
+
+        roundedPanel25.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel25.setLayout(new java.awt.BorderLayout());
+
+        jLabel64.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel64.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel64.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel64.setText("20");
+        roundedPanel25.add(jLabel64, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 40, 40));
+
+        roundedPanel26.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel26.setLayout(new java.awt.BorderLayout());
+
+        jLabel65.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel65.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel65.setText("15");
+        roundedPanel26.add(jLabel65, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 40, 40));
+
+        roundedPanel27.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel27.setLayout(new java.awt.BorderLayout());
+
+        jLabel66.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel66.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel66.setText("24");
+        roundedPanel27.add(jLabel66, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 40, 40));
+
+        roundedPanel28.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel28.setLayout(new java.awt.BorderLayout());
+
+        jLabel67.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel67.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel67.setText("23");
+        roundedPanel28.add(jLabel67, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 40, 40));
+
+        roundedPanel29.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel29.setLayout(new java.awt.BorderLayout());
+
+        jLabel68.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel68.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel68.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel68.setText("25");
+        roundedPanel29.add(jLabel68, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 40, 40));
+
+        roundedPanel30.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel30.setLayout(new java.awt.BorderLayout());
+
+        jLabel69.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel69.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel69.setText("26");
+        roundedPanel30.add(jLabel69, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 40, 40));
+
+        roundedPanel31.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel31.setLayout(new java.awt.BorderLayout());
+
+        jLabel70.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel70.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel70.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel70.setText("28");
+        roundedPanel31.add(jLabel70, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, 40, 40));
+
+        roundedPanel32.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel32.setLayout(new java.awt.BorderLayout());
+
+        jLabel71.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel71.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel71.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel71.setText("27");
+        roundedPanel32.add(jLabel71, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, 40, 40));
+
+        roundedPanel33.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel33.setLayout(new java.awt.BorderLayout());
+
+        jLabel72.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel72.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel72.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel72.setText("22");
+        roundedPanel33.add(jLabel72, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 40, 40));
+
+        roundedPanel41.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel41.setLayout(new java.awt.BorderLayout());
+
+        jLabel80.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel80.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel80.setText("31");
+        roundedPanel41.add(jLabel80, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 40, 40));
+
+        roundedPanel42.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel42.setLayout(new java.awt.BorderLayout());
+
+        jLabel81.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel81.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel81.setText("1");
+        roundedPanel42.add(jLabel81, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 40, 40));
+
+        roundedPanel43.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel43.setLayout(new java.awt.BorderLayout());
+
+        jLabel82.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel82.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel82.setText("3");
+        roundedPanel43.add(jLabel82, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, 40, 40));
+
+        roundedPanel44.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel44.setLayout(new java.awt.BorderLayout());
+
+        jLabel83.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel83.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel83.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel83.setText("30");
+        roundedPanel44.add(jLabel83, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 40, 40));
+
+        roundedPanel45.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel45.setLayout(new java.awt.BorderLayout());
+
+        jLabel84.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel84.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel84.setText("4");
+        roundedPanel45.add(jLabel84, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 40, 40));
+
+        roundedPanel46.setBackground(new java.awt.Color(244, 243, 243));
+        roundedPanel46.setLayout(new java.awt.BorderLayout());
+
+        jLabel85.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel85.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel85.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel85.setText("29");
+        roundedPanel46.add(jLabel85, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 40, 40));
+
+        roundedPanel47.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel47.setLayout(new java.awt.BorderLayout());
+
+        jLabel86.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel86.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel86.setText("2");
+        roundedPanel47.add(jLabel86, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 40, 40));
+
+        roundedPanel48.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel48.setLayout(new java.awt.BorderLayout());
+
+        jLabel87.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel87.setText("7");
+        roundedPanel48.add(jLabel87, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 40, 40));
+
+        roundedPanel49.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel49.setLayout(new java.awt.BorderLayout());
+
+        jLabel88.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel88.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel88.setText("8");
+        roundedPanel49.add(jLabel88, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 40, 40));
+
+        roundedPanel50.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel50.setLayout(new java.awt.BorderLayout());
+
+        jLabel89.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel89.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel89.setText("10");
+        roundedPanel50.add(jLabel89, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, 40, 40));
+
+        roundedPanel51.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel51.setLayout(new java.awt.BorderLayout());
+
+        jLabel90.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel90.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel90.setText("6");
+        roundedPanel51.add(jLabel90, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 40, 40));
+
+        roundedPanel52.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel52.setLayout(new java.awt.BorderLayout());
+
+        jLabel91.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel91.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel91.setText("11");
+        roundedPanel52.add(jLabel91, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, 40, 40));
+
+        roundedPanel53.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel53.setLayout(new java.awt.BorderLayout());
+
+        jLabel92.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel92.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel92.setText("5");
+        roundedPanel53.add(jLabel92, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 40, 40));
+
+        roundedPanel54.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel54.setLayout(new java.awt.BorderLayout());
+
+        jLabel93.setForeground(new java.awt.Color(35, 36, 37));
+        jLabel93.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel93.setText("9");
+        roundedPanel54.add(jLabel93, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(roundedPanel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 40, 40));
+
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 520, 390));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelnMouseMoved
@@ -1320,6 +1349,7 @@ public class CancelAppointment extends javax.swing.JPanel {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.CORRECT, "Cancelar cita", "Cita cancelada correctamente");
                 cleanFields();
                 renderAppointments(currentTime);
+                renderInfoAppointmentsToday();
             } else {
                 App.GetSingleton().newMessage(App.GetSingleton().getMainFrame(), MessageType.ERROR, "Cancelar cita", "Imposible cancelar cita");
             }
@@ -1384,8 +1414,6 @@ public class CancelAppointment extends javax.swing.JPanel {
     private javax.swing.JLabel jLService;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1401,8 +1429,10 @@ public class CancelAppointment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;

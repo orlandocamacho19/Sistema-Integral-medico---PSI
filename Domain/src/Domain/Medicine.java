@@ -7,7 +7,7 @@ public class Medicine {
 
     private int id_medicine;
     private String name;
-    private double amount;
+    private int amount;
     private String ingredient;
     private int mgIngredient;
     private String indications;
@@ -40,7 +40,7 @@ public class Medicine {
      * @param indications
      * @param active Active
      */
-    public Medicine(int id_medicine, String name, double amount, String ingredient, int mgIngredient, String indications, boolean active) {
+    public Medicine(int id_medicine, String name, int amount, String ingredient, int mgIngredient, String indications, boolean active) {
         this.id_medicine = id_medicine;
         this.name = name;
         this.amount = amount;
@@ -61,7 +61,7 @@ public class Medicine {
      * @param indications
      * @param active Active
      */
-    public Medicine(String name, double amount, String ingredient, int mgIngredient, String indications, boolean active) {
+    public Medicine(String name, int amount, String ingredient, int mgIngredient, String indications, boolean active) {
         this.name = name;
         this.amount = amount;
         this.ingredient = ingredient;
@@ -93,7 +93,7 @@ public class Medicine {
      *
      * @return Amount
      */
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -102,7 +102,7 @@ public class Medicine {
      *
      * @param amount Amount
      */
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
